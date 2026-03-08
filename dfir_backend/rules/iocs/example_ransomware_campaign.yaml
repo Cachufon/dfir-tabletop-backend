@@ -1,0 +1,24 @@
+metadata:
+  name: "Example Ransomware Campaign (Placeholder)"
+  source: "Internal Test / Placeholder"
+  first_seen: "2025-01-01"
+  last_seen: "2025-01-15"
+  confidence: "low"
+  tags:
+    - example
+    - placeholder
+    - ransomware
+
+indicators:
+  - type: "ipv4"
+    value: "203.0.113.10"
+    description: "Placeholder C2 IP"
+  - type: "domain"
+    value: "files-backup-secure[.]com"
+    description: "Placeholder domain used by the campaign"
+  - type: "sha256"
+    value: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    description: "Placeholder ransomware binary hash"
+  - type: "url"
+    value: "hxxps://files-backup-secure[.]com/download"
+    description: "Placeholder URL used for staging payloads"

@@ -1,0 +1,487 @@
+version: 1
+injects:
+  - id: CORE-COMMON-001
+    label: Exercise kickoff, scope, and assumptions confirmation
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, legal, communications]
+      csf_functions: [govern]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [exercise_rules, assumptions]
+    inject:
+      delivery_method: facilitator_readout
+      audience: all_participants
+      participant_prompt: "At {CLIENT_ALIAS}, you are beginning a cyber incident exercise focused on protecting {CROWN_JEWELS} and sustaining {CRITICAL_SERVICES}. Confirm exercise rules, known assumptions, and priority concerns from leadership including {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Confirming no-fault exercise norms and participation expectations.
+        - Agreeing the notional timeline, information quality limits, and decision authority boundaries.
+        - Identifying assumptions that would trigger re-evaluation if disproven.
+      expected_decisions:
+        - Approve exercise assumptions and rules of engagement.
+        - Assign an owner to track assumption changes during the scenario.
+      evaluation_criteria:
+        - Participants explicitly confirm scope and assumptions before major decisions.
+        - Team identifies at least one method to log and revisit assumptions.
+      facilitator_notes: "Use this inject to anchor realism and reduce debate drift before scenario escalation."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_CTEP_PACKAGES]
+
+  - id: CORE-COMMON-002
+    label: Incident commander selection and delegation
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [command_structure, role_clarity]
+    inject:
+      delivery_method: email_update
+      audience: executive_and_ir_leads
+      participant_prompt: "Initial reports indicate potential compromise affecting {CRITICAL_SERVICES} and possibly {CROWN_JEWELS}. At {CLIENT_ALIAS}, who is designated as incident commander, what authorities are delegated, and how will leadership concerns such as {LEADERSHIP_CONCERNS} be integrated into command decisions?"
+      expected_discussion:
+        - Choosing a qualified incident commander and backup.
+        - Defining delegated authority for containment, communication, and spend approvals.
+        - Clarifying when executive approval is required versus pre-authorized actions.
+      expected_decisions:
+        - Name incident commander and deputy.
+        - Publish command authorities and escalation rules.
+      evaluation_criteria:
+        - Command role is assigned quickly with clear decision rights.
+        - Delegations align to business impact and urgency.
+      facilitator_notes: "Press for explicit authority boundaries to test practical command readiness."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_CSWP29]
+
+  - id: CORE-COMMON-003
+    label: War room and bridge operations setup
+    tags:
+      categories: [core_common]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, communications]
+      csf_functions: [respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [coordination, operational_rhythm]
+    inject:
+      delivery_method: chat_message
+      audience: response_team
+      participant_prompt: "As incident response ramps up at {CLIENT_ALIAS}, establish a secure war room/bridge model to coordinate work on {CRITICAL_SERVICES} and potential impacts to {CROWN_JEWELS}, while keeping focus on {LEADERSHIP_CONCERNS}. Define attendee roles, meeting cadence, and artifact tracking."
+      expected_discussion:
+        - Selecting secure collaboration channels and backups.
+        - Setting standing agenda, attendance, and note-taking ownership.
+        - Defining incident log standards and decision register ownership.
+      expected_decisions:
+        - Approve war room platform, access controls, and operating cadence.
+        - Assign owners for timeline, actions, and decision log.
+      evaluation_criteria:
+        - Coordination structure supports rapid cross-functional updates.
+        - Team establishes durable records for later legal and AAR needs.
+      facilitator_notes: "Challenge participants on continuity if primary collaboration tools fail."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_CTEP_FACT_SHEET]
+
+  - id: CORE-COMMON-004
+    label: Severity classification and escalation trigger calibration
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, risk]
+      csf_functions: [govern, identify, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [severity, escalation_thresholds]
+    inject:
+      delivery_method: status_report
+      audience: command_team
+      participant_prompt: "Telemetry suggests growing uncertainty around compromise scope at {CLIENT_ALIAS}, including possible effects on {CROWN_JEWELS} and degraded {CRITICAL_SERVICES}. Classify severity using your framework and define escalation thresholds responsive to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Mapping observed impact and confidence levels to severity tiers.
+        - Distinguishing technical severity from enterprise business impact.
+        - Setting quantitative or qualitative triggers for executive escalation.
+      expected_decisions:
+        - Set current severity level and reassessment interval.
+        - Approve explicit thresholds for escalation to executive crisis governance.
+      evaluation_criteria:
+        - Severity rationale is documented and tied to measurable triggers.
+        - Escalation criteria are understandable by technical and business leaders.
+      facilitator_notes: "Encourage participants to avoid vague language and define trigger points concretely."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_NIST_SP_800_61_R3]
+
+  - id: CORE-COMMON-005
+    label: Executive decision under incomplete information
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, legal, communications]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [uncertainty, executive_tradeoffs]
+    inject:
+      delivery_method: executive_brief
+      audience: executive_leadership
+      participant_prompt: "At {CLIENT_ALIAS}, only partial facts are available on incident scope, but leadership asks for immediate strategic direction to protect {CRITICAL_SERVICES} and {CROWN_JEWELS}. How will you make time-bound decisions under uncertainty while addressing {LEADERSHIP_CONCERNS}?"
+      expected_discussion:
+        - Balancing speed, confidence, and reversible decisions.
+        - Defining decision windows with data quality thresholds.
+        - Identifying acceptable risk posture until evidence improves.
+      expected_decisions:
+        - Approve immediate strategic priorities with review checkpoints.
+        - Assign a process to revisit decisions as confidence changes.
+      evaluation_criteria:
+        - Leadership articulates risk-informed rationale, not delay-by-analysis.
+        - Decision checkpoints and ownership are clearly defined.
+      facilitator_notes: "Prompt explicit articulation of assumptions and fallback choices."
+      evidence_refs: [REF_NIST_CSF_2_0_OVERVIEW_SP1299, REF_NIST_SP_800_61_R3]
+
+  - id: CORE-COMMON-006
+    label: Internal communications cadence and single source of truth
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [communications, executive, hr, incident_response]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [internal_comms, rumor_control]
+    inject:
+      delivery_method: internal_inquiry
+      audience: communications_cell
+      participant_prompt: "Employees at {CLIENT_ALIAS} are receiving conflicting updates about disruptions to {CRITICAL_SERVICES} and possible exposure of {CROWN_JEWELS}. Build an internal communications cadence and single source of truth that aligns with {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Choosing canonical channels for staff and leadership updates.
+        - Setting update frequency tied to incident tempo.
+        - Establishing approval workflows to prevent contradictory messaging.
+      expected_decisions:
+        - Approve cadence, owner, and publication channel for internal updates.
+        - Define rumor-correction and Q&A routing process.
+      evaluation_criteria:
+        - Messaging governance minimizes conflicting internal statements.
+        - Update timing reflects operational and executive needs.
+      facilitator_notes: "Ask how remote, shift-based, and frontline teams receive consistent updates."
+      evidence_refs: [REF_CISA_CTEP_PACKAGES, REF_NIST_SP_800_61_R3]
+
+  - id: CORE-COMMON-007
+    label: External communications governance and holding statement review
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [communications, legal, executive]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [external_comms, reputational_risk]
+    inject:
+      delivery_method: media_alert
+      audience: communications_and_legal
+      participant_prompt: "A journalist asks whether {CLIENT_ALIAS} suffered a cyber incident affecting {CRITICAL_SERVICES} or {CROWN_JEWELS}. Develop governance for external communications and review a draft holding statement that accounts for {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Defining who can speak externally and under what approvals.
+        - Balancing factual transparency, legal exposure, and speculation risk.
+        - Aligning stakeholder-specific messaging with known facts.
+      expected_decisions:
+        - Approve holding statement content and approval chain.
+        - Set trigger conditions for public updates and stakeholder notices.
+      evaluation_criteria:
+        - External messaging is consistent, accurate, and non-prejudicial.
+        - Governance identifies decision owner for release timing.
+      facilitator_notes: "Introduce changing facts to test whether statement governance remains disciplined."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_CTEP_FACT_SHEET]
+
+  - id: CORE-COMMON-008
+    label: Legal and regulatory notification decision gate
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [legal, compliance, executive]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [notification_decisions, legal_risk]
+    inject:
+      delivery_method: counsel_memo
+      audience: legal_and_executive
+      participant_prompt: "Preliminary facts at {CLIENT_ALIAS} indicate a possible reportable event involving {CROWN_JEWELS} and interruption of {CRITICAL_SERVICES}. Determine legal/regulatory notification decision points, evidence thresholds, and timing strategy while addressing {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Establishing criteria for potentially reportable incidents.
+        - Mapping evidence maturity to notification timing decisions.
+        - Coordinating legal review with incident command and communications.
+      expected_decisions:
+        - Approve notification decision matrix and decision authority.
+        - Set next legal review checkpoint and required evidence package.
+      evaluation_criteria:
+        - Legal decision points are explicit and integrated with IR tempo.
+        - Team avoids overstatement while preserving timeliness obligations.
+      facilitator_notes: "Keep discussion jurisdiction-agnostic and focused on governance process quality."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_CSWP29]
+
+  - id: CORE-COMMON-009
+    label: Law enforcement engagement decision
+    tags:
+      categories: [core_common]
+      package_profiles: [half_day, full_day]
+      audiences: [legal, executive, incident_response]
+      csf_functions: [respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [external_coordination, evidence_handling]
+    inject:
+      delivery_method: executive_prompt
+      audience: legal_executive_ir
+      participant_prompt: "Leadership at {CLIENT_ALIAS} asks whether to engage law enforcement now, given uncertainty about impacts to {CROWN_JEWELS} and continuity risk to {CRITICAL_SERVICES}. Recommend a decision path aligned to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Benefits and drawbacks of early law enforcement coordination.
+        - Evidence preservation and chain-of-custody implications.
+        - Messaging considerations if external entities become involved.
+      expected_decisions:
+        - Decide whether and when to engage law enforcement.
+        - Define evidence handling and liaison responsibilities.
+      evaluation_criteria:
+        - Decision rationale includes operational, legal, and reputational factors.
+        - Evidence preservation actions are assigned and time-bound.
+      facilitator_notes: "Use this inject to test cross-functional risk balancing in external coordination."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_IC3_BEC]
+
+  - id: CORE-COMMON-010
+    label: Vendor management coordination beat
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [vendor_management, legal, incident_response, executive]
+      csf_functions: [identify, govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [third_party_risk, contract_obligations]
+    inject:
+      delivery_method: vendor_notice
+      audience: third_party_coordination_team
+      participant_prompt: "A key service provider used by {CLIENT_ALIAS} may be involved in the incident chain affecting {CRITICAL_SERVICES} and possibly {CROWN_JEWELS}. Establish vendor engagement priorities, contractual notification checks, and oversight actions aligned to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Determining which vendors are critical to incident containment and recovery.
+        - Clarifying contractual notice clauses, SLAs, and evidence requests.
+        - Defining accountability for third-party status verification.
+      expected_decisions:
+        - Approve priority vendor outreach sequence and owners.
+        - Set minimum information requirements for vendor updates.
+      evaluation_criteria:
+        - Vendor actions are prioritized by business dependency impact.
+        - Contractual and technical coordination are synchronized.
+      facilitator_notes: "Probe whether participants can operate when vendor information is delayed or incomplete."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_CISA_CTEP_PACKAGES]
+
+  - id: CORE-COMMON-011
+    label: Business continuity fallback activation
+    tags:
+      categories: [core_common]
+      package_profiles: [half_day, full_day]
+      audiences: [business_continuity, operations, executive]
+      csf_functions: [respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [continuity, service_restoration]
+    inject:
+      delivery_method: operations_update
+      audience: continuity_and_ops
+      participant_prompt: "Disruption persists for {CRITICAL_SERVICES} at {CLIENT_ALIAS}, and confidence in rapid remediation is low. Decide if continuity fallback options should activate to protect mission outcomes tied to {CROWN_JEWELS} and {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Trigger criteria for business continuity plan activation.
+        - Operational tradeoffs between degraded mode and full outage.
+        - Cross-team dependencies required for temporary workarounds.
+      expected_decisions:
+        - Activate, defer, or partially activate continuity playbooks.
+        - Define service-level targets for fallback operations.
+      evaluation_criteria:
+        - Continuity decisions are impact-based and time-bounded.
+        - Roles and communications for fallback mode are clearly set.
+      facilitator_notes: "Ask participants how they monitor risk accumulation during prolonged degraded operations."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_OVERVIEW_SP1299]
+
+  - id: CORE-COMMON-012
+    label: Data integrity validation before recovery
+    tags:
+      categories: [core_common]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, risk]
+      csf_functions: [recover]
+      mitre_attack: [T1486]
+      complexity: high
+      redline_topics: [integrity_validation, safe_recovery]
+    inject:
+      delivery_method: technical_brief
+      audience: technical_recovery_team
+      participant_prompt: "As {CLIENT_ALIAS} prepares to restore systems supporting {CRITICAL_SERVICES}, confidence in data and system integrity for {CROWN_JEWELS} remains uncertain. Define validation gates and rollback criteria that still satisfy {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Establishing integrity checks for systems, data, and credentials.
+        - Identifying trusted recovery sources and contamination risks.
+        - Defining rollback triggers if validation fails post-restore.
+      expected_decisions:
+        - Approve integrity validation checklist and sign-off authority.
+        - Sequence recovery by validation readiness and business priority.
+      evaluation_criteria:
+        - Recovery is gated by verification, not only speed pressure.
+        - Validation evidence is documented for audit and lessons learned.
+      facilitator_notes: "Use ATT&CK relevance only to frame impact behavior, not as a forced governance artifact."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE, ATTACK:T1486]
+
+  - id: CORE-COMMON-013
+    label: Service restoration prioritization under constraints
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, it_operations, business_owners]
+      csf_functions: [recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [prioritization, resource_constraints]
+    inject:
+      delivery_method: leadership_sync
+      audience: executive_and_service_owners
+      participant_prompt: "Resource limits at {CLIENT_ALIAS} prevent simultaneous recovery of all affected systems. Prioritize restoration order for {CRITICAL_SERVICES} and supporting assets tied to {CROWN_JEWELS}, considering {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Ranking services by safety, financial, and mission dependency.
+        - Assigning scarce personnel and infrastructure to priority tracks.
+        - Defining acceptable downtime and backlog handling.
+      expected_decisions:
+        - Approve phased restoration plan with explicit service order.
+        - Set decision checkpoints for reprioritization as facts evolve.
+      evaluation_criteria:
+        - Priorities map to documented business impact logic.
+        - Restoration plan includes review cadence and owner accountability.
+      facilitator_notes: "Test whether participants can defend tradeoffs transparently to leadership."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_NIST_SP_800_61_R3]
+
+  - id: CORE-COMMON-014
+    label: Board and stakeholder update governance
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, communications, legal]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [stakeholder_management, governance_reporting]
+    inject:
+      delivery_method: board_request
+      audience: executive_comms_legal
+      participant_prompt: "The board requests a status update from {CLIENT_ALIAS} on incident handling, implications for {CROWN_JEWELS}, and continuity of {CRITICAL_SERVICES}. Develop a governance approach for stakeholder updates that addresses {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Determining board update cadence and content boundaries.
+        - Aligning board messaging with internal and external communications.
+        - Defining confidence language for uncertain technical findings.
+      expected_decisions:
+        - Approve stakeholder reporting cadence and accountable owner.
+        - Set required elements for governance-level status reporting.
+      evaluation_criteria:
+        - Reporting approach balances transparency and factual discipline.
+        - Board communication integrates risk, response, and recovery status.
+      facilitator_notes: "Check for consistency with previously agreed single source of truth processes."
+      evidence_refs: [REF_NIST_CSF_2_0_OVERVIEW_SP1299, REF_CISA_CTEP_FACT_SHEET]
+
+  - id: CORE-COMMON-015
+    label: Decision logging and evidence preservation governance
+    tags:
+      categories: [core_common]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, legal, compliance]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [decision_logging, defensibility]
+    inject:
+      delivery_method: facilitator_prompt
+      audience: command_and_legal
+      participant_prompt: "Multiple high-impact decisions are being made rapidly at {CLIENT_ALIAS} regarding {CRITICAL_SERVICES} and {CROWN_JEWELS}. Define how decision logs, rationale capture, and evidence preservation will be maintained in a way responsive to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Minimum data fields for recording key decisions and assumptions.
+        - Ownership for preserving artifacts from technical and business channels.
+        - Alignment between operational records and legal defensibility.
+      expected_decisions:
+        - Approve decision log standard and retention approach.
+        - Assign owners for evidence collection and quality checks.
+      evaluation_criteria:
+        - Log and evidence process is actionable during active response.
+        - Records support later legal, audit, and post-incident review needs.
+      facilitator_notes: "Use this inject to test whether governance rigor persists under tempo pressure."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_CSWP29]
+
+  - id: CORE-COMMON-016
+    label: Transition criteria from response to recovery
+    tags:
+      categories: [core_common]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [phase_transition, residual_risk]
+    inject:
+      delivery_method: milestone_review
+      audience: command_team
+      participant_prompt: "At {CLIENT_ALIAS}, containment appears effective, but uncertainty remains around latent risk to {CROWN_JEWELS} and sustained performance of {CRITICAL_SERVICES}. Define objective criteria to transition from response to recovery while addressing {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Indicators that response objectives are sufficiently met.
+        - Residual risk tolerance for moving into formal recovery.
+        - Ownership handoffs between response and recovery teams.
+      expected_decisions:
+        - Approve phase-transition criteria and sign-off roles.
+        - Set enhanced monitoring period and contingency triggers.
+      evaluation_criteria:
+        - Transition decision uses objective criteria and residual risk framing.
+        - Handoff responsibilities are explicit and time-bounded.
+      facilitator_notes: "Prompt participants to avoid premature transition driven only by fatigue or optics."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_OVERVIEW_SP1299]
+
+  - id: CORE-COMMON-017
+    label: Immediate post-incident improvement backlog (0-day)
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, risk, operations]
+      csf_functions: [govern, recover]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [lessons_learned, immediate_actions]
+    inject:
+      delivery_method: hotwash_prompt
+      audience: all_key_roles
+      participant_prompt: "Following stabilization at {CLIENT_ALIAS}, define immediate (0-day) improvements that reduce near-term risk to {CROWN_JEWELS} and resilience of {CRITICAL_SERVICES}, while speaking directly to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Capturing urgent corrective actions from observed gaps.
+        - Prioritizing improvements by risk reduction and effort.
+        - Assigning owners and deadlines for immediate fixes.
+      expected_decisions:
+        - Approve 0-day action backlog with accountable owners.
+        - Set executive tracking mechanism for completion.
+      evaluation_criteria:
+        - Immediate improvements are concrete, measurable, and owned.
+        - Prioritization reflects observed incident pain points.
+      facilitator_notes: "Encourage participants to separate urgent fixes from longer-term initiatives."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_CTEP_PACKAGES]
+
+  - id: CORE-COMMON-018
+    label: 30/90-day resilience roadmap commitment
+    tags:
+      categories: [core_common]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, risk, it_operations, legal, communications]
+      csf_functions: [govern, recover, identify]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [continuous_improvement, strategic_follow_through]
+    inject:
+      delivery_method: executive_planning_session
+      audience: leadership_and_control_owners
+      participant_prompt: "Create a 30-day and 90-day improvement plan for {CLIENT_ALIAS} that hardens protection of {CROWN_JEWELS}, strengthens reliability of {CRITICAL_SERVICES}, and closes gaps linked to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Selecting durable capability improvements across governance, response, and recovery.
+        - Sequencing initiatives based on dependencies and capacity.
+        - Defining measurable outcomes and governance checkpoints.
+      expected_decisions:
+        - Approve 30/90-day milestones, owners, and reporting cadence.
+        - Commit to validation exercises or drills for high-priority improvements.
+      evaluation_criteria:
+        - Roadmap includes measurable outcomes and accountable ownership.
+        - Plan balances quick wins with structural resilience upgrades.
+      facilitator_notes: "Insist on traceability from incident lessons to funded improvement actions."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_NIST_SP_800_61_R3]

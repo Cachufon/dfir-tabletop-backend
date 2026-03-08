@@ -1,0 +1,649 @@
+version: 1
+injects:
+  - id: RANSOMWARE-EXTORTION-001
+    label: Ransomware/extortion scenario opening and command priorities
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, legal, communications]
+      csf_functions: [govern, identify]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [scenario_context, business_priorities, decision_scope]
+    inject:
+      delivery_method: facilitator_readout
+      audience: all_participants
+      participant_prompt: "At {CLIENT_ALIAS}, leadership is briefed on a potential ransomware/extortion incident affecting {CRITICAL_SERVICES}. Confirm command priorities, business tolerances, and early decision boundaries."
+      expected_discussion:
+        - Aligning leaders on life-safety, critical operations, and legal exposure priorities.
+        - Clarifying decision rights and escalation expectations for the first operational period.
+        - Defining unacceptable downtime thresholds for key business services.
+      expected_decisions:
+        - Approve initial incident objectives and governance structure.
+        - Assign owners for decision logging and executive updates.
+      evaluation_criteria:
+        - Teams set a shared incident framing before tactical actions.
+        - Roles, ownership, and escalation triggers are explicit.
+      facilitator_notes: "Use this opening inject to establish governance and pacing for all profiles."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-002
+    label: Initial access suspicion from phishing lure
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, security_operations, executive]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1566]
+      complexity: medium
+      redline_topics: [initial_access, phishing_suspicion, triage_priorities]
+    inject:
+      delivery_method: soc_ticket
+      audience: incident_response_and_soc
+      participant_prompt: "SOC reports multiple users opened a suspicious attachment tied to credential prompts and endpoint anomalies. Decide immediate triage sequence, evidence collection priorities, and executive notification thresholds."
+      expected_discussion:
+        - Determining which affected users and systems are triaged first.
+        - Prioritizing mailbox, endpoint, and identity evidence preservation.
+        - Defining conditions that trigger severity escalation.
+      expected_decisions:
+        - Approve high-priority triage order and responsible teams.
+        - Set escalation criteria for moving to a declared major incident.
+      evaluation_criteria:
+        - Triage approach is risk-based and time-bounded.
+        - Escalation thresholds are specific and actionable.
+      facilitator_notes: "Keep technical details tool-agnostic and focused on triage decisions."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1566_PHISHING, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-003
+    label: Initial access suspicion from valid account abuse
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: medium
+      redline_topics: [valid_accounts, initial_access, authentication_abuse]
+    inject:
+      delivery_method: identity_alert
+      audience: command_team
+      participant_prompt: "Authentication logs show successful sign-ins from unusual geographies for privileged and IT support accounts. Decide whether this reflects valid account abuse and what immediate controls should be applied."
+      expected_discussion:
+        - Evaluating confidence in signs of credential misuse.
+        - Selecting immediate controls for privileged accounts.
+        - Balancing urgent action with operational dependencies.
+      expected_decisions:
+        - Approve account containment actions and validation steps.
+        - Establish criteria for expanding containment scope.
+      evaluation_criteria:
+        - Decisions tie controls to confidence and risk.
+        - Containment scope is justified and documented.
+      facilitator_notes: "Push participants to explain why they treat activity as suspicious versus confirmed compromise."
+      evidence_refs: [REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE]
+
+  - id: RANSOMWARE-EXTORTION-004
+    label: Early triage decision on ransomware indicators versus false positive
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, executive, risk]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1566, ATTACK:T1078]
+      complexity: medium
+      redline_topics: [triage_decision, confidence_levels, declaration_threshold]
+    inject:
+      delivery_method: command_bridge_update
+      audience: command_team
+      participant_prompt: "Competing reports suggest either an active ransomware campaign or a limited malware event. Choose the declaration posture, staffing level, and cross-functional activation timing."
+      expected_discussion:
+        - Defining what evidence is sufficient to declare ransomware conditions.
+        - Determining when legal/comms are activated.
+        - Considering cost of overreaction versus delayed response.
+      expected_decisions:
+        - Select declaration status and command cadence.
+        - Approve staffing and stakeholder activation scope.
+      evaluation_criteria:
+        - Declaration rationale is explicit and risk-informed.
+        - Activation plan aligns to incident uncertainty.
+      facilitator_notes: "Encourage explicit confidence statements and contingency branching."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1566_PHISHING]
+
+  - id: RANSOMWARE-EXTORTION-005
+    label: Lateral movement and spread suspicion across shared infrastructure
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [identify, respond, protect]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [lateral_movement, spread_suspicion, network_segmentation]
+    inject:
+      delivery_method: operations_digest
+      audience: command_team
+      participant_prompt: "Operations reports abnormal process execution and mass authentication attempts on multiple server segments, raising concern for lateral spread. Determine immediate segmentation and monitoring actions."
+      expected_discussion:
+        - Prioritizing containment around high-value segments.
+        - Assessing business impact from segment isolation.
+        - Establishing triggers for broader network restrictions.
+      expected_decisions:
+        - Approve immediate spread-limiting controls by segment.
+        - Define criteria for escalation to enterprise-wide containment.
+      evaluation_criteria:
+        - Containment plan addresses both threat suppression and continuity.
+        - Spread indicators are tracked with clear decision checkpoints.
+      facilitator_notes: "Keep spread discussion high level; avoid requiring specific tooling."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-006
+    label: Decision beat on isolating impacted segments
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, it_operations, incident_response]
+      csf_functions: [protect, respond]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [segment_isolation, business_constraints, containment_tradeoffs]
+    inject:
+      delivery_method: executive_decision_brief
+      audience: leadership
+      participant_prompt: "Security requests immediate isolation of two production network segments to slow ransomware spread, but business leaders warn that order fulfillment and patient/customer services may be disrupted. Decide scope and timing."
+      expected_discussion:
+        - Weighing immediate technical containment against service obligations.
+        - Identifying alternative controls if full isolation is deferred.
+        - Defining who can authorize service-impacting actions.
+      expected_decisions:
+        - Approve full, partial, or phased segment isolation.
+        - Set reevaluation checkpoints tied to spread indicators.
+      evaluation_criteria:
+        - Decision explicitly balances operational and security risk.
+        - Contingency paths are defined if initial choice fails.
+      facilitator_notes: "Probe how teams justify risk acceptance when isolation is limited."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-007
+    label: Decision beat on disabling shared services and network shares
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [it_operations, incident_response, executive]
+      csf_functions: [protect, respond]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [disable_shares, containment_tradeoffs, productivity_impact]
+    inject:
+      delivery_method: operations_update
+      audience: command_team
+      participant_prompt: "File activity spikes indicate possible encryption staging through shared drives. Decide whether to disable enterprise shares immediately, by business unit, or with protective exceptions."
+      expected_discussion:
+        - Evaluating likely spread paths through shared resources.
+        - Estimating business interruption from broad share shutdowns.
+        - Defining exception handling for critical workflows.
+      expected_decisions:
+        - Select share disablement scope and implementation order.
+        - Approve exception governance for critical business processes.
+      evaluation_criteria:
+        - Share-control decision is fast, clear, and enforceable.
+        - Exception handling prevents uncontrolled risk acceptance.
+      facilitator_notes: 'Press participants to avoid vague "case-by-case" decisions without criteria.'
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-008
+    label: Decision beat on taking critical systems offline
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, operations, legal]
+      csf_functions: [protect, respond, govern]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [system_shutdown, safety_constraints, downtime_tolerance]
+    inject:
+      delivery_method: crisis_meeting
+      audience: leadership
+      participant_prompt: "Encryption activity is now observed on a subset of production hosts. Decide whether to proactively take additional critical systems offline to contain impact, acknowledging contractual and safety constraints."
+      expected_discussion:
+        - Prioritizing systems for controlled shutdown versus continued operation.
+        - Addressing life-safety, regulatory, and contractual implications.
+        - Coordinating technical actions with executive communication.
+      expected_decisions:
+        - Approve offline plan and execution authority.
+        - Define conditions to reverse or expand shutdown actions.
+      evaluation_criteria:
+        - Shutdown strategy is risk-ranked and documented.
+        - Stakeholder communications are synchronized with operations.
+      facilitator_notes: "Keep focus on decision governance, not host-level response commands."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-009
+    label: Encryption impact confirmation and outage declaration
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, communications]
+      csf_functions: [respond, govern]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [encryption_impact, outage_declaration, crisis_comms]
+    inject:
+      delivery_method: incident_bridge_update
+      audience: command_team
+      participant_prompt: "Multiple systems display ransom notes and encrypted files, disrupting key business functions. Decide if and when to declare an official operational outage and launch crisis communications."
+      expected_discussion:
+        - Establishing outage declaration thresholds.
+        - Determining immediate stakeholder communication scope.
+        - Aligning technical findings with public/internal messaging.
+      expected_decisions:
+        - Approve outage status and communication triggers.
+        - Assign accountable executives for internal and external updates.
+      evaluation_criteria:
+        - Outage declaration is timely and evidence-based.
+        - Messaging decisions are coordinated and role-aligned.
+      facilitator_notes: "Use this as a major pivot from suspicion to confirmed impact."
+      evidence_refs: [REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT, REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-010
+    label: Business continuity decision under sustained outage
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, business_continuity, operations]
+      csf_functions: [respond, recover]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [continuity_prioritization, manual_workarounds, service_levels]
+    inject:
+      delivery_method: continuity_brief
+      audience: leadership
+      participant_prompt: "Core systems remain unavailable and business units request priority restoration. Determine continuity priorities, manual workaround approvals, and service-level commitments for the next 24 hours."
+      expected_discussion:
+        - Ranking critical processes for reduced-mode operation.
+        - Identifying acceptable risk in manual processing.
+        - Defining communication commitments to customers and partners.
+      expected_decisions:
+        - Approve continuity priorities and workaround governance.
+        - Set executive-approved service-level messaging.
+      evaluation_criteria:
+        - Continuity plan is realistic and time-bounded.
+        - Workarounds include control measures and accountability.
+      facilitator_notes: "Ensure teams articulate what will not be restored or operated immediately."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT]
+
+  - id: RANSOMWARE-EXTORTION-011
+    label: Extortion claim of data theft received
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [legal, executive, communications, incident_response]
+      csf_functions: [respond, govern]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [extortion_claim, data_theft_allegation, legal_coordination]
+    inject:
+      delivery_method: threat_actor_message
+      audience: command_team
+      participant_prompt: "An extortion message claims sensitive data was stolen before encryption and demands rapid engagement. Decide verification approach, legal review sequencing, and message handling controls."
+      expected_discussion:
+        - Separating verified facts from extortion claims.
+        - Determining legal privilege and documentation handling.
+        - Setting internal boundaries on who can engage with messages.
+      expected_decisions:
+        - Approve data-theft claim validation workstream.
+        - Designate authorized personnel for message intake and tracking.
+      evaluation_criteria:
+        - Teams avoid treating claims as confirmed without evidence.
+        - Legal and response coordination is explicit and controlled.
+      facilitator_notes: "Keep claim generic; do not reference specific leak sites or actor branding."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT]
+
+  - id: RANSOMWARE-EXTORTION-012
+    label: Communications posture for unverified data theft claim
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [communications, legal, executive]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [external_communications, unverified_claims, stakeholder_assurance]
+    inject:
+      delivery_method: media_inquiry
+      audience: communications_team
+      participant_prompt: "Reporters and customers ask whether stolen data is being extorted. Decide what can be communicated now, what must remain under investigation, and who approves language."
+      expected_discussion:
+        - Balancing transparency with investigative uncertainty.
+        - Aligning external statements with legal and regulatory obligations.
+        - Managing rumor risk and stakeholder trust.
+      expected_decisions:
+        - Approve initial holding statement and approval workflow.
+        - Define update cadence for external stakeholder communications.
+      evaluation_criteria:
+        - Messaging is accurate, consistent, and does not overstate certainty.
+        - Approval authority and timeline are clearly defined.
+      facilitator_notes: "Emphasize disciplined language around alleged theft and ongoing validation."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-013
+    label: Negotiation redline handling when ransom payment discussion is restricted
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, legal, risk]
+      csf_functions: [govern, respond]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [avoid_ransom_payment_discussion, negotiation_redlines, executive_boundaries]
+    inject:
+      delivery_method: facilitator_prompt
+      audience: leadership
+      participant_prompt: "Intake redlines specify 'avoid ransom payment discussion.' The extortion timeline is tightening. Determine what negotiation-related actions remain in scope and how teams maintain discipline against prohibited discussion areas."
+      expected_discussion:
+        - Distinguishing message handling from payment deliberation.
+        - Defining facilitator or legal interventions when redlines are breached.
+        - Ensuring teams focus on containment, recovery, and communications.
+      expected_decisions:
+        - Approve redline-safe engagement protocol and speaking boundaries.
+        - Assign a redline monitor role for discussion control.
+      evaluation_criteria:
+        - Teams comply with stated redline constraints.
+        - Redirects are timely when prohibited topics emerge.
+      facilitator_notes: "Do not allow direct payment option evaluation in this branch."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT]
+
+  - id: RANSOMWARE-EXTORTION-014
+    label: Negotiation governance when no payment redline is present
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [executive, legal, risk, communications]
+      csf_functions: [govern, respond]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [negotiation_governance, decision_rights, legal_controls]
+    inject:
+      delivery_method: legal_brief
+      audience: command_team
+      participant_prompt: "No intake redline prohibits payment discussion. Leadership must decide whether to establish a negotiation governance framework, who can engage intermediaries, and what legal controls are required."
+      expected_discussion:
+        - Defining negotiation decision rights and approval thresholds.
+        - Determining legal review requirements for any engagement pathway.
+        - Setting documentation standards for sensitive deliberations.
+      expected_decisions:
+        - Approve negotiation governance structure and authority boundaries.
+        - Establish criteria for initiating, pausing, or terminating engagement.
+      evaluation_criteria:
+        - Governance model is controlled, accountable, and documented.
+        - Legal and executive controls are integrated into decision flow.
+      facilitator_notes: "Frame as governance and process control, not tactical bargaining."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-015
+    label: Law enforcement redline handling path
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [legal, executive, incident_response]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [law_enforcement_redline, escalation_boundaries, reporting_constraints]
+    inject:
+      delivery_method: facilitator_prompt
+      audience: command_team
+      participant_prompt: "Intake redlines indicate law enforcement engagement is out of scope for this exercise run. Adjust discussion scope to compliant alternatives for evidence preservation, legal preparation, and stakeholder coordination."
+      expected_discussion:
+        - Identifying lawful and practical actions that do not involve law enforcement.
+        - Ensuring evidence handling remains rigorous for future optional reporting.
+        - Communicating clearly that this is a scope constraint, not policy advice.
+      expected_decisions:
+        - Approve a redline-compliant coordination path.
+        - Document deferred actions that would apply outside the redline.
+      evaluation_criteria:
+        - Teams avoid prohibited discussion while preserving readiness.
+        - Scope constraints are explicitly recorded.
+      facilitator_notes: "If participants drift into law enforcement tactics, redirect to redline-compliant alternatives."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE]
+
+  - id: RANSOMWARE-EXTORTION-016
+    label: Optional law enforcement notification discussion
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [legal, executive, communications]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [law_enforcement_optional, reporting_strategy, stakeholder_implications]
+    inject:
+      delivery_method: legal_coordination_note
+      audience: leadership
+      participant_prompt: "If no intake redline restricts it, discuss whether and when to notify law enforcement, what information would be shared, and how this affects communications and evidence management."
+      expected_discussion:
+        - Weighing benefits and concerns of voluntary notification.
+        - Determining minimum validated facts before outreach.
+        - Aligning notification timing with communications planning.
+      expected_decisions:
+        - Approve conditional criteria for law enforcement engagement.
+        - Assign owners for preparation and documentation.
+      evaluation_criteria:
+        - Decision reflects legal and operational coordination.
+        - Criteria and ownership are clear and actionable.
+      facilitator_notes: "Present only when law enforcement discussion is not redlined."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-017
+    label: Backup integrity confidence check
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [it_operations, incident_response, executive]
+      csf_functions: [identify, recover]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [backup_integrity, recovery_readiness, validation_gaps]
+    inject:
+      delivery_method: recovery_team_update
+      audience: command_team
+      participant_prompt: "Recovery team reports backups exist, but integrity and cleanliness are uncertain for recent restore points. Decide validation depth, timeline tolerance, and criteria for backup trust."
+      expected_discussion:
+        - Determining acceptable confidence thresholds for backup integrity.
+        - Balancing speed of recovery against reinfection risk.
+        - Prioritizing systems for deep versus rapid validation.
+      expected_decisions:
+        - Approve backup validation strategy and sequencing.
+        - Set executive risk acceptance criteria for incomplete validation.
+      evaluation_criteria:
+        - Validation plan is structured and prioritized.
+        - Risk tradeoffs are explicit before restore operations.
+      facilitator_notes: "Do not assume backups are safe without verification."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT]
+
+  - id: RANSOMWARE-EXTORTION-018
+    label: Recovery sequence prioritization under limited clean restores
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [it_operations, business_continuity, executive]
+      csf_functions: [recover, govern]
+      mitre_attack: [ATTACK:T1486]
+      complexity: high
+      redline_topics: [restore_priorities, limited_capacity, business_risk]
+    inject:
+      delivery_method: restoration_planning_brief
+      audience: leadership
+      participant_prompt: "Only a subset of clean backups can be restored within 12 hours. Decide restoration order across business services and communicate consequences to affected units."
+      expected_discussion:
+        - Ranking restoration targets by mission and customer impact.
+        - Managing interdependencies between systems and processes.
+        - Setting expectations with non-priority business units.
+      expected_decisions:
+        - Approve restore sequence and decision rationale.
+        - Assign communication owners for impacted stakeholders.
+      evaluation_criteria:
+        - Sequence reflects clear, cross-functional prioritization logic.
+        - Dependency and stakeholder impacts are addressed.
+      facilitator_notes: "Require explicit deferral choices, not all-services-at-once plans."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT]
+
+  - id: RANSOMWARE-EXTORTION-019
+    label: Decision beat on when it is safe to restore
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [respond, recover]
+      mitre_attack: [ATTACK:T1486, ATTACK:T1078]
+      complexity: high
+      redline_topics: [safe_to_restore, residual_access, reentry_risk]
+    inject:
+      delivery_method: command_bridge_update
+      audience: command_team
+      participant_prompt: "Containment has reduced active encryption, but there is uncertainty about residual adversary access. Decide what conditions must be met before restoring critical systems to production."
+      expected_discussion:
+        - Defining technical and governance gates for restore approval.
+        - Considering identity assurance and access hardening prerequisites.
+        - Determining rollback actions if signs of persistence reappear.
+      expected_decisions:
+        - Approve safe-to-restore criteria and go/no-go authority.
+        - Establish monitoring and rollback commitments post-restore.
+      evaluation_criteria:
+        - Restore decision uses explicit gates, not assumptions.
+        - Post-restore monitoring obligations are defined.
+      facilitator_notes: "Link restore readiness to both endpoint and identity risk controls."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: RANSOMWARE-EXTORTION-020
+    label: Credential and privileged access reset before recovery
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [protect, recover]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [credential_reset, privileged_access_hardening, recovery_dependency]
+    inject:
+      delivery_method: security_control_brief
+      audience: command_team
+      participant_prompt: "Restoration planning highlights unresolved privileged credential risk. Decide whether to require staged credential/secret resets before each restore wave and how to handle business urgency."
+      expected_discussion:
+        - Sequencing recovery with identity hardening controls.
+        - Estimating downtime added by access-control remediation.
+        - Choosing exceptions and associated risk acceptance.
+      expected_decisions:
+        - Approve credential reset policy tied to restore waves.
+        - Define emergency exception process and approval authority.
+      evaluation_criteria:
+        - Identity hardening is integrated into recovery execution.
+        - Exceptions are controlled and justified.
+      facilitator_notes: "Keep focus on valid-account risk reduction during recovery."
+      evidence_refs: [REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE]
+
+  - id: RANSOMWARE-EXTORTION-021
+    label: Recovery integrity monitoring and relapse detection
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, security_operations, it_operations]
+      csf_functions: [recover, identify, respond]
+      mitre_attack: [ATTACK:T1486, ATTACK:T1078]
+      complexity: high
+      redline_topics: [integrity_monitoring, relapse_detection, recovery_controls]
+    inject:
+      delivery_method: soc_update
+      audience: recovery_and_soc
+      participant_prompt: "During staged restoration, SOC sees suspicious authentication and process activity on newly restored assets. Decide whether to pause restoration, continue with safeguards, or revert specific systems."
+      expected_discussion:
+        - Interpreting relapse indicators versus normal recovery noise.
+        - Determining stop/go criteria for restoration waves.
+        - Coordinating incident and recovery command decisions.
+      expected_decisions:
+        - Approve restoration pause/continue thresholds.
+        - Set rapid rollback protocol for suspect restored systems.
+      evaluation_criteria:
+        - Monitoring and decision thresholds are pre-defined.
+        - Recovery governance adapts quickly to relapse signals.
+      facilitator_notes: "Use this inject to test resilience of recovery integrity controls."
+      evidence_refs: [REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT, REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3]
+
+  - id: RANSOMWARE-EXTORTION-022
+    label: Regulatory and customer notification timing decision
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [legal, communications, executive]
+      csf_functions: [govern, respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [notification_timing, legal_risk, customer_trust]
+    inject:
+      delivery_method: legal_deadline_alert
+      audience: legal_and_executive
+      participant_prompt: "As outage and extortion impacts evolve, legal deadlines and customer expectations are converging. Decide notification timing strategy under uncertain forensic scope."
+      expected_discussion:
+        - Establishing minimum factual thresholds for notices.
+        - Balancing speed, accuracy, and legal defensibility.
+        - Coordinating customer and regulator communication sequencing.
+      expected_decisions:
+        - Approve notification threshold criteria and timeline.
+        - Assign sign-off roles for regulatory and customer notices.
+      evaluation_criteria:
+        - Notification plan is coherent and role-accountable.
+        - Uncertainty is addressed without misleading statements.
+      facilitator_notes: "Keep language generic across jurisdictions and sectors."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE]
+
+  - id: RANSOMWARE-EXTORTION-023
+    label: Third-party and insurer coordination during extortion recovery
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [half_day, full_day]
+      audiences: [executive, legal, procurement, risk]
+      csf_functions: [govern, respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [third_party_coordination, insurer_alignment, contractual_obligations]
+    inject:
+      delivery_method: stakeholder_call_summary
+      audience: leadership
+      participant_prompt: "Key vendors and insurers request updates and action plans before supporting restoration and claims processing. Decide information-sharing boundaries, coordination cadence, and ownership."
+      expected_discussion:
+        - Determining what incident details can be shared and when.
+        - Aligning contractual obligations with operational realities.
+        - Managing conflicting expectations across partners.
+      expected_decisions:
+        - Approve third-party communication framework.
+        - Assign owners for insurer and vendor coordination tracks.
+      evaluation_criteria:
+        - External coordination plan is structured and controlled.
+        - Confidentiality and operational needs are balanced.
+      facilitator_notes: "Keep discussion on governance and dependencies rather than policy minutiae."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_STOPRANSOMWARE_GUIDE]
+
+  - id: RANSOMWARE-EXTORTION-024
+    label: Post-incident resilience commitments and executive closeout
+    tags:
+      categories: [ransomware_extortion]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, risk, communications]
+      csf_functions: [recover, govern, identify]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [lessons_learned, resilience_commitments, corrective_actions]
+    inject:
+      delivery_method: hotwash_prompt
+      audience: all_participants
+      participant_prompt: "Recovery is stabilizing. Confirm executive-level commitments for ransomware/extortion resilience improvements, including identity hardening, segmentation maturity, backup validation cadence, and communication readiness."
+      expected_discussion:
+        - Prioritizing corrective actions by risk-reduction impact.
+        - Assigning ownership and target dates for resilience improvements.
+        - Capturing policy, technical, and governance lessons.
+      expected_decisions:
+        - Approve a prioritized remediation roadmap.
+        - Set accountability model for tracking commitments.
+      evaluation_criteria:
+        - Commitments are specific, measurable, and owned.
+        - Lessons learned map to observed decision gaps.
+      facilitator_notes: "Use as final cross-functional closeout across all profile lengths."
+      evidence_refs: [REF_CISA_STOPRANSOMWARE_GUIDE, REF_NIST_SP_800_61_R3, REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT]

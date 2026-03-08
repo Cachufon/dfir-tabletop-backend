@@ -1,0 +1,26 @@
+# Keep metadata filled when adding real IOC bundles.
+# Use consistent types: ipv4, ipv6, domain, url, email, sha1, sha256, md5, etc.
+
+# IOC Bundle Template
+
+metadata:
+  name: "Example Threat Group or Incident Name"
+  source: "Internal / External Report / Vendor"
+  first_seen: "2025-01-01"
+  last_seen: "2025-01-15"
+  confidence: "medium"
+  tags:
+    - example
+    - threat-group
+    - ransomware
+
+indicators:
+  - type: "ipv4"
+    value: "1.2.3.4"
+    description: "Example C2 server"
+  - type: "domain"
+    value: "example.bad"
+    description: "Malicious domain"
+  - type: "sha256"
+    value: "CHANGE-ME-HASH"
+    description: "Malicious file hash"

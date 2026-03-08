@@ -1,0 +1,2 @@
+case_id,data_source,collection_path,required_fields_present,coverage_start_utc,coverage_end_utc,gaps_noted,validation_status,owner
+CASE-0001,Identity Provider Sign-In Logs,Export,Yes,2026-01-15T00:00:00Z,2026-01-16T00:00:00Z,None,Validated,analyst@example.com

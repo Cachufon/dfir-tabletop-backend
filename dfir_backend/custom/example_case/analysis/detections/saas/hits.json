@@ -1,0 +1,20 @@
+[
+  {
+    "example_data": true,
+    "rule": "Mailbox Forwarding Created",
+    "user": "alice@example.com",
+    "timestamp": "2024-05-01T10:16:10Z",
+    "src_ip": "198.51.100.42",
+    "severity": "high",
+    "context": "New inbox rule redirecting mail to exfil@example.net"
+  },
+  {
+    "example_data": true,
+    "rule": "Mailbox Configuration Change",
+    "user": "alice@example.com",
+    "timestamp": "2024-05-01T10:16:00Z",
+    "src_ip": "198.51.100.42",
+    "severity": "medium",
+    "context": "Forwarding SMTP address set to external domain"
+  }
+]

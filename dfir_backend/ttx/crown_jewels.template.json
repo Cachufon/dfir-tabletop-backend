@@ -1,0 +1,13 @@
+{
+  "crown_jewels": [
+    {
+      "asset_name": "",
+      "business_function": "",
+      "owner": "",
+      "criticality": "",
+      "rto_hours": null,
+      "rpo_hours": null,
+      "notes": ""
+    }
+  ]
+}

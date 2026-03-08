@@ -1,0 +1,20 @@
+[
+  {
+    "example_data": true,
+    "rule": "MFA Fatigue Spike",
+    "user": "alice@example.com",
+    "timestamp": "2024-05-01T10:14:55Z",
+    "src_ip": "192.0.2.46",
+    "severity": "medium",
+    "context": "Multiple push prompts within 15 minutes"
+  },
+  {
+    "example_data": true,
+    "rule": "Foreign Login After MFA",
+    "user": "alice@example.com",
+    "timestamp": "2024-05-01T10:15:10Z",
+    "src_ip": "198.51.100.42",
+    "severity": "high",
+    "context": "Session established from documentation-range IP shortly after MFA approval"
+  }
+]

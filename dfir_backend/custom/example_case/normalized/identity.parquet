@@ -1,0 +1,3 @@
+EXAMPLE PLACEHOLDER FILE
+This placeholder represents normalized identity events mapped to normalized_data_contract.md.
+Expected fields include: timestamp, user, src_ip, event_type, mfa_result, session_id.

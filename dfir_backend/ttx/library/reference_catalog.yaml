@@ -1,0 +1,201 @@
+version: 1
+references:
+  - id: REF_NIST_CSF_2_0_CSWP29
+    title: NIST Cybersecurity Framework (CSF) 2.0
+    url: https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf
+    publisher: NIST
+    why_it_matters: >-
+      Provides the foundational CSF 2.0 functions, categories, and outcomes used to
+      structure and assess cyber risk and response capabilities.
+
+  - id: REF_NIST_CSF_2_0_OVERVIEW_SP1299
+    title: NIST SP 1299 - Cybersecurity Framework 2.0 Overview
+    url: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1299.pdf
+    publisher: NIST
+    why_it_matters: >-
+      Summarizes CSF 2.0 intent and implementation approach for leadership and program
+      teams aligning governance with operational practices.
+
+  - id: REF_NIST_SP_800_61_R3
+    title: NIST SP 800-61r3 Incident Response Recommendations and Considerations for Cybersecurity Risk Management
+    url: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf
+    publisher: NIST
+    why_it_matters: >-
+      Defines current incident response guidance and lifecycle practices that inform
+      decision points, escalation, and coordination during tabletop exercises.
+
+  - id: REF_CISA_CTEP_PACKAGES
+    title: CISA Tabletop Exercise Packages (CTEP)
+    url: https://www.cisa.gov/resources-tools/services/cisa-tabletop-exercise-packages
+    publisher: CISA
+    why_it_matters: >-
+      Provides public-sector-aligned exercise package examples and facilitation framing
+      that improve realism and consistency in exercise design.
+
+  - id: REF_CISA_CTEP_FACT_SHEET
+    title: CISA Tabletop Exercise Package Program Fact Sheet
+    url: https://www.cisa.gov/sites/default/files/2023-02/ctep_fact_sheet_v._11_16_2021_final.pdf
+    publisher: CISA
+    why_it_matters: >-
+      Offers concise program context and expected outcomes for CTEP-style exercises,
+      useful for stakeholder alignment and planning assumptions.
+
+  - id: REF_CISA_STOPRANSOMWARE_GUIDE
+    title: CISA StopRansomware Guide
+    url: https://www.cisa.gov/stopransomware/ransomware-guide
+    publisher: CISA
+    why_it_matters: >-
+      Captures practical ransomware prevention, response, and recovery considerations
+      that map directly to ransomware/extortion scenario inject content.
+
+  - id: REF_FBI_BEC
+    title: FBI Business Email Compromise
+    url: https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise
+    publisher: FBI
+    why_it_matters: >-
+      Describes current BEC fraud patterns and risk indicators to ground financial fraud
+      scenario realism and executive decision tradeoffs.
+
+  - id: REF_IC3_BEC
+    title: IC3 Business Email Compromise Information
+    url: https://www.ic3.gov/CrimeInfo/BEC
+    publisher: IC3
+    why_it_matters: >-
+      Provides complaint trends and BEC threat reporting context to support risk
+      communication and incident reporting decisions in exercises.
+
+  - id: REF_ATTACK_MATRIX_ENTERPRISE
+    title: MITRE ATT&CK Enterprise Matrix
+    url: https://attack.mitre.org/matrices/enterprise/
+    publisher: MITRE
+    why_it_matters: >-
+      Supplies enterprise ATT&CK tactic/technique mapping used to label injects with
+      attacker behavior references and improve technical traceability.
+
+  - id: REF_ATTACK_T1566_PHISHING
+    title: MITRE ATT&CK T1566 Phishing
+    url: https://attack.mitre.org/techniques/T1566/
+    publisher: MITRE
+    why_it_matters: >-
+      Represents a common initial access vector relevant to identity compromise and BEC
+      scenarios where social engineering initiates the incident.
+
+  - id: REF_ATTACK_T1078_VALID_ACCOUNTS
+    title: MITRE ATT&CK T1078 Valid Accounts
+    url: https://attack.mitre.org/techniques/T1078/
+    publisher: MITRE
+    why_it_matters: >-
+      Covers adversary use of legitimate credentials, central to identity abuse and
+      lateral operational impacts modeled in SaaS and cloud scenarios.
+
+  - id: REF_ATTACK_T1110_BRUTE_FORCE
+    title: MITRE ATT&CK T1110 Brute Force
+    url: https://attack.mitre.org/techniques/T1110/
+    publisher: MITRE
+    why_it_matters: >-
+      Captures password-guessing activity that often precedes account compromise and
+      drives detection and response decision pressure.
+
+  - id: REF_ATTACK_T1486_ENCRYPTED_FOR_IMPACT
+    title: MITRE ATT&CK T1486 Data Encrypted for Impact
+    url: https://attack.mitre.org/techniques/T1486/
+    publisher: MITRE
+    why_it_matters: >-
+      Anchors ransomware/extortion scenario progression when critical systems or data are
+      encrypted to coerce payment or disrupt operations.
+
+  - id: REF_OWASP_TOP10_PROJECT_PAGE
+    title: OWASP Top 10 Project
+    url: https://owasp.org/www-project-top-ten/
+    publisher: OWASP
+    why_it_matters: >-
+      Establishes authoritative web application risk categories used to scope injects,
+      control failures, and decision points in web/app breach exercises.
+
+  - id: REF_OWASP_TOP10_2025
+    title: OWASP Top 10 2025
+    url: https://owasp.org/Top10/2025/
+    publisher: OWASP
+    why_it_matters: >-
+      Provides the current OWASP risk prioritization baseline for selecting likely exploit
+      paths and realistic application security control gaps.
+
+  - id: REF_OWASP_API_TOP10_2023_HOME
+    title: OWASP API Security Top 10 2023
+    url: https://owasp.org/API-Security/editions/2023/en/0x00-header/
+    publisher: OWASP
+    why_it_matters: >-
+      Defines common API-specific weaknesses that shape threat progression and response
+      actions in API breach tabletop scenarios.
+
+  - id: REF_OWASP_API1_2023_BOLA
+    title: OWASP API1:2023 Broken Object Level Authorization
+    url: https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+    publisher: OWASP
+    why_it_matters: >-
+      Highlights a dominant API authorization failure pattern that supports realistic inject
+      design for unauthorized data access and exposure decisions.
+
+  - id: REF_OWASP_ASVS
+    title: OWASP Application Security Verification Standard (ASVS)
+    url: https://owasp.org/www-project-application-security-verification-standard/
+    publisher: OWASP
+    why_it_matters: >-
+      Supplies verification requirements to evaluate preventative and detective control
+      maturity when debriefing exercise outcomes.
+
+  - id: REF_NIST_SP_800_218_SSDF
+    title: NIST SP 800-218 Secure Software Development Framework (SSDF)
+    url: https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf
+    publisher: NIST
+    why_it_matters: >-
+      Provides software development security practices used to frame remediation actions
+      and long-term risk reduction decisions after application incidents.
+
+  - id: REF_CISA_KEV_CATALOG
+    title: CISA Known Exploited Vulnerabilities (KEV) Catalog
+    url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+    publisher: CISA
+    why_it_matters: >-
+      Prioritizes vulnerabilities under active exploitation to drive urgency, patching
+      decisions, and executive risk communication during scenario escalation.
+
+  - id: REF_CISA_SECURE_BY_DESIGN
+    title: CISA Secure by Design
+    url: https://www.cisa.gov/securebydesign
+    publisher: CISA
+    why_it_matters: >-
+      Frames engineering accountability and design-time security principles that inform
+      strategic improvement actions captured from exercise findings.
+
+  - id: REF_ATTACK_T1190_EXPLOIT_PUBLIC_FACING_APP
+    title: MITRE ATT&CK T1190 Exploit Public-Facing Application
+    url: https://attack.mitre.org/techniques/T1190/
+    publisher: MITRE
+    why_it_matters: >-
+      Maps initial access through internet-facing application exploitation, a core attack
+      path for web and API breach scenario timelines.
+
+  - id: REF_ATTACK_T1528_STEAL_APP_ACCESS_TOKEN
+    title: MITRE ATT&CK T1528 Steal Application Access Token
+    url: https://attack.mitre.org/techniques/T1528/
+    publisher: MITRE
+    why_it_matters: >-
+      Supports inject design for token theft and session abuse that can bypass normal
+      authentication controls in cloud-connected applications.
+
+  - id: REF_ATTACK_T1505_003_WEB_SHELL
+    title: MITRE ATT&CK T1505.003 Web Shell
+    url: https://attack.mitre.org/techniques/T1505/003/
+    publisher: MITRE
+    why_it_matters: >-
+      Describes adversary persistence via server-side web shells, informing containment
+      and eradication decision points during active compromise.
+
+  - id: REF_ATTACK_T1552_001_CREDENTIALS_IN_FILES
+    title: MITRE ATT&CK T1552.001 Credentials in Files
+    url: https://attack.mitre.org/techniques/T1552/001/
+    publisher: MITRE
+    why_it_matters: >-
+      Covers credential exposure in files and repositories, useful for modeling follow-on
+      privilege abuse and scope expansion in web/API incidents.

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gruve.ai/schemas/ttx_scenario.schema.json",
+  "title": "Gruve DFIR TTX Scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "scenario", "injects"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "category", "duration_minutes", "audiences", "objectives", "assumptions"],
+      "properties": {
+        "id": { "type": "string", "minLength": 3 },
+        "title": { "type": "string", "minLength": 3 },
+        "category": { "type": "string", "minLength": 3 },
+        "duration_minutes": { "type": "integer", "minimum": 15 },
+        "audiences": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 2 }
+        },
+        "summary": { "type": "string" },
+        "threat_context": { "type": "string" },
+        "business_context": { "type": "string" },
+        "objectives": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "assumptions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "pre_read": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "out_of_scope": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "facilitator_notes": { "type": "string" }
+      }
+    },
+    "injects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "t_plus_min", "delivery_method", "audience", "participant_prompt"],
+        "properties": {
+          "id": { "type": "string", "minLength": 2 },
+          "t_plus_min": { "type": "integer", "minimum": 0 },
+          "delivery_method": { "type": "string", "minLength": 2 },
+          "audience": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 2 }
+          },
+          "participant_prompt": { "type": "string", "minLength": 3 },
+          "expected_discussion": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 3 }
+          },
+          "expected_decisions": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 3 }
+          },
+          "evaluation_criteria": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 3 }
+          },
+          "branching_guidance": { "type": "string" },
+          "facilitator_notes": { "type": "string" },
+          "evidence_refs": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 3 }
+          }
+        }
+      }
+    }
+  }
+}

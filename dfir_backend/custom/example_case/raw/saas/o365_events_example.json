@@ -1,0 +1,30 @@
+[
+  {
+    "example_data": true,
+    "recordType": "MailboxAudit",
+    "userId": "alice@example.com",
+    "operation": "Set-Mailbox",
+    "clientIP": "198.51.100.42",
+    "parameters": {"ForwardingSmtpAddress": "exfil@example.net"},
+    "creationTime": "2024-05-01T10:16:00Z"
+  },
+  {
+    "example_data": true,
+    "recordType": "MailboxRule",
+    "userId": "alice@example.com",
+    "operation": "New-InboxRule",
+    "clientIP": "198.51.100.42",
+    "ruleName": "EXAMPLE auto-forward all",
+    "parameters": {"RedirectTo": "exfil@example.net", "StopProcessingRules": true},
+    "creationTime": "2024-05-01T10:16:10Z"
+  },
+  {
+    "example_data": true,
+    "recordType": "UserLogin",
+    "userId": "alice@example.com",
+    "operation": "Login",
+    "clientIP": "198.51.100.42",
+    "status": "Success",
+    "creationTime": "2024-05-01T10:15:20Z"
+  }
+]

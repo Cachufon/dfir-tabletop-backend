@@ -1,0 +1,208 @@
+version: 1
+category: ransomware_extortion
+profiles:
+  EXEC_90:
+    duration_minutes: 90
+    description: Executive ransomware/extortion scenario centered on rapid containment, outage governance, and recovery confidence decisions.
+    modules:
+      - id: EXEC90-M0
+        name: Opening and early triage alignment
+        timebox_min: 15
+        references: [CORE-COMMON-001, CORE-COMMON-002, RANSOMWARE-EXTORTION-001, RANSOMWARE-EXTORTION-002]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 6
+            inject_id: RANSOMWARE-EXTORTION-001
+      - id: EXEC90-M1
+        name: Module 1 - Initial access and spread suspicion decisions
+        timebox_min: 20
+        references: [RANSOMWARE-EXTORTION-003, RANSOMWARE-EXTORTION-004, RANSOMWARE-EXTORTION-005]
+        inject_slots:
+          - t_plus_min: 16
+            inject_id: RANSOMWARE-EXTORTION-003
+          - t_plus_min: 24
+            inject_id: RANSOMWARE-EXTORTION-005
+      - id: EXEC90-M2
+        name: Module 2 - Containment and outage decision tradeoffs
+        timebox_min: 25
+        references: [RANSOMWARE-EXTORTION-006, RANSOMWARE-EXTORTION-007, RANSOMWARE-EXTORTION-009]
+        inject_slots:
+          - t_plus_min: 38
+            inject_id: RANSOMWARE-EXTORTION-006
+          - t_plus_min: 46
+            inject_id: RANSOMWARE-EXTORTION-007
+          - t_plus_min: 54
+            inject_id: RANSOMWARE-EXTORTION-009
+      - id: EXEC90-M3
+        name: Module 3 - Extortion and constrained governance handling
+        timebox_min: 15
+        references: [RANSOMWARE-EXTORTION-011, RANSOMWARE-EXTORTION-013, RANSOMWARE-EXTORTION-015]
+        inject_slots:
+          - t_plus_min: 64
+            inject_id: RANSOMWARE-EXTORTION-011
+          - t_plus_min: 70
+            inject_id: RANSOMWARE-EXTORTION-013
+      - id: EXEC90-M4
+        name: Module 4 - Recovery integrity gates and closeout
+        timebox_min: 15
+        references: [RANSOMWARE-EXTORTION-017, RANSOMWARE-EXTORTION-019, RANSOMWARE-EXTORTION-024]
+        inject_slots:
+          - t_plus_min: 78
+            inject_id: RANSOMWARE-EXTORTION-017
+          - t_plus_min: 84
+            inject_id: RANSOMWARE-EXTORTION-024
+    completeness_rules:
+      must_include_tags: [ransomware_extortion, respond, recover]
+      min_injects: 9
+      max_injects: 12
+
+  HALF_DAY:
+    duration_minutes: 240
+    description: Half-day ransomware/extortion exercise adding operational containment depth, extortion governance, and restoration sequencing.
+    modules:
+      - id: HALF-M0
+        name: Opening and declaration posture
+        timebox_min: 20
+        references: [CORE-COMMON-001, CORE-COMMON-002, RANSOMWARE-EXTORTION-001, RANSOMWARE-EXTORTION-004]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 8
+            inject_id: RANSOMWARE-EXTORTION-001
+      - id: HALF-M1
+        name: Module 1 - Initial access and lateral spread triage
+        timebox_min: 45
+        references: [RANSOMWARE-EXTORTION-002, RANSOMWARE-EXTORTION-003, RANSOMWARE-EXTORTION-005, RANSOMWARE-EXTORTION-006]
+        inject_slots:
+          - t_plus_min: 24
+            inject_id: RANSOMWARE-EXTORTION-002
+          - t_plus_min: 36
+            inject_id: RANSOMWARE-EXTORTION-003
+          - t_plus_min: 48
+            inject_id: RANSOMWARE-EXTORTION-005
+      - id: HALF-M2
+        name: Module 2 - Containment options and operational outage
+        timebox_min: 55
+        references: [RANSOMWARE-EXTORTION-007, RANSOMWARE-EXTORTION-008, RANSOMWARE-EXTORTION-009, RANSOMWARE-EXTORTION-010]
+        inject_slots:
+          - t_plus_min: 70
+            inject_id: RANSOMWARE-EXTORTION-007
+          - t_plus_min: 84
+            inject_id: RANSOMWARE-EXTORTION-008
+          - t_plus_min: 98
+            inject_id: RANSOMWARE-EXTORTION-010
+      - id: HALF-M3
+        name: Module 3 - Extortion claim, communications, and legal pathways
+        timebox_min: 55
+        references: [RANSOMWARE-EXTORTION-011, RANSOMWARE-EXTORTION-012, RANSOMWARE-EXTORTION-013, RANSOMWARE-EXTORTION-014, RANSOMWARE-EXTORTION-016]
+        inject_slots:
+          - t_plus_min: 122
+            inject_id: RANSOMWARE-EXTORTION-011
+          - t_plus_min: 136
+            inject_id: RANSOMWARE-EXTORTION-012
+          - t_plus_min: 150
+            inject_id: RANSOMWARE-EXTORTION-014
+      - id: HALF-M4
+        name: Module 4 - Recovery and integrity decision module
+        timebox_min: 45
+        references: [RANSOMWARE-EXTORTION-017, RANSOMWARE-EXTORTION-018, RANSOMWARE-EXTORTION-019, RANSOMWARE-EXTORTION-021]
+        inject_slots:
+          - t_plus_min: 176
+            inject_id: RANSOMWARE-EXTORTION-017
+          - t_plus_min: 188
+            inject_id: RANSOMWARE-EXTORTION-018
+          - t_plus_min: 200
+            inject_id: RANSOMWARE-EXTORTION-021
+      - id: HALF-M5
+        name: Hotwash and executive commitments
+        timebox_min: 20
+        references: [RANSOMWARE-EXTORTION-022, RANSOMWARE-EXTORTION-023, RANSOMWARE-EXTORTION-024]
+        inject_slots:
+          - t_plus_min: 220
+            inject_id: RANSOMWARE-EXTORTION-024
+    completeness_rules:
+      must_include_tags: [ransomware_extortion, identify, respond, recover]
+      min_injects: 16
+      max_injects: 22
+
+  FULL_DAY:
+    duration_minutes: 480
+    description: Full-day ransomware/extortion lifecycle scenario spanning access suspicion through integrity-validated restoration and resilience closure.
+    modules:
+      - id: FULL-M0
+        name: Opening and incident governance setup
+        timebox_min: 30
+        references: [CORE-COMMON-001, CORE-COMMON-002, RANSOMWARE-EXTORTION-001, RANSOMWARE-EXTORTION-004]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 10
+            inject_id: RANSOMWARE-EXTORTION-001
+      - id: FULL-M1
+        name: Module 1 - Initial access and spread development
+        timebox_min: 85
+        references: [RANSOMWARE-EXTORTION-002, RANSOMWARE-EXTORTION-003, RANSOMWARE-EXTORTION-004, RANSOMWARE-EXTORTION-005, RANSOMWARE-EXTORTION-006]
+        inject_slots:
+          - t_plus_min: 34
+            inject_id: RANSOMWARE-EXTORTION-002
+          - t_plus_min: 50
+            inject_id: RANSOMWARE-EXTORTION-003
+          - t_plus_min: 66
+            inject_id: RANSOMWARE-EXTORTION-005
+          - t_plus_min: 82
+            inject_id: RANSOMWARE-EXTORTION-006
+      - id: FULL-M2
+        name: Module 2 - Containment tradeoffs and outage operations
+        timebox_min: 95
+        references: [RANSOMWARE-EXTORTION-007, RANSOMWARE-EXTORTION-008, RANSOMWARE-EXTORTION-009, RANSOMWARE-EXTORTION-010]
+        inject_slots:
+          - t_plus_min: 122
+            inject_id: RANSOMWARE-EXTORTION-007
+          - t_plus_min: 138
+            inject_id: RANSOMWARE-EXTORTION-008
+          - t_plus_min: 154
+            inject_id: RANSOMWARE-EXTORTION-009
+          - t_plus_min: 170
+            inject_id: RANSOMWARE-EXTORTION-010
+      - id: FULL-M3
+        name: Module 3 - Extortion pressure, redlines, and legal/comms coordination
+        timebox_min: 95
+        references: [RANSOMWARE-EXTORTION-011, RANSOMWARE-EXTORTION-012, RANSOMWARE-EXTORTION-013, RANSOMWARE-EXTORTION-014, RANSOMWARE-EXTORTION-015, RANSOMWARE-EXTORTION-016]
+        inject_slots:
+          - t_plus_min: 220
+            inject_id: RANSOMWARE-EXTORTION-011
+          - t_plus_min: 236
+            inject_id: RANSOMWARE-EXTORTION-012
+          - t_plus_min: 252
+            inject_id: RANSOMWARE-EXTORTION-013
+          - t_plus_min: 268
+            inject_id: RANSOMWARE-EXTORTION-016
+      - id: FULL-M4
+        name: Module 4 - Recovery and integrity validation module
+        timebox_min: 110
+        references: [RANSOMWARE-EXTORTION-017, RANSOMWARE-EXTORTION-018, RANSOMWARE-EXTORTION-019, RANSOMWARE-EXTORTION-020, RANSOMWARE-EXTORTION-021]
+        inject_slots:
+          - t_plus_min: 322
+            inject_id: RANSOMWARE-EXTORTION-017
+          - t_plus_min: 338
+            inject_id: RANSOMWARE-EXTORTION-018
+          - t_plus_min: 354
+            inject_id: RANSOMWARE-EXTORTION-019
+          - t_plus_min: 370
+            inject_id: RANSOMWARE-EXTORTION-021
+      - id: FULL-M5
+        name: Module 5 - Notification, third-party dependencies, and closeout
+        timebox_min: 65
+        references: [RANSOMWARE-EXTORTION-022, RANSOMWARE-EXTORTION-023, RANSOMWARE-EXTORTION-024]
+        inject_slots:
+          - t_plus_min: 434
+            inject_id: RANSOMWARE-EXTORTION-022
+          - t_plus_min: 448
+            inject_id: RANSOMWARE-EXTORTION-023
+          - t_plus_min: 462
+            inject_id: RANSOMWARE-EXTORTION-024
+    completeness_rules:
+      must_include_tags: [ransomware_extortion, identify, respond, recover, govern]
+      min_injects: 24
+      max_injects: 34

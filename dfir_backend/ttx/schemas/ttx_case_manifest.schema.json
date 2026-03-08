@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gruve DFIR TTX Case Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "created_at_utc",
+    "last_updated_at_utc",
+    "state",
+    "bundle_type",
+    "duration_minutes",
+    "timezone",
+    "audience_roles",
+    "industry",
+    "region",
+    "paths",
+    "inputs",
+    "scenario",
+    "package",
+    "handouts",
+    "facilitation",
+    "outputs",
+    "history"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0", "1.1"]
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_updated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "S1_CASE_INITIALIZED",
+        "S2_INPUTS_COLLECTED",
+        "S3_SCENARIO_DRAFTED",
+        "S4_SCENARIO_VALIDATED",
+        "S4_SCENARIO_APPROVED",
+        "S5_PACKAGE_BUILT",
+        "S6_HANDOUTS_EXPORTED",
+        "S7_FACILITATION_IN_PROGRESS",
+        "S8_LOGS_EXPORTED",
+        "S9_AAR_DRAFTED",
+        "S10_CLOSED"
+      ]
+    },
+    "bundle_type": {
+      "type": "string",
+      "enum": ["EXECUTIVE", "HALF_DAY", "FULL_DAY", "CUSTOM"]
+    },
+    "duration_minutes": {
+      "type": "integer",
+      "minimum": 30
+    },
+    "timezone": {
+      "type": "string",
+      "minLength": 1
+    },
+    "handling_label": {
+      "type": "string",
+      "enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "CLIENT_CONFIDENTIAL"],
+      "description": "Optional. Non-government handling label for commercial work."
+    },
+    "tlp": {
+      "type": "string",
+      "enum": ["TLP:CLEAR", "TLP:GREEN", "TLP:AMBER", "TLP:AMBER+STRICT", "TLP:RED"],
+      "description": "Deprecated compatibility field. Do not use for new commercial cases."
+    },
+    "audience_roles": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "industry": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["admin_dir", "inputs_dir", "delivery_dir", "outputs_dir", "internal_dir"],
+      "properties": {
+        "admin_dir": { "type": "string" },
+        "inputs_dir": { "type": "string" },
+        "delivery_dir": { "type": "string" },
+        "outputs_dir": { "type": "string" },
+        "internal_dir": { "type": "string" }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputs_complete", "intake_notes_path", "ir_plan_path", "threat_brief_path", "scenario_generation_dir"],
+      "properties": {
+        "inputs_complete": { "type": "boolean" },
+        "intake_notes_path": { "type": "string" },
+        "ir_plan_path": { "type": "string" },
+        "threat_brief_path": { "type": "string" },
+        "scenario_generation_dir": { "type": "string" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_yaml_path",
+        "category",
+        "title_hint",
+        "draft_method",
+        "validated",
+        "validation_last_run_utc",
+        "validation_errors",
+        "approved",
+        "approved_by",
+        "approved_at_utc"
+      ],
+      "properties": {
+        "scenario_yaml_path": { "type": "string" },
+        "category": { "type": "string" },
+        "title_hint": { "type": "string" },
+        "draft_method": {
+          "type": "string",
+          "enum": ["UNSET", "BASE_SCENARIO", "AI_ASSISTED", "MANUAL", "OPTION_C_SKELETON"]
+        },
+        "validated": { "type": "boolean" },
+        "validation_last_run_utc": { "type": "string" },
+        "validation_errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "approved": { "type": "boolean" },
+        "approved_by": { "type": "string" },
+        "approved_at_utc": { "type": "string" }
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package_dir", "built", "built_at_utc"],
+      "properties": {
+        "package_dir": { "type": "string" },
+        "built": { "type": "boolean" },
+        "built_at_utc": { "type": "string" }
+      }
+    },
+    "handouts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handouts_dir", "zip_path", "exported", "exported_at_utc"],
+      "properties": {
+        "handouts_dir": { "type": "string" },
+        "zip_path": { "type": "string" },
+        "exported": { "type": "boolean" },
+        "exported_at_utc": { "type": "string" }
+      }
+    },
+    "facilitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "started_at_utc", "completed_at_utc"],
+      "properties": {
+        "status": { "type": "string", "enum": ["NOT_STARTED", "IN_PROGRESS", "COMPLETE"] },
+        "started_at_utc": { "type": "string" },
+        "completed_at_utc": { "type": "string" }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logs_dir",
+        "scribe_runtime_json_path",
+        "aar_draft_path",
+        "aar_ai_bundle_path",
+        "executive_readout_path"
+      ],
+      "properties": {
+        "logs_dir": { "type": "string" },
+        "scribe_runtime_json_path": { "type": "string" },
+        "aar_draft_path": { "type": "string" },
+        "aar_ai_bundle_path": { "type": "string" },
+        "executive_readout_path": { "type": "string" }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at_utc", "event", "from_state", "to_state", "note"],
+        "properties": {
+          "at_utc": { "type": "string", "format": "date-time" },
+          "event": { "type": "string" },
+          "from_state": { "type": ["string", "null"] },
+          "to_state": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

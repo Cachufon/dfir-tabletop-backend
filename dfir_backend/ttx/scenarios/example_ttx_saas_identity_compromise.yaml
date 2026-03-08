@@ -1,0 +1,145 @@
+version: 1
+
+scenario:
+  id: ttx-saas-identity-001
+  title: "SaaS Identity Compromise with Business Email Abuse"
+  category: "SaaS / Identity"
+  duration_minutes: 90
+  audiences:
+    - "Executive"
+    - "IT"
+    - "Security"
+    - "Legal/PR"
+  summary: >
+    A discussion-based scenario in which an identity compromise leads to suspicious mailbox activity
+    and client-facing impact. The exercise tests escalation, containment decision rights, communications,
+    and notification triggers.
+  threat_context: >
+    Adversary obtains valid credentials (phishing, token theft, or password spray), establishes access
+    to cloud identity and email, and abuses the account for internal reconnaissance and external email abuse.
+  business_context: >
+    The organization relies heavily on SaaS email and document collaboration. Client trust and brand impact
+    are high. Decision-making requires coordination across Security, IT, Executive leadership, and Legal/PR.
+  objectives:
+    - "Validate initial triage and containment decision rights for suspected identity compromise."
+    - "Exercise escalation paths and cross-functional communication under time pressure."
+    - "Test criteria for external communications and client notification."
+  assumptions:
+    - "Identity provider and email audit logging are available."
+    - "Security and IT can coordinate on short notice during business hours."
+    - "Legal/PR can be reached for consultation during incident escalation."
+  constraints:
+    - "This is a discussion exercise only; no systems are touched."
+    - "Participants should state assumptions when information is missing."
+  success_criteria:
+    - "Participants identify an owner for incident command and agree on immediate priorities."
+    - "Participants articulate a containment strategy and tradeoffs (business impact vs risk)."
+    - "Participants identify notification decision points and who approves them."
+  pre_read:
+    - "Know the internal escalation contacts for Security, IT, Exec, and Legal/PR."
+    - "Know whether the organization has a formal incident severity classification process."
+  out_of_scope:
+    - "Deep technical forensics or log analysis (assume data can be requested as needed)."
+  facilitator_notes: >
+    Keep the scenario focused on decisions and communication. If the group gets stuck in technical details,
+    pause and ask: 'What decision do you need to make right now, and what information would you request?'
+
+injects:
+  - id: i01
+    t_plus_min: 0
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      An identity alert indicates multiple failed logins for a senior user followed by a successful login
+      from an unusual location. The user reports a recent "MFA push" they did not recognize.
+    expected_discussion:
+      - "Who owns incident command right now?"
+      - "What is the threshold for immediate containment?"
+      - "What information should be requested first (audit logs, sign-in details, session tokens)?"
+    expected_decisions:
+      - "Decide whether to contain immediately (disable account/reset sessions) or observe briefly."
+      - "Decide incident severity classification and who must be notified internally."
+    evaluation_criteria:
+      - "Clear assignment of incident lead and scribe."
+      - "Timely escalation based on defined triggers."
+    facilitator_notes: >
+      If asked for more details: state that the successful login created new mailbox rules and accessed
+      a shared drive folder within 10 minutes.
+    evidence_refs:
+      - "SIM-IDP-ALERT-001"
+
+  - id: i02
+    t_plus_min: 12
+    delivery_method: "Chat/Email"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Security"
+    participant_prompt: >
+      A key client contacts the organization: they received a suspicious email from the compromised user's address
+      asking to review an updated invoice attachment.
+    expected_discussion:
+      - "Who communicates with the client and what do we say now vs later?"
+      - "Do we treat this as a suspected breach requiring broader escalation?"
+    expected_decisions:
+      - "Decide whether to activate crisis communications."
+      - "Decide whether to notify other potentially impacted clients preemptively."
+    evaluation_criteria:
+      - "Consistent messaging and single source of truth."
+      - "Appropriate involvement of Legal/PR before external statements."
+    facilitator_notes: >
+      If participants ask whether the email contained malware: answer 'unknown' and prompt what analysis
+      or containment steps they would take.
+
+  - id: i03
+    t_plus_min: 25
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      IT observes new inbox forwarding rules and multiple OAuth application consent grants tied to the user.
+      There are also sign-ins to a collaboration tool from the same unusual location.
+    expected_discussion:
+      - "Do we revoke tokens/sessions broadly?"
+      - "Do we suspect other accounts are compromised?"
+      - "What logs or tooling do we rely on to scope impact?"
+    expected_decisions:
+      - "Decide containment actions (disable account, revoke sessions, block OAuth apps, reset MFA)."
+      - "Decide whether to initiate broader hunt across identity and email."
+    evaluation_criteria:
+      - "Containment choices reflect risk tradeoffs and are communicated to stakeholders."
+      - "Clear plan to scope impact beyond the initial user."
+    facilitator_notes: >
+      If participants go too deep technically, ask them to list the top 5 queries or data pulls they want
+      from identity/email logs and what each would confirm.
+
+  - id: i04
+    t_plus_min: 45
+    delivery_method: "Chat/Email"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      Additional internal reports arrive: two employees received similar invoice emails. One clicked and entered
+      credentials into a look-alike login page. A third-party vendor asks whether your organization has been breached.
+    expected_discussion:
+      - "Do we expand scope to a multi-user incident?"
+      - "What is the decision framework for notifications (clients, vendor, regulators)?"
+      - "What is the containment posture for the email domain and collaboration links?"
+    expected_decisions:
+      - "Decide whether to declare a major incident and activate full IR plan."
+      - "Decide initial notification posture and approval workflow."
+    evaluation_criteria:
+      - "Decision rights and approval workflow are explicit."
+      - "Actions are time-boxed and owners assigned."
+    facilitator_notes: >
+      Use this inject to force clarity on decision rights and communications. Push for a concrete decision:
+      'Within the next 30 minutes, what are you doing and who is responsible?'
+    evidence_refs:
+      - "SIM-CLIENT-REPORT-002"
+      - "SIM-PHISH-PORTAL-003"

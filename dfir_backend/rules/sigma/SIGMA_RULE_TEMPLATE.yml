@@ -1,0 +1,25 @@
+# Update title, id, description, logsource, detection logic, and tags before publishing.
+# Keep this rule compatible with Sigma tooling and community schemas.
+
+title: Example Sigma Rule Template
+id: CHANGE-ME-GRVE-XXXX
+status: experimental
+description: >
+  Short description of what this rule detects.
+author: Gruve DFIR
+logsource:
+  product: example_product
+  service: example_service
+detection:
+  selection:
+    field1: "value"
+  condition: selection
+fields:
+  - field1
+  - field2
+falsepositives:
+  - Unknown
+level: medium
+tags:
+  - attack.T0000
+  - gruve.template

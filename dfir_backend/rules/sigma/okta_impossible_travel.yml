@@ -1,0 +1,35 @@
+title: Okta Impossible Travel (Placeholder)
+id: GRV-SIG-IDENTITY-0001
+status: experimental
+description: >
+  Detects potential "impossible travel" sign-in activity for Okta users by
+  flagging logins from distant geolocations in a short time window.
+author: Gruve DFIR
+date: 2025/01/01
+logsource:
+  product: okta
+  service: authentication
+detection:
+  selection_success:
+    outcome: SUCCESS
+  # NOTE: This is a placeholder. Actual impossible-travel logic will be implemented
+  # in code that aggregates login events and compares geo/ASN between consecutive logins.
+  condition: selection_success
+fields:
+  - actor.id
+  - actor.alternateId
+  - client.ipAddress
+  - client.geographicalContext.country
+  - client.geographicalContext.city
+  - outcome
+  - authenticationContext.credentialProvider
+falsepositives:
+  - Users traveling legitimately
+  - VPN usage
+  - Shared or test accounts
+level: medium
+tags:
+  - attack.T1078
+  - attack.T1071
+  - product.okta
+  - gruve.placeholder

@@ -1,0 +1,26 @@
+[
+  {
+    "example_data": true,
+    "eventType": "user.mfa.challenge",
+    "actor": {"id": "00u1exampleA", "alternateId": "alice@example.com"},
+    "client": {"ipAddress": "192.0.2.45"},
+    "outcome": {"result": "FAILURE", "reason": "user denied push"},
+    "published": "2024-05-01T10:00:05Z"
+  },
+  {
+    "example_data": true,
+    "eventType": "user.mfa.challenge",
+    "actor": {"id": "00u1exampleA", "alternateId": "alice@example.com"},
+    "client": {"ipAddress": "192.0.2.46"},
+    "outcome": {"result": "SUCCESS", "reason": "user approved push"},
+    "published": "2024-05-01T10:14:55Z"
+  },
+  {
+    "example_data": true,
+    "eventType": "user.session.start",
+    "actor": {"id": "00u1exampleA", "alternateId": "alice@example.com"},
+    "client": {"ipAddress": "198.51.100.42"},
+    "authenticationContext": {"credentialProvider": "OKTA_MFA"},
+    "published": "2024-05-01T10:15:10Z"
+  }
+]

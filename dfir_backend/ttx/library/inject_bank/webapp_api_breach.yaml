@@ -1,0 +1,757 @@
+version: 1
+injects:
+  - id: WEBAPI-001
+    label: Opening rules and exercise objectives framing
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Engineering", "Security", "Legal", "PR/Comms", "IT", "Product"]
+      csf_functions: ["Govern", "Identify"]
+      mitre_attack: []
+      complexity: low
+      redline_topics: []
+    inject:
+      delivery_method: Facilitator readout
+      audience: All participants
+      participant_prompt: "Welcome to the {CLIENT_ALIAS} tabletop focused on potential compromise of {CRITICAL_SERVICES}. Confirm this is a no-fault discussion, decisions are not precedent, and priorities align to {PRIMARY_OBJECTIVES}, {CROWN_JEWELS}, and {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - "Shared understanding of scenario purpose, constraints, and decision focus."
+        - "Agreement on balancing transparency, speed, and business continuity."
+        - "Confirmation that assumptions should be challenged and logged."
+      expected_decisions:
+        - "Approve exercise guardrails, participation expectations, and decision logging approach."
+        - "Confirm the top three business outcomes to protect during this scenario."
+      evaluation_criteria:
+        - "Participants can restate exercise rules and non-punitive intent."
+        - "Business priorities and scope are explicitly acknowledged by all core roles."
+      facilitator_notes: "Use this inject to establish psychological safety and decision discipline before technical details appear."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_TOP10_2025"]
+
+  - id: WEBAPI-002
+    label: Incident command authority and escalation thresholds check
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Security", "Engineering", "Legal", "IT"]
+      csf_functions: ["Govern", "Respond"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Leadership status prompt
+      audience: Command team
+      participant_prompt: "An active web/API incident is suspected at {CLIENT_ALIAS}. Clarify who is incident commander, who can approve high-impact actions, and what thresholds trigger executive, legal, and board-level escalation tied to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - "Decision rights for containment, customer messaging, and service-impacting actions."
+        - "Escalation thresholds based on uncertainty, scope, and potential harm."
+        - "Fallback authority if primary approvers are unavailable."
+      expected_decisions:
+        - "Name incident commander and deputies with clear delegated authorities."
+        - "Approve escalation triggers and required notification pathways."
+      evaluation_criteria:
+        - "Roles and approvals are unambiguous across functions."
+        - "Escalation triggers are measurable and practical under time pressure."
+      facilitator_notes: "Push for explicit authority statements, not informal assumptions."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_CISA_SECURE_BY_DESIGN"]
+
+  - id: WEBAPI-003
+    label: API gateway and WAF anomaly triage decision
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Security", "Engineering", "IT", "Product"]
+      csf_functions: ["Detect", "Respond", "Identify"]
+      mitre_attack: ["T1190"]
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: SOC alert summary
+      audience: Security and engineering leads
+      participant_prompt: "Monitoring shows unusual API gateway/WAF behavior, including spikes in 4xx/5xx responses against endpoints supporting {CRITICAL_SERVICES}. Decide immediate triage actions, confidence level, and whether to declare an incident now or continue investigation."
+      expected_discussion:
+        - "Distinguishing malicious probing from customer or integration errors."
+        - "Minimum evidence needed for incident declaration."
+        - "Short-term safeguards that minimize customer disruption."
+      expected_decisions:
+        - "Set incident severity and whether to activate full response process."
+        - "Approve immediate containment controls pending deeper validation."
+      evaluation_criteria:
+        - "Triage logic is risk-based and time-bounded."
+        - "Decision includes explicit assumptions and confidence rating."
+      facilitator_notes: "Emphasize decision quality under incomplete telemetry."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_API_TOP10_2023_HOME", "REF_ATTACK_T1190_EXPLOIT_PUBLIC_FACING_APP"]
+
+  - id: WEBAPI-004
+    label: Customer-reported suspicious access concern
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Security", "Legal", "PR/Comms", "Product"]
+      csf_functions: ["Identify", "Respond", "Govern"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Customer escalation ticket
+      audience: Command team and communications
+      participant_prompt: "A major customer reports seeing data that should not have been visible in their API workflow and requests an immediate statement. Determine triage priority, customer handling approach, and what can be communicated before root cause is confirmed."
+      expected_discussion:
+        - "How customer reports influence incident severity and response cadence."
+        - "Balancing factual accuracy with urgency in external communications."
+        - "Cross-team alignment between support, legal, and security."
+      expected_decisions:
+        - "Approve customer-facing holding statement boundaries."
+        - "Set timeline for next update and ownership for evidence-backed communication."
+      evaluation_criteria:
+        - "Response is timely, consistent, and avoids speculative claims."
+        - "Customer triage path is integrated with incident command decisions."
+      facilitator_notes: "Focus on communication governance, not wording perfection."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_TOP10_PROJECT_PAGE"]
+
+  - id: WEBAPI-005
+    label: Broken access control suspected in web tier
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "Product", "Executive"]
+      csf_functions: ["Identify", "Protect", "Respond"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Security architecture finding
+      audience: Engineering, security, product leadership
+      participant_prompt: "Internal review indicates a possible broken access control weakness exposing operations linked to {CROWN_JEWELS}. Determine how to scope impact quickly and decide whether to suspend affected capabilities pending validation."
+      expected_discussion:
+        - "Risk of continued operation versus abrupt feature interruption."
+        - "Data and function-level exposure hypotheses to test first."
+        - "Ownership split between product risk and security containment."
+      expected_decisions:
+        - "Approve immediate guardrails for high-risk authorization paths."
+        - "Set criteria for pausing or continuing affected user journeys."
+      evaluation_criteria:
+        - "Decisions reflect business impact and exposure severity."
+        - "Containment and product decisions are synchronized."
+      facilitator_notes: "Anchor on executive-level risk choices, not code specifics."
+      evidence_refs: ["REF_OWASP_TOP10_2025", "REF_OWASP_ASVS", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-006
+    label: API1 BOLA object ID manipulation risk
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "Product", "IT"]
+      csf_functions: ["Identify", "Protect", "Respond"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Penetration test escalation
+      audience: API engineering and security
+      participant_prompt: "Testing reveals API object identifiers may be manipulated to retrieve unauthorized records in {CRITICAL_SERVICES}. Decide immediate compensating controls, exposure validation scope, and customer-risk prioritization."
+      expected_discussion:
+        - "How broadly object-level authorization must be revalidated."
+        - "Potential need for endpoint restrictions while fixes are prepared."
+        - "Downstream implications for data trust and customer confidence."
+      expected_decisions:
+        - "Approve emergency controls on high-risk object access patterns."
+        - "Set sequencing for validation of adjacent endpoints and services."
+      evaluation_criteria:
+        - "Response plan addresses systemic authorization risk, not single endpoint only."
+        - "Business and technical owners share common risk language."
+      facilitator_notes: "Encourage teams to avoid narrow-scope assumptions with BOLA-style flaws."
+      evidence_refs: ["REF_OWASP_API1_2023_BOLA", "REF_OWASP_API_TOP10_2023_HOME", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-007
+    label: Hotfix versus rollback versus endpoint shutdown
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Engineering", "Security", "Product", "IT"]
+      csf_functions: ["Respond", "Protect", "Govern"]
+      mitre_attack: []
+      complexity: high
+      redline_topics: ["Availability versus exposure tradeoff"]
+    inject:
+      delivery_method: Incident decision brief
+      audience: Command team
+      participant_prompt: "An active vulnerability path likely affects {CROWN_JEWELS}. Engineering proposes three options: urgent hotfix, rollback to prior release, or temporary endpoint disablement. Decide which option to pursue and what risk is accepted across availability, integrity, and exposure."
+      expected_discussion:
+        - "Tradeoffs among recovery speed, regression risk, and exploitation window."
+        - "Operational dependencies and customer commitments affected by each option."
+        - "Decision checkpoints if chosen path fails."
+      expected_decisions:
+        - "Select primary mitigation path and fallback trigger."
+        - "Approve internal and external messaging tied to chosen action."
+      evaluation_criteria:
+        - "Decision rationale explicitly maps to business risk appetite."
+        - "Fallback conditions are pre-defined before implementation."
+      facilitator_notes: "Ensure teams articulate acceptable residual risk, not just preferred engineering path."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_CISA_SECURE_BY_DESIGN"]
+
+  - id: WEBAPI-008
+    label: Logging and alerting gaps discovered
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Security", "Engineering", "IT", "Executive"]
+      csf_functions: ["Detect", "Respond", "Recover"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Detection coverage review
+      audience: Security operations and engineering
+      participant_prompt: "During investigation, teams discover key API and auth events are not sufficiently logged for rapid scoping. Decide immediate workarounds, confidence communication, and how to proceed with decision-making under telemetry gaps."
+      expected_discussion:
+        - "What minimum evidence is required to support high-impact decisions."
+        - "Temporary compensating measures for visibility and monitoring."
+        - "How uncertainty is conveyed to leadership and customers."
+      expected_decisions:
+        - "Approve short-term telemetry workaround plan and ownership."
+        - "Set risk posture and communication language for known unknowns."
+      evaluation_criteria:
+        - "Teams avoid false certainty and document assumptions clearly."
+        - "Workarounds are practical and tied to decision timelines."
+      facilitator_notes: "Probe whether teams can continue decisively when data quality is imperfect."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_ASVS"]
+
+  - id: WEBAPI-009
+    label: Public-facing exploitation suspected with mitigation sequencing
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Security", "Engineering", "IT", "Executive", "Product"]
+      csf_functions: ["Respond", "Protect", "Detect"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Threat intel + SOC correlation
+      audience: Incident command and technical leads
+      participant_prompt: "Indicators suggest active exploitation of a public-facing web/API component. Determine sequencing for patching, compensating controls, and monitoring so risk is reduced quickly without destabilizing {CRITICAL_SERVICES}."
+      expected_discussion:
+        - "Order of operations between immediate blocking and durable remediation."
+        - "How to prioritize affected environments and customer segments."
+        - "Criteria for declaring exploitation contained."
+      expected_decisions:
+        - "Approve mitigation sequence with timeline and checkpoints."
+        - "Define escalation if exploitation continues after first controls."
+      evaluation_criteria:
+        - "Sequence is realistic and reduces exposure promptly."
+        - "Containment success criteria are explicit and testable."
+      facilitator_notes: "Avoid implementation detail drift; keep focus on decision sequencing and risk."
+      evidence_refs: ["REF_ATTACK_T1190_EXPLOIT_PUBLIC_FACING_APP", "REF_NIST_SP_800_61_R3", "REF_CISA_KEV_CATALOG"]
+
+  - id: WEBAPI-010
+    label: Authentication failures and session anomaly containment
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Security", "Engineering", "IT", "Executive", "Product"]
+      csf_functions: ["Detect", "Respond", "Protect"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Authentication health alert
+      audience: Security, identity, and product leads
+      participant_prompt: "Authentication failures and irregular session behavior increase across user populations. Decide among forced reauthentication, step-up controls, selective session revocation, or full invalidation and evaluate impact on {PRIMARY_OBJECTIVES}."
+      expected_discussion:
+        - "Risk reduction versus user disruption and support load."
+        - "How broadly containment should be applied under uncertainty."
+        - "Messaging for customers and internal teams if login friction rises."
+      expected_decisions:
+        - "Select containment option and scope for session controls."
+        - "Approve customer communication trigger for auth changes."
+      evaluation_criteria:
+        - "Containment decision is proportionate and documented."
+        - "Business impact and abuse risk are explicitly balanced."
+      facilitator_notes: "Drive a clear choice rather than prolonged preference debate."
+      evidence_refs: ["REF_OWASP_TOP10_2025", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-011
+    label: Token theft suspicion and revocation tradeoff
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Security", "Engineering", "Executive", "IT", "Product"]
+      csf_functions: ["Respond", "Protect", "Detect"]
+      mitre_attack: ["T1528"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Incident update memo
+      audience: Command team
+      participant_prompt: "Evidence suggests API access tokens may have been stolen and replayed. Decide token invalidation scope, signing key rotation urgency, and customer-impact management for potentially forced reauthentication at scale."
+      expected_discussion:
+        - "Breadth of revocation needed to meaningfully reduce risk."
+        - "Timing and order of token and secret rotation actions."
+        - "Operational readiness for customer-facing friction and support demand."
+      expected_decisions:
+        - "Approve token revocation scope and timeline."
+        - "Approve key/secret rotation sequence and customer notice thresholds."
+      evaluation_criteria:
+        - "Decisions limit attacker persistence while controlling business disruption."
+        - "Dependencies and rollback considerations are identified."
+      facilitator_notes: "Probe whether teams can act decisively before perfect attribution is available."
+      evidence_refs: ["REF_ATTACK_T1528_STEAL_APP_ACCESS_TOKEN", "REF_NIST_SP_800_61_R3", "REF_OWASP_API_TOP10_2023_HOME"]
+
+  - id: WEBAPI-012
+    label: Credentials exposed in code or configuration
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "IT", "Executive"]
+      csf_functions: ["Identify", "Protect", "Respond"]
+      mitre_attack: ["T1552.001"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Secure code review finding
+      audience: Engineering and security leadership
+      participant_prompt: "A review identifies credentials embedded in repository history and runtime configuration related to {CRITICAL_SERVICES}. Decide rotation scope, repository hygiene actions, and risk communication for unknown exposure duration."
+      expected_discussion:
+        - "Whether to treat all potentially exposed credentials as compromised."
+        - "Scope and sequencing for emergency secret rotation."
+        - "Controls needed to prevent recurrence in delivery pipelines."
+      expected_decisions:
+        - "Approve immediate secret rotation priorities and owners."
+        - "Approve repository remediation and policy enforcement plan."
+      evaluation_criteria:
+        - "Rotation plan is comprehensive and time-bound."
+        - "Preventive controls are included, not only reactive actions."
+      facilitator_notes: "Keep discussion on governance and risk acceptance, not tooling brand details."
+      evidence_refs: ["REF_ATTACK_T1552_001_CREDENTIALS_IN_FILES", "REF_NIST_SP_800_218_SSDF", "REF_OWASP_ASVS"]
+
+  - id: WEBAPI-013
+    label: Security misconfiguration on web or API stack
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "IT", "Product"]
+      csf_functions: ["Identify", "Protect", "Respond"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Configuration audit report
+      audience: Engineering and security teams
+      participant_prompt: "An urgent review surfaces permissive CORS settings, exposed debug functionality, and inconsistent auth middleware behavior in a production path. Decide immediate risk-reduction actions and how to validate no parallel misconfigurations exist."
+      expected_discussion:
+        - "Prioritization of misconfigurations by exploitability and blast radius."
+        - "Change-control rigor needed during active response."
+        - "Cross-environment consistency and drift detection challenges."
+      expected_decisions:
+        - "Approve emergency hardening steps and validation checkpoints."
+        - "Define criteria for safely restoring normal change cadence."
+      evaluation_criteria:
+        - "Response addresses systemic configuration governance, not one-off fixes."
+        - "Validation approach confirms control consistency across environments."
+      facilitator_notes: "Push teams to articulate how misconfiguration risk is governed long term."
+      evidence_refs: ["REF_OWASP_TOP10_2025", "REF_OWASP_ASVS", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-014
+    label: SSRF abuse path and cloud metadata risk
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "IT", "Executive"]
+      csf_functions: ["Identify", "Protect", "Respond"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Threat model escalation
+      audience: Engineering, cloud, and security leads
+      participant_prompt: "A server-side request pattern suggests potential SSRF into internal resources, including possible metadata services in {CLOUD_PLATFORMS}. Decide containment urgency, credential exposure assumptions, and cloud control changes."
+      expected_discussion:
+        - "Whether to assume cloud role credentials may already be exposed."
+        - "Immediate network and service-level safeguards for SSRF paths."
+        - "How SSRF risk alters confidence in current forensic timeline."
+      expected_decisions:
+        - "Approve emergency SSRF containment and cloud credential safeguards."
+        - "Set expanded investigation scope for lateral impact."
+      evaluation_criteria:
+        - "Decision set addresses both application and cloud-layer exposure."
+        - "Assumptions about credential risk are explicit and conservative."
+      facilitator_notes: "Encourage cross-domain coordination between app and cloud owners."
+      evidence_refs: ["REF_OWASP_API_TOP10_2023_HOME", "REF_NIST_SP_800_61_R3", "REF_CISA_SECURE_BY_DESIGN"]
+
+  - id: WEBAPI-015
+    label: Rate limiting and resource consumption abuse
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "Product", "Executive", "IT"]
+      csf_functions: ["Protect", "Detect", "Respond"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Performance degradation alert
+      audience: Command team and service owners
+      participant_prompt: "API traffic patterns indicate abusive resource consumption affecting service quality for legitimate users. Decide protective throttling posture, fairness policy, and customer communication strategy while preserving core operations."
+      expected_discussion:
+        - "How aggressive limits should be without harming trusted use cases."
+        - "Fairness and priority treatment for critical customers and services."
+        - "Tradeoffs between strict controls and immediate availability recovery."
+      expected_decisions:
+        - "Approve temporary rate-control strategy and exception policy."
+        - "Set metrics that trigger tightening or relaxation of controls."
+      evaluation_criteria:
+        - "Protection decisions are equitable, transparent, and measurable."
+        - "Service protection balances abuse resistance with customer experience."
+      facilitator_notes: "Keep focus on policy choices, not WAF syntax or tuning specifics."
+      evidence_refs: ["REF_OWASP_API_TOP10_2023_HOME", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-016
+    label: Sensitive business flow abuse decision point
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Product", "Engineering", "Security", "Executive", "Legal"]
+      csf_functions: ["Identify", "Protect", "Respond", "Govern"]
+      mitre_attack: []
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Fraud and abuse operations brief
+      audience: Product, security, and executive stakeholders
+      participant_prompt: "Behavior indicates abuse of a sensitive business process exposed through APIs tied to {PRIMARY_OBJECTIVES}. Determine immediate safeguards, acceptable friction, and governance for approving business-flow restrictions."
+      expected_discussion:
+        - "Where to impose controls without undermining legitimate customer workflows."
+        - "How to quantify abuse risk versus conversion or productivity impact."
+        - "Decision authority for temporary policy exceptions."
+      expected_decisions:
+        - "Approve abuse mitigation controls for sensitive flow stages."
+        - "Define owner and review cadence for business-impact monitoring."
+      evaluation_criteria:
+        - "Mitigation choices are tied to measurable abuse and business signals."
+        - "Governance for exceptions and rollback is clearly defined."
+      facilitator_notes: "Steer toward cross-functional ownership of abuse risk."
+      evidence_refs: ["REF_OWASP_API_TOP10_2023_HOME", "REF_CISA_SECURE_BY_DESIGN", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-017
+    label: Unknown API endpoint discovered in production
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "IT", "Executive", "Product"]
+      csf_functions: ["Identify", "Protect", "Respond", "Govern"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Asset inventory discrepancy alert
+      audience: Engineering, security, and leadership
+      participant_prompt: "During containment, teams find an undocumented externally reachable endpoint supporting a legacy integration. Decide whether to immediately disable it, isolate and monitor it, or maintain operation until impact is clearer."
+      expected_discussion:
+        - "Risk of unknown exposure versus dependency disruption."
+        - "Ownership and accountability gaps in API inventory management."
+        - "How to preserve evidence while reducing immediate risk."
+      expected_decisions:
+        - "Choose endpoint disposition: shut down, isolate, or monitor with conditions."
+        - "Approve inventory correction and governance accountability actions."
+      evaluation_criteria:
+        - "Decision addresses both tactical risk and inventory control failure."
+        - "Chosen approach includes measurable review checkpoints."
+      facilitator_notes: "Challenge assumptions that legacy endpoints are low risk by default."
+      evidence_refs: ["REF_OWASP_API_TOP10_2023_HOME", "REF_NIST_SP_800_61_R3", "REF_ATTACK_T1190_EXPLOIT_PUBLIC_FACING_APP"]
+
+  - id: WEBAPI-018
+    label: Unsafe third-party API consumption risk
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "Product", "Legal", "Executive"]
+      csf_functions: ["Identify", "Protect", "Govern", "Respond"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Vendor integration risk brief
+      audience: Product, security, legal, and engineering
+      participant_prompt: "A critical integration depends on third-party API responses now behaving unpredictably. Determine trust boundaries, fail-safe behavior, and whether to degrade or suspend dependent features while validating integrity."
+      expected_discussion:
+        - "How external API trust assumptions affect internal risk posture."
+        - "Business and contractual impacts of disabling third-party dependent features."
+        - "Fallback and verification strategies for third-party data quality."
+      expected_decisions:
+        - "Approve temporary trust restrictions and fallback behavior."
+        - "Set criteria for restoring full dependency on third-party responses."
+      evaluation_criteria:
+        - "Decision protects internal systems from untrusted external behavior."
+        - "Business and legal implications are explicitly considered."
+      facilitator_notes: "Encourage durable vendor risk controls beyond immediate workaround."
+      evidence_refs: ["REF_OWASP_API_TOP10_2023_HOME", "REF_NIST_SP_800_218_SSDF"]
+
+  - id: WEBAPI-019
+    label: Outdated component or supply chain weakness suspected
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "IT", "Executive", "Product"]
+      csf_functions: ["Identify", "Protect", "Respond", "Recover"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Dependency risk advisory
+      audience: Engineering and security leadership
+      participant_prompt: "Threat intelligence indicates a vulnerable component in your web/API delivery chain may be implicated. Decide emergency patching scope, compensating controls, and how software supply chain assurances will be validated for {CRITICAL_SERVICES}."
+      expected_discussion:
+        - "How to prioritize patching across services with shared dependencies."
+        - "Confidence limits of current software bill-of-materials and provenance data."
+        - "Balancing rapid change with release stability and regression risk."
+      expected_decisions:
+        - "Approve supply-chain incident response priorities and control measures."
+        - "Set executive expectations for residual risk and remediation timeline."
+      evaluation_criteria:
+        - "Plan includes both immediate risk reduction and SSDF-aligned follow-through."
+        - "Decisions account for systemic dependency exposure, not one service only."
+      facilitator_notes: "Link tactical decisions to sustainable secure development commitments."
+      evidence_refs: ["REF_OWASP_TOP10_2025", "REF_NIST_SP_800_218_SSDF", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-020
+    label: KEV urgency and exploited-in-the-wild response
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Security", "Engineering", "IT", "Legal"]
+      csf_functions: ["Identify", "Respond", "Protect", "Govern"]
+      mitre_attack: ["T1190"]
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: External threat bulletin
+      audience: Command team
+      participant_prompt: "A vulnerability affecting your stack appears in a KEV-style exploited-in-the-wild alert. Decide patch window, compensating control requirements, and who can authorize temporary business disruption to close exposure rapidly."
+      expected_discussion:
+        - "Acceleration of patch timelines under elevated threat certainty."
+        - "Compensating controls when immediate patching is constrained."
+        - "Governance for risk acceptance if remediation is delayed."
+      expected_decisions:
+        - "Approve emergency remediation timeline and accountability chain."
+        - "Approve compensating controls and exception process if timelines slip."
+      evaluation_criteria:
+        - "Urgency response is commensurate with active exploitation risk."
+        - "Risk acceptance decisions are explicit, documented, and time-limited."
+      facilitator_notes: "Emphasize urgency governance and executive accountability."
+      evidence_refs: ["REF_CISA_KEV_CATALOG", "REF_NIST_SP_800_61_R3", "REF_OWASP_TOP10_2025"]
+
+  - id: WEBAPI-021
+    label: Web shell backdoor suspicion on app host
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Security", "Engineering", "IT", "Executive", "Legal"]
+      csf_functions: ["Detect", "Respond", "Recover"]
+      mitre_attack: ["T1505.003"]
+      complexity: high
+      redline_topics: ["Containment versus forensics tradeoff"]
+    inject:
+      delivery_method: EDR and host triage escalation
+      audience: Incident command and technical leads
+      participant_prompt: "Host-level signals suggest possible web shell persistence on an application server supporting {CRITICAL_SERVICES}. Decide whether to immediately isolate/rebuild, preserve live state for forensics, or pursue a staged containment approach."
+      expected_discussion:
+        - "Tradeoff between stopping attacker activity and preserving evidence depth."
+        - "Operational impact of host isolation on critical customer workflows."
+        - "Legal and investigative requirements for evidence handling."
+      expected_decisions:
+        - "Select containment strategy and evidence preservation posture."
+        - "Define thresholds to shift from staged to immediate isolation."
+      evaluation_criteria:
+        - "Decision balances business continuity with investigative integrity."
+        - "Evidence and containment responsibilities are clearly assigned."
+      facilitator_notes: "Require explicit reasoning for chosen containment-forensics balance."
+      evidence_refs: ["REF_ATTACK_T1505_003_WEB_SHELL", "REF_NIST_SP_800_61_R3", "REF_OWASP_TOP10_2025"]
+
+  - id: WEBAPI-022
+    label: Data exfiltration concern and notification readiness
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Legal", "PR/Comms", "Security", "Product"]
+      csf_functions: ["Respond", "Govern", "Recover"]
+      mitre_attack: []
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Legal and security joint briefing
+      audience: Executive, legal, communications, security
+      participant_prompt: "Evidence indicates potential data exfiltration from web/API systems, but scope is incomplete. Determine what is known versus unknown, readiness for potential notifications, and escalation timing to legal and communications leadership."
+      expected_discussion:
+        - "Thresholds for notification preparation before full certainty is reached."
+        - "Documentation quality needed to support legal and executive decisions."
+        - "How uncertainty is communicated without eroding trust."
+      expected_decisions:
+        - "Approve notification readiness posture and decision checkpoints."
+        - "Approve cross-functional fact validation cadence and ownership."
+      evaluation_criteria:
+        - "Known/unknowns are explicitly captured and updated."
+        - "Notification governance is deliberate, consistent, and timely."
+      facilitator_notes: "Drive disciplined uncertainty management and governance alignment."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_TOP10_PROJECT_PAGE", "REF_CISA_SECURE_BY_DESIGN"]
+
+  - id: WEBAPI-023
+    label: Customer and sales messaging pressure point
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "PR/Comms", "Legal", "Product", "Security"]
+      csf_functions: ["Govern", "Respond", "Recover"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Revenue team escalation
+      audience: Executive, communications, legal, product
+      participant_prompt: "Customer success and sales teams request immediate talking points for active deals involving {CROWN_JEWELS}. Decide what can be said now, who approves statements, and how to keep messages consistent while investigation continues."
+      expected_discussion:
+        - "How to provide useful guidance without overcommitting facts."
+        - "Approval workflow for externally shared incident statements."
+        - "Tension between commercial urgency and legal risk management."
+      expected_decisions:
+        - "Approve interim customer messaging boundaries and owner."
+        - "Set cadence and authority for message updates."
+      evaluation_criteria:
+        - "Statements are accurate, consistent, and policy-aligned."
+        - "Commercial and legal priorities are balanced transparently."
+      facilitator_notes: "Keep this decision-centered; avoid drafting exact customer copy."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_CISA_SECURE_BY_DESIGN"]
+
+  - id: WEBAPI-024
+    label: Regulator or partner inquiry governance decision
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Legal", "PR/Comms", "Security", "Product"]
+      csf_functions: ["Govern", "Respond", "Recover"]
+      mitre_attack: []
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: External inquiry notice
+      audience: Executive and legal leadership
+      participant_prompt: "A regulator and a strategic partner separately request status on the web/API incident. Decide governance for response ownership, evidentiary standards, and approval workflow for externally submitted information."
+      expected_discussion:
+        - "How to coordinate legal, executive, and technical inputs into one narrative."
+        - "What claims require high confidence versus preliminary qualifiers."
+        - "Risks of inconsistent disclosures across stakeholders."
+      expected_decisions:
+        - "Approve inquiry response governance model and sign-off chain."
+        - "Define what evidence threshold is required for each response tier."
+      evaluation_criteria:
+        - "External response process is controlled, auditable, and role-based."
+        - "Information quality standards are explicit and enforced."
+      facilitator_notes: "Stress governance clarity under simultaneous external pressure."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_CISA_SECURE_BY_DESIGN", "REF_OWASP_TOP10_2025"]
+
+  - id: WEBAPI-025
+    label: Recovery integrity and endpoint reopen decision
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Engineering", "Security", "IT", "Executive", "Product"]
+      csf_functions: ["Recover", "Protect", "Respond"]
+      mitre_attack: []
+      complexity: high
+      redline_topics: []
+    inject:
+      delivery_method: Recovery checkpoint brief
+      audience: Command team and service owners
+      participant_prompt: "Containment appears stable and teams propose reopening restricted endpoints. Decide what validation evidence is required to confirm integrity, what residual risk is acceptable, and who signs off on return to normal operations."
+      expected_discussion:
+        - "Technical and business criteria for safe service restoration."
+        - "Residual monitoring and contingency plans after reopening."
+        - "Executive accountability for accepting remaining risk."
+      expected_decisions:
+        - "Approve endpoint reopen criteria and authorization chain."
+        - "Approve post-reopen monitoring period and rollback triggers."
+      evaluation_criteria:
+        - "Recovery decisions are evidence-based and governed."
+        - "Residual risk and rollback conditions are clearly documented."
+      facilitator_notes: "Do not let optimism replace explicit recovery acceptance standards."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_ASVS"]
+
+  - id: WEBAPI-026
+    label: 0-30-90 post-incident improvement backlog planning
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Engineering", "Security", "Product", "IT"]
+      csf_functions: ["Recover", "Govern", "Protect", "Identify"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Lessons-to-roadmap workshop prompt
+      audience: Cross-functional leadership
+      participant_prompt: "Leadership requests a concrete 0/30/90-day backlog from this incident for {CLIENT_ALIAS}. Prioritize improvements across secure development, verification, and operational resilience tied to {PRIMARY_OBJECTIVES}."
+      expected_discussion:
+        - "Immediate corrective actions versus structural control improvements."
+        - "How to sequence wins across people, process, and technology."
+        - "Ownership and metrics for tracking completion and effectiveness."
+      expected_decisions:
+        - "Approve prioritized 0/30/90 improvement backlog with owners."
+        - "Approve governance cadence for progress review and risk closure."
+      evaluation_criteria:
+        - "Backlog is actionable, prioritized, and tied to measurable outcomes."
+        - "Improvements map to secure development and verification practices."
+      facilitator_notes: "Require explicit owners and due dates for each horizon."
+      evidence_refs: ["REF_NIST_SP_800_218_SSDF", "REF_OWASP_ASVS", "REF_NIST_SP_800_61_R3"]
+
+  - id: WEBAPI-027
+    label: Executive recap and strategic change commitments
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Security", "Engineering", "Product", "Legal", "PR/Comms"]
+      csf_functions: ["Govern", "Recover", "Identify"]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: []
+    inject:
+      delivery_method: Executive recap prompt
+      audience: Executive leadership and function heads
+      participant_prompt: "Executives ask for a concise recap: what happened, what mattered most to {LEADERSHIP_CONCERNS}, what worked, and what must change now across {CRITICAL_SERVICES}. Determine strategic commitments and resource decisions."
+      expected_discussion:
+        - "Top strategic weaknesses and strengths revealed by the scenario."
+        - "Resource and governance changes needed to reduce repeat risk."
+        - "How success will be measured at leadership level."
+      expected_decisions:
+        - "Approve strategic change commitments and accountable sponsors."
+        - "Approve executive metrics and reporting cadence for follow-through."
+      evaluation_criteria:
+        - "Recap outcomes translate into funded, owned strategic actions."
+        - "Leadership commitments are specific and time-bound."
+      facilitator_notes: "Keep recap outcome-oriented; avoid re-litigating earlier tactical choices."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_CISA_SECURE_BY_DESIGN", "REF_OWASP_TOP10_2025"]
+
+  - id: WEBAPI-028
+    label: Hotwash structured strengths gaps and open questions
+    tags:
+      categories: ["Web Application / API Breach"]
+      package_profiles: ["EXEC_90", "HALF_DAY", "FULL_DAY"]
+      audiences: ["Executive", "Engineering", "Security", "Legal", "PR/Comms", "IT", "Product"]
+      csf_functions: ["Recover", "Govern", "Identify"]
+      mitre_attack: []
+      complexity: low
+      redline_topics: []
+    inject:
+      delivery_method: Facilitated hotwash
+      audience: All participants
+      participant_prompt: "Conduct a structured hotwash for the web/API breach scenario: capture strengths to retain, gaps to remediate, improvements to prioritize, and open questions requiring follow-up at {CLIENT_ALIAS}."
+      expected_discussion:
+        - "What response behaviors were effective and should become standard."
+        - "Which decision bottlenecks or uncertainty points slowed outcomes."
+        - "What unresolved questions require formal owners and deadlines."
+      expected_decisions:
+        - "Approve hotwash outputs and ownership for unresolved actions."
+        - "Set date and scope for after-action review closure checkpoint."
+      evaluation_criteria:
+        - "Hotwash outputs are specific, prioritized, and assigned."
+        - "Open questions are converted into tracked follow-up actions."
+      facilitator_notes: "Conclude with commitment checks and clear next-step accountability."
+      evidence_refs: ["REF_NIST_SP_800_61_R3", "REF_OWASP_API_TOP10_2023_HOME"]

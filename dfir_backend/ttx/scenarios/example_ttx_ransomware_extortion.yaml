@@ -1,0 +1,245 @@
+version: 1
+
+scenario:
+  id: ttx-ransomware-extortion-001
+  title: "Ransomware & Extortion with Operational Disruption"
+  category: "Ransomware / Extortion"
+  duration_minutes: 90
+  audiences:
+    - "Executive"
+    - "IT"
+    - "Security"
+    - "Legal/PR"
+    - "Finance"
+  summary: >
+    A discussion-based ransomware and extortion scenario in which an organization experiences
+    operational disruption, uncertainty about data theft, and external pressure from customers and media.
+    The exercise tests decision rights, containment vs continuity tradeoffs, communications governance,
+    and legal/regulatory notification triggers.
+  threat_context: >
+    The adversary gains initial access (phishing, exploited edge service, or credential theft), expands
+    privileges, and deploys ransomware broadly. They claim to have stolen sensitive data and apply
+    extortion pressure with deadlines and threats of public release.
+  business_context: >
+    The organization depends on availability of core IT services (identity, email, file shares, key business
+    applications). Client trust and delivery commitments are critical. Decisions must balance operational
+    continuity, risk containment, contractual obligations, and reputational impact.
+  objectives:
+    - "Validate authority and escalation triggers for declaring a major incident and activating the IR plan."
+    - "Exercise containment vs continuity decision-making, including restoration prioritization."
+    - "Test communications governance and external messaging under uncertainty and time pressure."
+    - "Identify legal/regulatory notification decision points and approval workflow."
+  assumptions:
+    - "Backups exist but restore time is uncertain."
+    - "Endpoint and/or network telemetry can be requested as needed (no live analysis performed in exercise)."
+    - "A cross-functional leadership team can be convened during the incident."
+  constraints:
+    - "This is a discussion exercise only; no systems are touched."
+    - "Participants should state assumptions when information is missing."
+  success_criteria:
+    - "An incident commander/owner is identified early and decision rights are clear."
+    - "Containment and restoration actions are time-boxed with owners and rationale."
+    - "External communications are coordinated with Legal/PR and reflect uncertainty appropriately."
+    - "Notification triggers are identified with an approval process and tracked as open items."
+  pre_read:
+    - "Know who can authorize service isolation, shutdowns, and major business-impacting actions."
+    - "Know the organization’s escalation process for major incidents (if one exists)."
+    - "Know whether cyber insurance and/or outside counsel engagement is standard practice."
+  out_of_scope:
+    - "Deep technical forensics, malware reverse engineering, or exact log queries."
+  facilitator_notes: >
+    Keep the group focused on decisions and governance. If discussion drifts into tooling specifics,
+    ask what decision they are trying to make and what information they would request to make it.
+    Use branching to emphasize either business disruption (if aggressive containment) or expanding impact
+    (if containment is delayed).
+
+injects:
+  - id: i01
+    t_plus_min: 0
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      Multiple employees report being unable to access shared files. Security receives alerts indicating
+      unusual administrative activity and multiple endpoints showing suspicious encryption-like behavior.
+      An internal service desk ticket volume spike begins.
+    expected_discussion:
+      - "How do we classify severity and who acts as incident commander right now?"
+      - "What immediate containment actions are available (and what business disruption might they cause)?"
+      - "What information do we request first to confirm scope?"
+    expected_decisions:
+      - "Assign incident commander and scribe roles for the incident bridge."
+      - "Decide immediate containment posture (isolate affected segments/endpoints vs observe briefly)."
+      - "Decide initial stakeholder notifications (Exec, Legal/PR, Finance, business owners)."
+    evaluation_criteria:
+      - "Clear incident ownership and time-boxed next steps."
+      - "Containment decision includes explicit tradeoffs and communication plan."
+    facilitator_notes: >
+      If asked for more details: state that at least one file server share appears impacted and a small
+      subset of endpoints are already encrypted.
+    evidence_refs:
+      - "SIM-EDR-ALERT-001"
+      - "SIM-HELPDESK-QUEUE-001"
+
+  - id: i02
+    t_plus_min: 10
+    delivery_method: "Chat/Email"
+    audience:
+      - "Executive"
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      Several critical servers become unavailable. A business owner reports that a customer-facing function
+      is degraded. IT suggests isolating a major network segment to limit spread, which may cause a broader outage.
+    expected_discussion:
+      - "Who can authorize network isolation and major operational disruption?"
+      - "What is the priority: stop spread now or keep services running while investigating?"
+      - "How do we communicate internally about the outage and response steps?"
+    expected_decisions:
+      - "Decide whether to isolate key network segments immediately."
+      - "Decide incident escalation level and whether to activate the full IR plan/war room."
+      - "Assign an internal communications owner (role) and establish update cadence."
+    evaluation_criteria:
+      - "Decision rights are explicit; actions have owners and timelines."
+      - "Communications are governed and consistent."
+    facilitator_notes: >
+      If participants delay isolation, emphasize accelerated spread in later injects. If they isolate,
+      emphasize business disruption, customer impact, and comms complexity.
+
+  - id: i03
+    t_plus_min: 25
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+      - "Legal/PR"
+      - "Executive"
+    participant_prompt: >
+      A ransom note is discovered on multiple systems demanding payment within 72 hours. The actor claims
+      they stole sensitive data and will publish it if payment is not made. They provide a sample file list
+      (unverified) and a contact channel.
+    expected_discussion:
+      - "Do we treat the data theft claim as credible right now? What do we need to verify?"
+      - "What is the organization’s stance on ransom/extortion negotiations?"
+      - "How do we preserve evidence and maintain privilege boundaries?"
+    expected_decisions:
+      - "Decide whether to engage outside counsel and/or cyber insurer (if applicable)."
+      - "Decide initial posture on extortion communications (who, if anyone, engages; approvals required)."
+      - "Decide evidence preservation priorities and ownership."
+    evaluation_criteria:
+      - "Legal/PR engagement is timely; privilege considerations are stated."
+      - "Extortion posture and decision rights are documented (even if undecided)."
+    facilitator_notes: >
+      If asked for sample files: state the list includes sensitive-looking filenames but no confirmation
+      of actual exfiltration is available yet.
+    evidence_refs:
+      - "SIM-RANSOM-NOTE-001"
+      - "SIM-EXTORT-CLAIM-001"
+
+  - id: i04
+    t_plus_min: 40
+    delivery_method: "Chat/Email"
+    audience:
+      - "IT"
+      - "Security"
+      - "Executive"
+      - "Finance"
+    participant_prompt: >
+      IT reports backups exist, but restore time is uncertain. Some backups may be stale, and a key system’s
+      restore test has not been performed recently. Finance asks for the estimated cost of downtime vs recovery options.
+    expected_discussion:
+      - "How do we prioritize restoration (crown jewels first)?"
+      - "What is the decision framework for restore vs rebuild vs alternate operations?"
+      - "What does Finance need to support decision-making (downtime costs, third-party costs)?"
+    expected_decisions:
+      - "Define restoration priorities and owners (top 3 systems/services)."
+      - "Decide whether to rebuild from clean images vs attempt partial restore on critical systems."
+      - "Assign an owner to produce a downtime impact estimate for leadership."
+    evaluation_criteria:
+      - "Restoration plan is prioritized and realistic; dependencies are recognized."
+      - "Business impact is quantified or time-boxed as an urgent follow-up."
+    facilitator_notes: >
+      If participants have no restoration prioritization, prompt them to list crown jewels and RTO expectations.
+
+  - id: i05
+    t_plus_min: 55
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+      - "Legal/PR"
+      - "Executive"
+    participant_prompt: >
+      The threat actor emails a countdown and threatens to contact customers directly. Separately, a security
+      engineer notes unusual outbound traffic occurred before encryption began, but scope is unknown.
+    expected_discussion:
+      - "What evidence would confirm/deny exfiltration?"
+      - "What is the organization’s notification posture if exfiltration is suspected but unconfirmed?"
+      - "What do we communicate internally to prevent rumors and maintain consistency?"
+    expected_decisions:
+      - "Decide scope actions to assess potential data theft (what telemetry to request; who owns it)."
+      - "Decide provisional external comms stance (prepare notification messaging vs wait for confirmation)."
+      - "Set update cadence and single source of truth for stakeholders."
+    evaluation_criteria:
+      - "Uncertainty is handled explicitly; open questions are tracked with owners."
+      - "Comms governance prevents conflicting messages."
+    facilitator_notes: >
+      If participants ask for details on outbound traffic: answer 'large transfers to an unfamiliar external host'
+      without naming providers; prompt what additional data they need.
+
+  - id: i06
+    t_plus_min: 70
+    delivery_method: "Chat/Email"
+    audience:
+      - "Legal/PR"
+      - "Executive"
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      A reporter contacts your PR inbox asking for comment about a “cyber incident.” A key customer asks for an
+      ETA on service restoration and whether their data was accessed. Support teams report increased inbound calls.
+    expected_discussion:
+      - "Who is authorized to respond externally and what is approved messaging?"
+      - "How do we communicate restoration ETAs without overpromising?"
+      - "What do we tell customers when scope is still uncertain?"
+    expected_decisions:
+      - "Decide external response posture (hold statement vs no comment; who approves)."
+      - "Decide customer communication plan (who contacts top customers; what is said)."
+      - "Decide how to coordinate Support messaging and escalation."
+    evaluation_criteria:
+      - "Messaging reflects uncertainty and is approved through a defined process."
+      - "Customer communications and support coordination are organized and role-owned."
+    facilitator_notes: >
+      If participants attempt to disclose specifics prematurely, remind them this is under uncertainty and ask
+      them to craft a 'known/unknown/next update' statement.
+
+  - id: i07
+    t_plus_min: 85
+    delivery_method: "Verbal"
+    audience:
+      - "Legal/PR"
+      - "Executive"
+      - "Security"
+      - "IT"
+      - "Finance"
+    participant_prompt: >
+      Legal asks whether contractual or regulatory notifications may be required if sensitive information was accessed.
+      A partner requests written assurance about your incident response actions. Leadership asks for a go-forward decision
+      framework over the next 24 hours.
+    expected_discussion:
+      - "What triggers notification obligations (contracts, regulators) and who decides?"
+      - "What evidence is needed to support decisions within 24 hours?"
+      - "What are the top 3 priorities for the next day (containment, restoration, communications, scope)?"
+    expected_decisions:
+      - "Identify notification decision points and approval workflow (roles)."
+      - "Assign owners to produce 24-hour plan: containment status, restoration timeline, scope assessment."
+      - "Decide whether to prepare draft notifications/communications pending confirmation."
+    evaluation_criteria:
+      - "Decision rights and workflow are explicit; next steps are time-boxed."
+      - "Improvement items are captured with owners (e.g., backup testing, comms playbook, thresholds)."
+    facilitator_notes: >
+      Use this inject to force concrete next steps and owners. Ask: 'What will be true in 24 hours if this is going well?'
+    evidence_refs:
+      - "SIM-MEDIA-INQUIRY-001"
+      - "SIM-CUSTOMER-REQUEST-001"

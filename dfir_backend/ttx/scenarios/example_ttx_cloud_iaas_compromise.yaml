@@ -1,0 +1,169 @@
+version: 1
+
+scenario:
+  id: ttx-cloud-iaas-001
+  title: "Cloud Control Plane Compromise with Logging Tampering"
+  category: "Cloud (IaaS) Compromise"
+  duration_minutes: 90
+  audiences:
+    - "Cloud Ops"
+    - "Security Engineering"
+    - "Product/Engineering"
+    - "Executive"
+    - "Legal/PR"
+  summary: >
+    A discussion-based scenario where unauthorized cloud control-plane access leads to new privileged
+    identities, suspicious snapshots, and logging changes. The exercise tests containment authority,
+    outage tradeoffs, cross-team scoping, and notification posture.
+  threat_context: >
+    An adversary obtains cloud credentials and creates persistence through IAM changes while attempting
+    to reduce visibility by altering logging settings.
+  business_context: >
+    The organization runs customer-facing workloads in cloud accounts with strict uptime objectives.
+    Containment actions may disrupt production, requiring coordinated decisions across technical and
+    executive stakeholders.
+  objectives:
+    - "Validate incident command ownership for cloud incidents that risk production impact."
+    - "Exercise containment decisions involving key rotation, IAM lockdown, and deployment freezes."
+    - "Test 24-hour scoping and external communication planning under uncertainty."
+  assumptions:
+    - "Cloud audit logging exists but may be partially degraded during the incident."
+    - "Cloud Ops and Security Engineering can coordinate immediately during business hours."
+    - "Legal/PR is available to review customer messaging before external release."
+  constraints:
+    - "This is a discussion exercise only; no live cloud changes are performed."
+    - "Participants should state assumptions when required telemetry is missing."
+  success_criteria:
+    - "Incident lead, cloud containment owner, and communications owner are explicitly assigned."
+    - "Containment decisions include documented business-impact tradeoffs and approval path."
+    - "A time-boxed scoping plan is produced with owners and expected outputs."
+  pre_read:
+    - "Know current on-call paths for Cloud Ops and Security Engineering."
+    - "Know executive escalation thresholds for customer-facing outages."
+  out_of_scope:
+    - "Detailed technical exploit reproduction beyond decision-focused discussion."
+  facilitator_notes: >
+    Keep discussion focused on who decides, who executes, and what information is needed next. If teams
+    drift into implementation detail, prompt for immediate decisions and owner assignments.
+
+injects:
+  - id: i01
+    t_plus_min: 0
+    delivery_method: "Verbal"
+    audience:
+      - "Security Engineering"
+      - "Cloud Ops"
+    participant_prompt: >
+      A high-severity alert reports creation of a new privileged IAM role in production by an unknown
+      principal. The role policy allows broad administrative actions across core services.
+    expected_discussion:
+      - "Who owns incident command and who owns cloud containment execution?"
+      - "What immediate actions are safe without causing avoidable outages?"
+      - "What telemetry should be pulled first to confirm timeline and blast radius?"
+    expected_decisions:
+      - "Decide whether to disable the new IAM role immediately and rotate affected credentials."
+      - "Decide severity classification and required stakeholder notifications."
+    evaluation_criteria:
+      - "Clear owner assignment for command, containment, and documentation."
+      - "Immediate actions are prioritized and explicitly risk-scored."
+    evidence_refs:
+      - "SIM-CLOUD-IAM-CREATE-001"
+
+  - id: i02
+    t_plus_min: 15
+    delivery_method: "Chat/Email"
+    audience:
+      - "Cloud Ops"
+      - "Security Engineering"
+      - "Product/Engineering"
+    participant_prompt: >
+      Cloud logging configuration changed in one production account, and snapshot exports are observed to
+      an unfamiliar storage location. Engineering asks whether deployments should continue.
+    expected_discussion:
+      - "Do we freeze deployments across all environments or scope first?"
+      - "How do we proceed when visibility is degraded due to logging changes?"
+      - "What minimum controls are needed before resuming change activity?"
+    expected_decisions:
+      - "Decide deployment posture (freeze, limited continue, or full continue) with approval path."
+      - "Decide emergency controls (log restoration, SCP/policy lockdown, key rotation sequence)."
+    evaluation_criteria:
+      - "Decision includes rationale balancing containment urgency and service continuity."
+      - "Telemetry recovery and scoping actions are owner-assigned with deadlines."
+    facilitator_notes: >
+      If participants delay a decision, prompt for a 30-minute plan with named owners.
+    evidence_refs:
+      - "SIM-CLOUD-LOGGING-CHANGE-002"
+      - "SIM-CLOUD-SNAPSHOT-EXPORT-003"
+
+  - id: i03
+    t_plus_min: 35
+    delivery_method: "Verbal"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Security Engineering"
+    participant_prompt: >
+      A strategic customer asks whether their environment is affected and requests written assurance within
+      two hours. Internal scope is still incomplete.
+    expected_discussion:
+      - "What can be stated confidently now versus what remains unknown?"
+      - "Who approves outbound statements and what review sequence is required?"
+      - "What contractual notification triggers apply at this stage?"
+    expected_decisions:
+      - "Decide interim customer communication posture and approval workflow."
+      - "Decide whether to initiate formal contractual notification preparation."
+    evaluation_criteria:
+      - "Communications avoid overclaiming and clearly separate facts from assumptions."
+      - "Notification governance and sign-off chain are explicit."
+    evidence_refs:
+      - "SIM-CLOUD-CUSTOMER-INQUIRY-004"
+
+  - id: i04
+    t_plus_min: 55
+    delivery_method: "Chat/Email"
+    audience:
+      - "Cloud Ops"
+      - "Security Engineering"
+      - "Product/Engineering"
+      - "Executive"
+    participant_prompt: >
+      Forensic review suggests suspicious API activity in a second cloud account linked by shared CI/CD
+      credentials. Product leaders ask whether to isolate both accounts immediately.
+    expected_discussion:
+      - "How broadly should containment be applied given possible multi-account spread?"
+      - "What business services are impacted if both accounts are isolated?"
+      - "What is the restoration priority if containment causes service disruption?"
+    expected_decisions:
+      - "Decide scope of isolation and credential revocation across accounts."
+      - "Decide restoration priorities and escalation triggers if outages occur."
+    evaluation_criteria:
+      - "Containment scope reflects explicit blast-radius reasoning."
+      - "Recovery priorities are documented with business-owner alignment."
+    evidence_refs:
+      - "SIM-CLOUD-CICD-CRED-005"
+
+  - id: i05
+    t_plus_min: 75
+    delivery_method: "Verbal"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Security Engineering"
+      - "Cloud Ops"
+    participant_prompt: >
+      Leadership requests a 24-hour incident plan including confirmed facts, open questions, customer
+      communications, and immediate hardening actions.
+    expected_discussion:
+      - "What specific outcomes must be achieved in 24 hours?"
+      - "Which controls are temporary containment versus long-term remediation?"
+      - "How will decisions and evidence be documented for post-incident review?"
+    expected_decisions:
+      - "Assign owners for 24-hour scope confirmation, comms updates, and hardening actions."
+      - "Decide cadence and participants for executive update checkpoints."
+    evaluation_criteria:
+      - "Plan includes measurable deliverables, owners, and timing."
+      - "Action items distinguish immediate risk reduction from durable improvements."
+    facilitator_notes: >
+      End by asking each function to state one committed action, owner, and deadline.
+    evidence_refs:
+      - "SIM-CLOUD-24H-PLAN-006"

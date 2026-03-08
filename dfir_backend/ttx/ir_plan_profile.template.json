@@ -1,0 +1,69 @@
+{
+  "severity_levels": [
+    {
+      "name": "SEV_1",
+      "definition": "Critical business impact requiring immediate executive engagement."
+    },
+    {
+      "name": "SEV_2",
+      "definition": "High impact requiring cross-functional incident response leadership."
+    },
+    {
+      "name": "SEV_3",
+      "definition": "Moderate impact managed by security and IT response teams."
+    }
+  ],
+  "roles_and_contacts": {
+    "incident_commander": {
+      "name": "",
+      "contact": ""
+    },
+    "legal": {
+      "name": "",
+      "contact": ""
+    },
+    "comms": {
+      "name": "",
+      "contact": ""
+    },
+    "IT": {
+      "name": "",
+      "contact": ""
+    },
+    "exec_sponsor": {
+      "name": "",
+      "contact": ""
+    }
+  },
+  "escalation_timeboxes": {
+    "notify_legal_within_minutes": 60,
+    "notify_exec_sponsor_within_minutes": 120,
+    "declare_incident_within_minutes": 30
+  },
+  "external_parties": {
+    "ir_retainer": {
+      "provider": "",
+      "contact": "",
+      "policy_or_contract_id": ""
+    },
+    "pr_firm": {
+      "provider": "",
+      "contact": "",
+      "policy_or_contract_id": ""
+    },
+    "cyber_insurance": {
+      "provider": "",
+      "contact": "",
+      "policy_or_contract_id": ""
+    }
+  },
+  "communications_channels": {
+    "war_room_tool": "",
+    "incident_ticketing": ""
+  },
+  "regulatory_notification": {
+    "applicable": false,
+    "deadline_hours": null,
+    "notes": ""
+  }
+}

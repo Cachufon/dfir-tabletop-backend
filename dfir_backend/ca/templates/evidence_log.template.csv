@@ -1,0 +1,2 @@
+evidence_id,case_id,collection_path,source_system,artifact_description,collection_timestamp_utc,collector,integrity_hash,storage_location,chain_of_custody_notes
+EV-0001,CASE-0001,Remote Collection,Endpoint A Memory Image,Full memory capture,2026-01-15T14:30:00Z,collector@example.com,SHA256:EXAMPLEHASHVALUE,evidence/CASE-0001/EV-0001.img,Transferred to secure vault by on-duty custodian

@@ -1,0 +1,3 @@
+EXAMPLE PLACEHOLDER FILE
+This placeholder represents normalized SaaS events mapped to normalized_data_contract.md.
+Expected fields include: timestamp, user, src_ip, action, target_object, outcome.

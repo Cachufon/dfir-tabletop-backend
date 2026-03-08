@@ -1,0 +1,246 @@
+version: 1
+category: "Web Application / API Breach"
+profiles:
+  EXEC_90:
+    duration_minutes: 90
+    description: Executive sprint for a web/API breach emphasizing governance decisions, containment priorities, and recovery commitments.
+    modules:
+      - id: EXEC90-M0
+        name: Opening and scenario orientation
+        timebox_min: 10
+        references: [REF_NIST_SP_800_61_R3, REF_OWASP_TOP10_2025]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: WEBAPI-001
+      - id: EXEC90-M1
+        name: Module 1 - Initial detection and triage
+        timebox_min: 15
+        references: [REF_OWASP_API_TOP10_2023_HOME, REF_NIST_SP_800_61_R3]
+        inject_slots:
+          - t_plus_min: 8
+            inject_id: WEBAPI-002
+          - t_plus_min: 16
+            inject_id: WEBAPI-003
+      - id: EXEC90-M2
+        name: Module 2 - Containment tradeoff decisions
+        timebox_min: 18
+        references: [REF_CISA_KEV_CATALOG, REF_NIST_SP_800_218_SSDF]
+        inject_slots:
+          - t_plus_min: 24
+            inject_id: WEBAPI-005
+          - t_plus_min: 33
+            inject_id: WEBAPI-006
+          - t_plus_min: 42
+            inject_id: WEBAPI-007
+      - id: EXEC90-M3
+        name: Module 3 - Exposure analysis, communications, and legal alignment
+        timebox_min: 18
+        references: [REF_NIST_SP_800_61_R3, REF_OWASP_API_TOP10_2023_HOME]
+        inject_slots:
+          - t_plus_min: 52
+            inject_id: WEBAPI-011
+      - id: EXEC90-M4
+        name: Module 4 - Recovery and integrity assurance
+        timebox_min: 14
+        references: [REF_NIST_SP_800_218_SSDF, REF_OWASP_TOP10_2025]
+        inject_slots:
+          - t_plus_min: 62
+            inject_id: WEBAPI-022
+      - id: EXEC90-M5
+        name: Module 5 - Improvement commitments
+        timebox_min: 8
+        references: [REF_NIST_SP_800_218_SSDF, REF_CISA_KEV_CATALOG]
+        inject_slots:
+          - t_plus_min: 72
+            inject_id: WEBAPI-027
+      - id: EXEC90-M6
+        name: Hotwash and executive actions
+        timebox_min: 7
+        references: [REF_NIST_SP_800_61_R3, REF_NIST_SP_800_218_SSDF]
+        inject_slots:
+          - t_plus_min: 80
+            inject_id: WEBAPI-028
+    completeness_rules:
+      must_include_tags: ["csf:Govern", "csf:Respond", "csf:Recover"]
+      min_injects: 10
+      max_injects: 12
+
+  HALF_DAY:
+    duration_minutes: 240
+    description: Half-day web/API breach exercise with deeper operational decisions across detection, containment, exposure, recovery, and program improvement.
+    modules:
+      - id: HALF-M0
+        name: Opening and command framing
+        timebox_min: 20
+        references: [REF_NIST_SP_800_61_R3, REF_OWASP_TOP10_2025]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: WEBAPI-001
+          - t_plus_min: 12
+            inject_id: WEBAPI-002
+      - id: HALF-M1
+        name: Module 1 - Initial detection and triage
+        timebox_min: 35
+        references: [REF_OWASP_API_TOP10_2023_HOME, REF_NIST_SP_800_61_R3]
+        inject_slots:
+          - t_plus_min: 24
+            inject_id: WEBAPI-003
+          - t_plus_min: 38
+            inject_id: WEBAPI-004
+          - t_plus_min: 52
+            inject_id: WEBAPI-005
+      - id: HALF-M2
+        name: Module 2 - Containment tradeoff decisions
+        timebox_min: 45
+        references: [REF_CISA_KEV_CATALOG, REF_NIST_SP_800_218_SSDF]
+        inject_slots:
+          - t_plus_min: 66
+            inject_id: WEBAPI-006
+          - t_plus_min: 80
+            inject_id: WEBAPI-007
+          - t_plus_min: 94
+            inject_id: WEBAPI-008
+          - t_plus_min: 108
+            inject_id: WEBAPI-009
+      - id: HALF-M3
+        name: Module 3 - Exposure analysis, communications, and legal alignment
+        timebox_min: 55
+        references: [REF_NIST_SP_800_61_R3, REF_OWASP_API_TOP10_2023_HOME]
+        inject_slots:
+          - t_plus_min: 122
+            inject_id: WEBAPI-010
+          - t_plus_min: 136
+            inject_id: WEBAPI-011
+          - t_plus_min: 150
+            inject_id: WEBAPI-013
+          - t_plus_min: 164
+            inject_id: WEBAPI-015
+          - t_plus_min: 178
+            inject_id: WEBAPI-019
+      - id: HALF-M4
+        name: Module 4 - Recovery and integrity assurance
+        timebox_min: 45
+        references: [REF_NIST_SP_800_218_SSDF, REF_OWASP_TOP10_2025]
+        inject_slots:
+          - t_plus_min: 192
+            inject_id: WEBAPI-022
+          - t_plus_min: 206
+            inject_id: WEBAPI-025
+      - id: HALF-M5
+        name: Module 5 - Improvement commitments
+        timebox_min: 25
+        references: [REF_NIST_SP_800_218_SSDF, REF_CISA_KEV_CATALOG]
+        inject_slots:
+          - t_plus_min: 220
+            inject_id: WEBAPI-026
+      - id: HALF-M6
+        name: Hotwash and next-cycle priorities
+        timebox_min: 15
+        references: [REF_NIST_SP_800_61_R3, REF_NIST_SP_800_218_SSDF]
+        inject_slots:
+          - t_plus_min: 230
+            inject_id: WEBAPI-028
+    completeness_rules:
+      must_include_tags: ["csf:Identify", "csf:Respond", "csf:Recover"]
+      min_injects: 16
+      max_injects: 22
+
+  FULL_DAY:
+    duration_minutes: 420
+    description: Full-day web/API breach scenario with full lifecycle pressure from first signal through long-tail remediation governance.
+    modules:
+      - id: FULL-M0
+        name: Opening and strategic context
+        timebox_min: 30
+        references: [REF_NIST_SP_800_61_R3, REF_OWASP_TOP10_2025]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: WEBAPI-001
+          - t_plus_min: 15
+            inject_id: WEBAPI-002
+          - t_plus_min: 30
+            inject_id: WEBAPI-003
+      - id: FULL-M1
+        name: Module 1 - Initial detection and triage
+        timebox_min: 60
+        references: [REF_OWASP_API_TOP10_2023_HOME, REF_NIST_SP_800_61_R3]
+        inject_slots:
+          - t_plus_min: 45
+            inject_id: WEBAPI-004
+          - t_plus_min: 60
+            inject_id: WEBAPI-005
+          - t_plus_min: 75
+            inject_id: WEBAPI-006
+          - t_plus_min: 90
+            inject_id: WEBAPI-007
+      - id: FULL-M2
+        name: Module 2 - Containment tradeoff decisions
+        timebox_min: 80
+        references: [REF_CISA_KEV_CATALOG, REF_NIST_SP_800_218_SSDF]
+        inject_slots:
+          - t_plus_min: 105
+            inject_id: WEBAPI-008
+          - t_plus_min: 120
+            inject_id: WEBAPI-009
+          - t_plus_min: 135
+            inject_id: WEBAPI-010
+          - t_plus_min: 150
+            inject_id: WEBAPI-011
+          - t_plus_min: 165
+            inject_id: WEBAPI-012
+      - id: FULL-M3
+        name: Module 3 - Exposure analysis, communications, and legal alignment
+        timebox_min: 100
+        references: [REF_NIST_SP_800_61_R3, REF_OWASP_API_TOP10_2023_HOME]
+        inject_slots:
+          - t_plus_min: 180
+            inject_id: WEBAPI-013
+          - t_plus_min: 195
+            inject_id: WEBAPI-014
+          - t_plus_min: 210
+            inject_id: WEBAPI-015
+          - t_plus_min: 225
+            inject_id: WEBAPI-016
+          - t_plus_min: 240
+            inject_id: WEBAPI-017
+          - t_plus_min: 255
+            inject_id: WEBAPI-018
+          - t_plus_min: 270
+            inject_id: WEBAPI-019
+      - id: FULL-M4
+        name: Module 4 - Recovery and integrity assurance
+        timebox_min: 80
+        references: [REF_NIST_SP_800_218_SSDF, REF_OWASP_TOP10_2025]
+        inject_slots:
+          - t_plus_min: 285
+            inject_id: WEBAPI-020
+          - t_plus_min: 300
+            inject_id: WEBAPI-021
+          - t_plus_min: 315
+            inject_id: WEBAPI-022
+          - t_plus_min: 330
+            inject_id: WEBAPI-023
+          - t_plus_min: 345
+            inject_id: WEBAPI-024
+      - id: FULL-M5
+        name: Module 5 - Improvement commitments
+        timebox_min: 40
+        references: [REF_NIST_SP_800_218_SSDF, REF_CISA_KEV_CATALOG]
+        inject_slots:
+          - t_plus_min: 360
+            inject_id: WEBAPI-025
+          - t_plus_min: 375
+            inject_id: WEBAPI-026
+          - t_plus_min: 390
+            inject_id: WEBAPI-027
+      - id: FULL-M6
+        name: Hotwash and governance closeout
+        timebox_min: 30
+        references: [REF_NIST_SP_800_61_R3, REF_NIST_SP_800_218_SSDF]
+        inject_slots:
+          - t_plus_min: 410
+            inject_id: WEBAPI-028
+    completeness_rules:
+      must_include_tags: ["csf:Govern", "csf:Identify", "csf:Respond", "csf:Recover"]
+      min_injects: 24
+      max_injects: 34

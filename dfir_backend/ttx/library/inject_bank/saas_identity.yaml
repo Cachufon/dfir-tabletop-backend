@@ -1,0 +1,649 @@
+version: 1
+injects:
+  - id: SAAS-IDENTITY-001
+    label: Identity-focused scenario opening and business context alignment
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, legal, communications]
+      csf_functions: [govern, identify]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [scenario_context, identity_risk, decision_scope]
+    inject:
+      delivery_method: facilitator_readout
+      audience: all_participants
+      participant_prompt: "At {CLIENT_ALIAS}, leadership is briefed on suspicious identity-provider activity affecting privileged and user accounts tied to {CRITICAL_SERVICES}. Confirm identity-risk priorities, business tolerances, and decision boundaries related to {LEADERSHIP_CONCERNS}."
+      expected_discussion:
+        - Aligning leadership and response teams on identity-centric business risk.
+        - Defining what constitutes unacceptable access disruption during containment.
+        - Confirming assumptions about admin account security and third-party integrations.
+      expected_decisions:
+        - Approve initial identity incident objectives and constraints.
+        - Assign ownership for identity-risk decision logging.
+      evaluation_criteria:
+        - Teams establish a shared identity incident framing before tactical actions.
+        - Decision boundaries are documented and acknowledged cross-functionally.
+      facilitator_notes: "Use this as the opening identity frame before escalation injects begin."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_CSWP29]
+
+  - id: SAAS-IDENTITY-002
+    label: MFA fatigue and push bombing decision gate
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, incident_response, it_operations]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1110]
+      complexity: medium
+      redline_topics: [mfa_fatigue, authentication_pressure, executive_tradeoffs]
+    inject:
+      delivery_method: sms_alert
+      audience: command_team
+      participant_prompt: "Multiple employees report repeated authentication prompts overnight, and one executive may have accidentally approved access. Determine immediate policy and communication decisions for handling MFA fatigue reports without creating broad operational disruption."
+      expected_discussion:
+        - Balancing rapid containment with acceptable workforce login friction.
+        - Determining whether to temporarily tighten prompt controls and approval paths.
+        - Defining user guidance to reduce unsafe approval behavior.
+      expected_decisions:
+        - Approve an immediate MFA abuse response directive.
+        - Set executive criteria for expanded authentication controls.
+      evaluation_criteria:
+        - Teams issue clear, non-technical direction that reduces risky approval behavior.
+        - Containment decisions explicitly weigh business continuity effects.
+      facilitator_notes: "Keep this inject decision-focused and avoid tool-specific feature details."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1110_BRUTE_FORCE]
+
+  - id: SAAS-IDENTITY-003
+    label: Impossible-travel and suspicious sign-in triage
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, security_operations, executive]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: medium
+      redline_topics: [impossible_travel, anomaly_triage, prioritization]
+    inject:
+      delivery_method: soc_ticket
+      audience: incident_response_and_soc
+      participant_prompt: "Security monitoring flags impossible-travel sign-ins and unusual device registrations for several finance and IT users. Prioritize account triage, validation steps, and executive update thresholds."
+      expected_discussion:
+        - Ranking suspected compromised accounts by business criticality.
+        - Confirming identity telemetry needed before high-impact containment.
+        - Defining thresholds for raising severity based on sign-in anomaly concentration.
+      expected_decisions:
+        - Approve account triage order and ownership.
+        - Set escalation trigger for identity incident severity increase.
+      evaluation_criteria:
+        - Triage approach is risk-based and repeatable.
+        - Escalation criteria are specific and actionable.
+      facilitator_notes: "Push participants to articulate confidence levels in identity telemetry."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: SAAS-IDENTITY-004
+    label: Anomalous privileged admin activity review
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [identify, govern, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [privileged_access, admin_anomaly, oversight]
+    inject:
+      delivery_method: status_report
+      audience: command_team
+      participant_prompt: "Logs show unusual privileged admin actions during an off-hours window, including policy changes and delegated access updates. Determine oversight actions, evidence validation, and interim restrictions for privileged operations."
+      expected_discussion:
+        - Reviewing safeguards for privileged changes during an active incident.
+        - Determining which admin functions require temporary dual-approval.
+        - Clarifying evidence confidence before attributing malicious intent.
+      expected_decisions:
+        - Approve temporary privileged-change governance controls.
+        - Assign expedited review of high-risk admin actions.
+      evaluation_criteria:
+        - Privileged controls are tightened without stopping essential operations.
+        - Review ownership and deadlines are clearly assigned.
+      facilitator_notes: "Drive discussion toward governance and accountability, not deep tooling specifics."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: SAAS-IDENTITY-005
+    label: Token and session abuse containment decision
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, executive, legal]
+      csf_functions: [identify, respond, protect]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [session_abuse, token_risk, containment_scope]
+    inject:
+      delivery_method: incident_bridge_update
+      audience: command_team
+      participant_prompt: "Investigators suspect active misuse of authenticated sessions and access tokens across multiple accounts. Decide whether to force broad session invalidation, targeted token revocation, or phased action, and justify tradeoffs."
+      expected_discussion:
+        - Comparing immediate broad revocation against targeted actions.
+        - Evaluating user productivity and customer impact from forced reauthentication.
+        - Determining evidence requirements for staged containment.
+      expected_decisions:
+        - Select a session/token containment strategy and timing.
+        - Define criteria for expanding or narrowing revocation scope.
+      evaluation_criteria:
+        - Strategy reflects clear risk-based rationale and business tradeoff analysis.
+        - Follow-on triggers for additional containment are documented.
+      facilitator_notes: "Keep language generic; do not assume specific vendor token mechanics."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: SAAS-IDENTITY-006
+    label: Privileged role assignment and account manipulation decision beat
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, executive, risk]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [role_abuse, account_manipulation, access_governance]
+    inject:
+      delivery_method: identity_audit_digest
+      audience: command_team
+      participant_prompt: "Identity audits identify recent privileged role assignments and account property changes that do not match change records. Decide how to validate legitimacy, roll back access, and preserve required business functions."
+      expected_discussion:
+        - Determining rollback priorities for questionable privilege grants.
+        - Coordinating emergency access needs with strict approval controls.
+        - Establishing audit evidence needed for post-incident accountability.
+      expected_decisions:
+        - Approve immediate review and rollback workflow for suspect changes.
+        - Set emergency exception process for mission-critical access.
+      evaluation_criteria:
+        - Access rollback process is controlled and traceable.
+        - Exception handling prevents unmanaged privileged persistence.
+      facilitator_notes: "Probe whether governance keeps pace with fast-moving privilege risks."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: SAAS-IDENTITY-007
+    label: SaaS app consent and OAuth authorization risk assessment
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, legal, executive]
+      csf_functions: [identify, govern, respond]
+      mitre_attack: [ATTACK:T1078, ATTACK:T1566]
+      complexity: high
+      redline_topics: [app_consent, oauth_risk, third_party_access]
+    inject:
+      delivery_method: threat_intel_note
+      audience: command_team
+      participant_prompt: "A newly authorized third-party application appears to have broad access permissions to user data and mailboxes. Assess whether to revoke app consent globally, by cohort, or after additional validation, and address legal/compliance implications."
+      expected_discussion:
+        - Evaluating risk from over-permissive delegated application access.
+        - Balancing immediate revocation against workflow dependencies.
+        - Determining legal review needs for potential data exposure.
+      expected_decisions:
+        - Approve app authorization containment approach.
+        - Trigger legal/compliance review threshold for delegated access abuse.
+      evaluation_criteria:
+        - App-risk decisions are timely and proportionate to potential impact.
+        - Governance includes compliance and operational owners.
+      facilitator_notes: "Keep application-consent discussion high level and platform neutral."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_ATTACK_T1566_PHISHING]
+
+  - id: SAAS-IDENTITY-008
+    label: Credential reset strategy and timing
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [protect, respond, recover]
+      mitre_attack: [ATTACK:T1110, ATTACK:T1078]
+      complexity: medium
+      redline_topics: [credential_reset, workforce_impact, phased_actions]
+    inject:
+      delivery_method: operations_update
+      audience: command_team
+      participant_prompt: "With compromise scope still uncertain, leadership must decide whether to reset credentials for all users, only privileged groups, or only impacted cohorts. Define timing, communications, and contingency support requirements."
+      expected_discussion:
+        - Estimating productivity impacts of broad credential resets.
+        - Defining support models for large-scale access recovery.
+        - Aligning reset strategy with evolving investigation confidence.
+      expected_decisions:
+        - Approve credential reset scope and deployment sequence.
+        - Establish business continuity fallback for locked-out users.
+      evaluation_criteria:
+        - Reset strategy is operationally feasible and risk-informed.
+        - Workforce communication and support needs are addressed.
+      facilitator_notes: "Encourage participants to tie reset scope to evidence maturity."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1110_BRUTE_FORCE]
+
+  - id: SAAS-IDENTITY-009
+    label: MFA enforcement hardening during active response
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [protect, respond]
+      mitre_attack: [ATTACK:T1110]
+      complexity: medium
+      redline_topics: [mfa_enforcement, policy_change, access_friction]
+    inject:
+      delivery_method: policy_change_request
+      audience: identity_and_command_team
+      participant_prompt: "Identity engineers propose immediate stricter authentication controls for remote and privileged access. Decide approval criteria, rollout sequencing, and exception handling during the incident."
+      expected_discussion:
+        - Evaluating security gain versus urgent business access needs.
+        - Determining how to approve temporary access exceptions.
+        - Planning user notification to reduce confusion and help desk load.
+      expected_decisions:
+        - Approve or defer stricter MFA enforcement actions.
+        - Define expiration and review cadence for temporary exceptions.
+      evaluation_criteria:
+        - Enforcement decisions include governance and operational safeguards.
+        - Exception pathways are controlled and time-bound.
+      facilitator_notes: "Stress practical tradeoffs between speed and stability."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_ATTACK_T1110_BRUTE_FORCE]
+
+  - id: SAAS-IDENTITY-010
+    label: High-level mailbox forwarding and rules discovery
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, legal, communications]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: medium
+      redline_topics: [mailbox_rules, forwarding_risk, discovery_scope]
+    inject:
+      delivery_method: analyst_brief
+      audience: response_and_legal_leads
+      participant_prompt: "Investigators find potentially unauthorized mailbox forwarding settings and suspicious rules in executive accounts. Determine discovery depth, legal hold considerations, and notification implications."
+      expected_discussion:
+        - Deciding targeted versus broad mailbox rules review scope.
+        - Coordinating evidence handling and legal oversight.
+        - Evaluating potential exposure and stakeholder communications timing.
+      expected_decisions:
+        - Approve mailbox discovery scope and preservation approach.
+        - Set threshold for escalating to formal legal notification review.
+      evaluation_criteria:
+        - Discovery actions are prioritized and legally defensible.
+        - Decision points for escalation are explicit.
+      facilitator_notes: "Focus on governance and discovery decisions, not forensic minutiae."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: SAAS-IDENTITY-011
+    label: Access log expansion and timeline reconciliation
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, security_operations, risk]
+      csf_functions: [identify, respond, recover]
+      mitre_attack: [ATTACK:T1078]
+      complexity: medium
+      redline_topics: [access_logs, timeline_confidence, investigation_scope]
+    inject:
+      delivery_method: investigation_update
+      audience: incident_command
+      participant_prompt: "Correlated identity and SaaS access logs reveal additional questionable sessions beyond the original user set. Decide whether to expand investigation scope and adjust severity, resource allocation, and reporting cadence."
+      expected_discussion:
+        - Interpreting confidence and gaps in available log data.
+        - Assessing staffing and external support requirements for scope growth.
+        - Recalibrating leadership updates as uncertainty increases.
+      expected_decisions:
+        - Approve expanded access log review scope.
+        - Update severity and resourcing assumptions based on new findings.
+      evaluation_criteria:
+        - Scope decisions are evidence-driven and operationally realistic.
+        - Command updates reflect changing confidence and impact.
+      facilitator_notes: "Press for explicit rationale on scope expansion timing."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_OVERVIEW_SP1299]
+
+  - id: SAAS-IDENTITY-012
+    label: Identity-specific executive communication trigger
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, communications, legal]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [executive_comms, identity_incident_updates, stakeholder_alignment]
+    inject:
+      delivery_method: executive_prompt
+      audience: executive_and_comms
+      participant_prompt: "Board leadership asks for an immediate summary of identity compromise risk, current containment actions, and expected disruption to business operations. Decide update content, owner, and frequency."
+      expected_discussion:
+        - Selecting business-relevant identity risk indicators for leadership.
+        - Defining communication approvals under evolving facts.
+        - Aligning operational and executive narratives.
+      expected_decisions:
+        - Approve executive identity update framework.
+        - Assign communication owner and recurring briefing cadence.
+      evaluation_criteria:
+        - Leadership communications remain consistent and decision-oriented.
+        - Information governance is clear and repeatable.
+      facilitator_notes: "This inject can lead directly into core communications governance decisions."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_CISA_CTEP_PACKAGES]
+
+  - id: SAAS-IDENTITY-013
+    label: Identity incident legal readiness trigger
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [legal, executive, incident_response]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [legal_readiness, evidence_thresholds, notification_prep]
+    inject:
+      delivery_method: counsel_request
+      audience: legal_and_command_team
+      participant_prompt: "General counsel requests a documented basis for whether unauthorized identity access may trigger customer, contractual, or regulatory obligations. Define legal evidence thresholds and next review gates."
+      expected_discussion:
+        - Identifying identity-specific facts needed for legal determinations.
+        - Establishing review checkpoints synchronized with investigation updates.
+        - Coordinating legal, technical, and communications responsibilities.
+      expected_decisions:
+        - Approve legal evidence package requirements.
+        - Set timing for formal legal decision checkpoint.
+      evaluation_criteria:
+        - Legal readiness workstream is integrated into command operations.
+        - Evidence requirements are specific and actionable.
+      facilitator_notes: "Use this to flow into core legal notification decision gates."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_CSWP29]
+
+  - id: SAAS-IDENTITY-014
+    label: Identity compromise employee communications trigger
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [communications, hr, executive]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [employee_messaging, guidance_quality, behavior_change]
+    inject:
+      delivery_method: internal_comms_draft
+      audience: communications_and_hr
+      participant_prompt: "Employees are requesting guidance after hearing about account lockouts and repeated sign-in prompts. Decide what identity-safe behaviors to communicate now and how to handle rumor control."
+      expected_discussion:
+        - Crafting concise user actions for suspected identity abuse.
+        - Sequencing communications with ongoing containment steps.
+        - Defining channels for rumor correction and reporting.
+      expected_decisions:
+        - Approve employee identity-safety communication content.
+        - Set publication cadence and ownership for updates.
+      evaluation_criteria:
+        - Messaging provides actionable behavior guidance without speculation.
+        - Communication process supports consistent internal narratives.
+      facilitator_notes: "This identity-focused comms inject can precede broader core internal updates."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_CTEP_FACT_SHEET]
+
+  - id: SAAS-IDENTITY-015
+    label: Customer and partner identity assurance trigger
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [communications, legal, executive, vendor_management]
+      csf_functions: [govern, respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [external_assurance, trust_management, partner_coordination]
+    inject:
+      delivery_method: partner_inquiry
+      audience: legal_comms_executive
+      participant_prompt: "Key partners ask whether identity compromise could affect shared workflows and federated access. Decide if and when to issue targeted assurance notices and what technical controls to disclose."
+      expected_discussion:
+        - Determining assurance message scope and confidence limits.
+        - Coordinating partner communications with legal review.
+        - Balancing transparency with ongoing investigative sensitivity.
+      expected_decisions:
+        - Approve partner communication trigger criteria.
+        - Assign owner for partner coordination and follow-up.
+      evaluation_criteria:
+        - External assurance decisions are risk-based and coordinated.
+        - Messaging aligns with known facts and legal posture.
+      facilitator_notes: "Use as an identity-specific lead-in to broader external communications governance."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_CISA_CTEP_PACKAGES]
+
+  - id: SAAS-IDENTITY-016
+    label: Incident support surge and access restoration planning
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [it_operations, incident_response, executive]
+      csf_functions: [respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [support_surge, access_restoration, continuity]
+    inject:
+      delivery_method: service_desk_report
+      audience: command_team
+      participant_prompt: "Containment actions generate high volumes of lockout and access restoration requests. Decide staffing surge priorities, restoration sequencing, and service-level expectations for critical business units."
+      expected_discussion:
+        - Prioritizing restoration for high-impact business functions.
+        - Defining temporary support models and escalation paths.
+        - Establishing fairness and transparency in access restoration queues.
+      expected_decisions:
+        - Approve support surge plan and critical-user prioritization logic.
+        - Set restoration service targets and reporting cadence.
+      evaluation_criteria:
+        - Restoration plan supports continuity while maintaining security controls.
+        - Roles and escalation ownership are clearly assigned.
+      facilitator_notes: "Use this inject to test operational stamina beyond initial containment."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_OVERVIEW_SP1299]
+
+  - id: SAAS-IDENTITY-017
+    label: Suspected credential phishing precursor analysis
+    tags:
+      categories: [saas_identity]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, security_operations, communications]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1566, ATTACK:T1078]
+      complexity: medium
+      redline_topics: [phishing_precursor, root_cause, user_protection]
+    inject:
+      delivery_method: threat_hunt_note
+      audience: response_team
+      participant_prompt: "The threat team identifies a likely phishing campaign targeting sign-in pages prior to suspicious account activity. Decide immediate user protection messaging and controls while attribution remains preliminary."
+      expected_discussion:
+        - Connecting probable phishing exposure to identity compromise hypotheses.
+        - Choosing urgent user-protection actions and warnings.
+        - Determining what confidence is required for broader announcements.
+      expected_decisions:
+        - Approve targeted anti-phishing user advisory content.
+        - Prioritize affected groups for additional monitoring and support.
+      evaluation_criteria:
+        - User protection actions are timely and proportionate.
+        - Communications avoid overstatement while reducing risk.
+      facilitator_notes: "Map this inject to initial-access decision pressure without overclaiming certainty."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1566_PHISHING]
+
+  - id: SAAS-IDENTITY-018
+    label: Brute-force pattern response for exposed accounts
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1110]
+      complexity: medium
+      redline_topics: [brute_force, lockout_policy, false_positive_tradeoffs]
+    inject:
+      delivery_method: detection_alert
+      audience: identity_operations
+      participant_prompt: "Authentication systems show elevated failed sign-in attempts against high-value users. Determine lockout strategy, risk-based blocking, and support readiness to manage both malicious and legitimate attempts."
+      expected_discussion:
+        - Selecting controls that suppress attacks without crippling access.
+        - Weighing lockout duration and threshold options.
+        - Coordinating user support for false-positive lockouts.
+      expected_decisions:
+        - Approve brute-force mitigation policy adjustments.
+        - Set monitoring and reassessment cadence for lockout impacts.
+      evaluation_criteria:
+        - Mitigation plan addresses both security efficacy and operational burden.
+        - Reassessment criteria are clear and measurable.
+      facilitator_notes: "Keep control discussion policy-level rather than implementation-level."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_ATTACK_T1110_BRUTE_FORCE]
+
+  - id: SAAS-IDENTITY-019
+    label: Security monitoring gap and telemetry retention decision
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, risk, executive]
+      csf_functions: [identify, govern, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [telemetry_gaps, retention, assurance]
+    inject:
+      delivery_method: risk_memo
+      audience: executive_and_risk
+      participant_prompt: "Investigators discover incomplete identity and SaaS telemetry retention for part of the suspected compromise window. Decide interim risk statements, compensating analysis, and post-incident improvement commitments."
+      expected_discussion:
+        - Handling uncertainty when key identity evidence is unavailable.
+        - Defining compensating sources for timeline confidence.
+        - Framing commitments for retention and monitoring improvements.
+      expected_decisions:
+        - Approve interim risk posture statement.
+        - Set post-incident telemetry improvement owner and milestones.
+      evaluation_criteria:
+        - Team communicates uncertainty responsibly without paralysis.
+        - Improvement commitments are concrete and accountable.
+      facilitator_notes: "Use to bridge response decisions into recovery and lessons planning."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_OVERVIEW_SP1299]
+
+  - id: SAAS-IDENTITY-020
+    label: Federated access trust boundary containment decision
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, vendor_management, executive, legal]
+      csf_functions: [identify, respond, govern]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [federation_risk, trust_boundaries, partner_impact]
+    inject:
+      delivery_method: architecture_brief
+      audience: command_team
+      participant_prompt: "Because federated identity trust extends to partner-connected services, leadership must decide whether to restrict federation pathways temporarily. Evaluate cross-organization impact, legal obligations, and rollback conditions."
+      expected_discussion:
+        - Identifying the minimum federation restrictions needed for risk reduction.
+        - Estimating partner and customer workflow disruption.
+        - Defining legal/commercial coordination requirements.
+      expected_decisions:
+        - Approve federated trust boundary containment scope.
+        - Set criteria for restoring restricted federation pathways.
+      evaluation_criteria:
+        - Containment decisions include partner impact and recovery logic.
+        - Governance and accountability are explicit.
+      facilitator_notes: "Push participants to articulate restoration gates before restricting trust paths."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: SAAS-IDENTITY-021
+    label: Pre-notification readiness for identity data exposure
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [legal, communications, executive]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [pre_notification, evidence_quality, decision_readiness]
+    inject:
+      delivery_method: legal_status_check
+      audience: legal_and_executive
+      participant_prompt: "Legal and communications teams request a readiness decision on whether available identity evidence is sufficient to prepare external notifications. Determine threshold criteria, draft timing, and approval dependencies."
+      expected_discussion:
+        - Defining notification preparation triggers under incomplete facts.
+        - Coordinating legal and communications drafting workflows.
+        - Managing reputational risk from early or delayed preparation.
+      expected_decisions:
+        - Approve pre-notification readiness posture.
+        - Set cross-functional checkpoint for final notification decision.
+      evaluation_criteria:
+        - Readiness decision reflects legal and factual rigor.
+        - Drafting governance is clear and time-bound.
+      facilitator_notes: "Use this inject as an identity-specific ramp into core external/legal decision points."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_CISA_CTEP_FACT_SHEET]
+
+  - id: SAAS-IDENTITY-022
+    label: Recovery validation for restored identity controls
+    tags:
+      categories: [saas_identity]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [recover, protect]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [recovery_validation, control_effectiveness, reintroduction_risk]
+    inject:
+      delivery_method: recovery_checkpoint
+      audience: command_team
+      participant_prompt: "As containment stabilizes, teams must validate whether restored identity controls, account states, and access paths are safe for steady-state operations. Decide acceptance criteria and remaining risk exceptions."
+      expected_discussion:
+        - Defining objective criteria for recovery completeness.
+        - Identifying residual risk requiring temporary compensating controls.
+        - Establishing executive sign-off requirements for normalization.
+      expected_decisions:
+        - Approve identity recovery acceptance criteria.
+        - Document residual risk exceptions and remediation owners.
+      evaluation_criteria:
+        - Recovery decisions are measurable and risk-informed.
+        - Residual risks are tracked with accountable owners.
+      facilitator_notes: "Transition the room from urgent response into disciplined recovery governance."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_NIST_CSF_2_0_CSWP29]
+
+  - id: SAAS-IDENTITY-023
+    label: Lessons learned on identity governance and architecture
+    tags:
+      categories: [saas_identity]
+      package_profiles: [full_day]
+      audiences: [executive, risk, incident_response, it_operations]
+      csf_functions: [govern, recover, identify]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [lessons_learned, governance_improvement, architecture_debt]
+    inject:
+      delivery_method: hotwash_prompt
+      audience: all_participants
+      participant_prompt: "Leadership requests a prioritized improvement plan from the identity incident, including governance, detection, access controls, and resilience measures. Determine near-term and strategic corrective actions."
+      expected_discussion:
+        - Identifying top identity governance and control gaps revealed by the scenario.
+        - Prioritizing actions by risk reduction and implementation feasibility.
+        - Defining ownership and timelines for sustained improvement.
+      expected_decisions:
+        - Approve prioritized identity improvement roadmap.
+        - Assign executive sponsor and tracking cadence for corrective actions.
+      evaluation_criteria:
+        - Improvement plan is prioritized, owned, and time-bound.
+        - Lessons capture spans governance, operations, and user behavior.
+      facilitator_notes: "Use to close full-day lifecycle emphasis with concrete follow-through commitments."
+      evidence_refs: [REF_NIST_CSF_2_0_CSWP29, REF_CISA_CTEP_PACKAGES]
+
+  - id: SAAS-IDENTITY-024
+    label: Long-term resilience investments and policy updates
+    tags:
+      categories: [saas_identity]
+      package_profiles: [full_day]
+      audiences: [executive, risk, legal, it_operations]
+      csf_functions: [govern, recover, protect]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [resilience_investment, policy_updates, risk_acceptance]
+    inject:
+      delivery_method: executive_decision_memo
+      audience: executive_team
+      participant_prompt: "Executives must decide which identity resilience investments and policy updates to fund immediately versus defer. Evaluate risk acceptance, budget posture, and measurable outcomes from each option."
+      expected_discussion:
+        - Comparing short-term wins to long-term architecture improvements.
+        - Setting policy modernization priorities tied to observed incident gaps.
+        - Aligning funding decisions with business risk appetite.
+      expected_decisions:
+        - Approve prioritized identity resilience investment set.
+        - Document deferred risks and executive risk acceptance rationale.
+      evaluation_criteria:
+        - Investment decisions include measurable security and business outcomes.
+        - Deferred risk decisions are explicit and governed.
+      facilitator_notes: "Conclude full-day path with strategy-level commitments anchored in incident learning."
+      evidence_refs: [REF_NIST_CSF_2_0_OVERVIEW_SP1299, REF_NIST_SP_800_61_R3]

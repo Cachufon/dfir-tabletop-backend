@@ -1,0 +1,218 @@
+version: 1
+
+scenario:
+  id: ttx-insider-exfil-001
+  title: "Insider Data Exfiltration During Offboarding"
+  category: "Insider / Data Exfiltration"
+  duration_minutes: 90
+  audiences:
+    - "Executive"
+    - "Security"
+    - "IT"
+    - "Legal"
+    - "HR"
+    - "Business Owner"
+  summary: >
+    A discussion-based scenario in which an employee (or contractor) with legitimate access exfiltrates
+    sensitive data shortly before departure. The exercise tests decision rights, HR/Legal coordination,
+    evidence preservation for civil/regulatory support, and notification posture under uncertainty.
+  threat_context: >
+    A trusted insider uses valid access and common tools (cloud sync, email forwarding, downloads,
+    removable media) to copy sensitive data. Detection is noisy and attribution is uncertain.
+    Response requires careful coordination to preserve evidence and reduce business/legal risk.
+  business_context: >
+    The organization stores sensitive client and internal information in collaboration platforms and
+    shared repositories. Brand trust and contractual commitments are high. HR and Legal involvement is
+    required to manage employee actions, preserve evidence, and protect privileged communications.
+  objectives:
+    - "Validate cross-functional coordination between Security, IT, HR, Legal, and leadership."
+    - "Exercise decision rights for access suspension, containment scope, and employee engagement."
+    - "Test evidence preservation and documentation practices suitable for civil/regulatory follow-up."
+    - "Identify notification decision points (clients/partners/regulators) under uncertainty."
+  assumptions:
+    - "Identity and SaaS audit logging are available upon request (discussion-based; no live analysis)."
+    - "HR can provide offboarding status and manage employee communication."
+    - "Legal can advise on preservation, privilege, and notification posture."
+  constraints:
+    - "This is a discussion exercise only; no systems are touched."
+    - "Participants should state assumptions when information is missing."
+  success_criteria:
+    - "Participants identify an incident lead/owner and define immediate priorities."
+    - "Access and preservation actions are time-boxed with explicit owners and rationale."
+    - "HR/Legal coordination is timely and privilege boundaries are acknowledged."
+    - "Notification decision points and approval workflow are documented."
+  pre_read:
+    - "Know who can authorize access suspension and what approvals are required."
+    - "Know the basic employee offboarding process and who owns it."
+    - "Know where sensitive data typically resides (high level)."
+  out_of_scope:
+    - "Criminal investigation steps or law enforcement engagement."
+    - "Deep technical forensics of devices during the exercise."
+  facilitator_notes: >
+    Keep the discussion centered on decision rights, HR/Legal coordination, and evidence preservation.
+    If participants dive into technical details, ask what decision they are trying to make and what
+    specific information they would request. Use branching to emphasize business disruption if access is
+    suspended broadly, or risk expansion if containment is delayed.
+
+injects:
+  - id: i01
+    t_plus_min: 0
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+      - "Business Owner"
+    participant_prompt: >
+      A monitoring alert indicates unusually large downloads from a sensitive shared repository by a single user.
+      The user is a high-performing employee on a key team. The business owner says the employee is scheduled to
+      leave the company within two weeks.
+    expected_discussion:
+      - "Who owns incident command right now and how do we classify severity?"
+      - "What is the initial hypothesis (benign vs risky) and what data do we request first?"
+      - "Who must be notified internally (HR, Legal, leadership) and when?"
+    expected_decisions:
+      - "Assign incident lead and scribe roles for the response bridge."
+      - "Decide immediate containment posture (monitor vs restrict access) and thresholds for escalation."
+      - "Decide whether to engage HR and Legal immediately."
+    evaluation_criteria:
+      - "Clear ownership and time-boxed next steps."
+      - "Appropriate early engagement of HR/Legal given insider risk."
+    facilitator_notes: >
+      If asked for context: state that downloads occurred outside normal working hours and included client-labeled folders.
+    evidence_refs:
+      - "SIM-SaaS-DOWNLOAD-ALERT-001"
+
+  - id: i02
+    t_plus_min: 12
+    delivery_method: "Chat/Email"
+    audience:
+      - "HR"
+      - "Legal"
+      - "Security"
+      - "Executive"
+    participant_prompt: >
+      HR confirms the employee has accepted an offer elsewhere and is expected to be offboarded soon.
+      HR asks whether Security has evidence of wrongdoing and whether HR should speak to the employee now.
+      Legal asks what preservation steps are being taken.
+    expected_discussion:
+      - "What is the decision framework for speaking to the employee vs silent monitoring?"
+      - "How do we preserve evidence while minimizing employee relations risk?"
+      - "What privilege boundaries should be established for communications and notes?"
+    expected_decisions:
+      - "Decide whether HR engages the employee now, and what is said (approved messaging)."
+      - "Decide evidence preservation actions (log retention, legal hold, documentation owners)."
+      - "Decide how to document under privilege (if applicable) and who is included in sensitive threads."
+    evaluation_criteria:
+      - "HR/Legal coordination is timely and structured."
+      - "Preservation and documentation actions are explicit with owners."
+    facilitator_notes: >
+      If participants are unsure about privilege handling, prompt: "Who should be in the core thread and how do you label notes?"
+
+  - id: i03
+    t_plus_min: 25
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      IT reports the user enabled personal email forwarding rules and shared multiple sensitive documents
+      externally using a personal email address. A new personal cloud sync application appears to have
+      been used on the user’s workstation (unconfirmed).
+    expected_discussion:
+      - "Do we suspend access immediately or scope first?"
+      - "What are the minimum containment steps that reduce risk but limit disruption?"
+      - "What additional data do we request (identity logs, email audit, file share audit)?"
+    expected_decisions:
+      - "Decide containment actions (disable forwarding, remove external shares, revoke sessions, restrict downloads)."
+      - "Decide whether to suspend the account and how broadly (least privilege approach)."
+      - "Assign owners for scoping tasks and a time-box for initial scope assessment."
+    evaluation_criteria:
+      - "Containment decisions reflect explicit tradeoffs and are time-boxed."
+      - "Scope plan is clear and owner-assigned."
+    facilitator_notes: >
+      If participants delay containment, emphasize potential continued exfiltration in later injects.
+    evidence_refs:
+      - "SIM-MAIL-FWD-RULE-001"
+      - "SIM-EXT-SHARE-ALERT-002"
+
+  - id: i04
+    t_plus_min: 40
+    delivery_method: "Chat/Email"
+    audience:
+      - "Executive"
+      - "Legal"
+      - "Security"
+      - "HR"
+    participant_prompt: >
+      A client success manager reports a client is concerned that their confidential information may have been shared
+      because the employee recently referenced details in a conversation that were not part of the employee’s normal duties.
+      Leadership asks: "Is this a breach? Do we need to notify anyone?"
+    expected_discussion:
+      - "What constitutes a breach vs suspicion, and how do we handle uncertainty?"
+      - "What are the notification decision points (clients/partners/regulators/contracts)?"
+      - "What can we responsibly say internally and externally right now?"
+    expected_decisions:
+      - "Decide provisional classification (suspected incident) and whether to initiate formal IR plan activation."
+      - "Decide notification posture (prepare drafts vs wait for confirmation) and approval workflow."
+      - "Assign an owner to compile contractual notification triggers and timelines."
+    evaluation_criteria:
+      - "Uncertainty is handled explicitly and tracked as open questions."
+      - "Decision rights for notifications and comms are clear."
+    facilitator_notes: >
+      Push for concrete wording: "What do you say to the client today, and who approves it?"
+    evidence_refs:
+      - "SIM-CLIENT-CONCERN-001"
+
+  - id: i05
+    t_plus_min: 55
+    delivery_method: "Verbal"
+    audience:
+      - "HR"
+      - "Legal"
+      - "Security"
+      - "IT"
+    participant_prompt: >
+      HR schedules an offboarding meeting earlier than planned. The employee requests access to complete "handoff work"
+      and asks to export additional project files. Meanwhile, Security notes the user accessed additional sensitive folders
+      after the earlier alerts.
+    expected_discussion:
+      - "Do we allow continued access under supervision, restrict access, or cut off immediately?"
+      - "How do we preserve evidence while proceeding with offboarding?"
+      - "What are acceptable communications to the employee and team to reduce rumor and retaliation risk?"
+    expected_decisions:
+      - "Decide access posture during offboarding (restrict/monitor/suspend) and who authorizes it."
+      - "Decide preservation actions tied to the employee endpoint and accounts (what to retain; who owns)."
+      - "Decide internal messaging to relevant managers/teams (role-owned and approved)."
+    evaluation_criteria:
+      - "Access decisions are risk-based and time-boxed."
+      - "Preservation plan is specific and role-owned."
+    facilitator_notes: >
+      If participants propose taking custody of a personal device, remind: keep discussion focused on civil/regulatory support and internal controls.
+
+  - id: i06
+    t_plus_min: 70
+    delivery_method: "Chat/Email"
+    audience:
+      - "Executive"
+      - "Legal"
+      - "Security"
+      - "Business Owner"
+    participant_prompt: >
+      A partner requests written assurance that their data is protected and asks whether the departing employee
+      had access to their sensitive information. Leadership asks for a 24-hour plan: what will we know, what will we do,
+      and what will we communicate?
+    expected_discussion:
+      - "What can we assert confidently right now vs what is still unknown?"
+      - "What is the plan to confirm scope within 24 hours?"
+      - "What is the governance for external statements and written assurances?"
+    expected_decisions:
+      - "Assign owners for a 24-hour scope assessment plan (accounts, repositories, external shares, email)."
+      - "Decide communications posture for the partner request (approved language + who signs off)."
+      - "Capture improvement items (monitoring, offboarding controls, DLP/visibility gaps)."
+    evaluation_criteria:
+      - "Clear 24-hour plan with owners and measurable outcomes."
+      - "Communications are governed and do not overclaim."
+    facilitator_notes: >
+      Use this inject to force concrete next steps: "What will be true in 24 hours if this is going well?"
+    evidence_refs:
+      - "SIM-PARTNER-ASSURANCE-REQ-001"

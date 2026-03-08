@@ -1,0 +1,167 @@
+version: 1
+
+scenario:
+  id: ttx-third-party-001
+  title: "Vendor Integration Compromise with Customer Assurance Pressure"
+  category: "Third-Party / Supply Chain"
+  duration_minutes: 90
+  audiences:
+    - "Security"
+    - "IT"
+    - "Procurement/Vendor Mgmt"
+    - "Legal/PR"
+    - "Executive"
+  summary: >
+    A discussion-based scenario where a key vendor reports compromise and suspicious activity appears via
+    integration accounts. The exercise tests access suspension decisions, vendor coordination,
+    contractual obligations, and customer communications.
+  threat_context: >
+    A third-party service provider is breached, and existing trust paths (SSO/API integration) become
+    potential attack vectors into the organization environment.
+  business_context: >
+    The organization depends on vendor integrations for daily operations and customer delivery. Disabling
+    vendor connectivity may disrupt service and requires cross-functional approval.
+  objectives:
+    - "Validate decision rights for disabling third-party access under uncertain scope."
+    - "Exercise coordination between Security, Vendor Management, Legal/PR, and Executive leadership."
+    - "Test communication and notification sequencing to customers and partners."
+  assumptions:
+    - "Vendor contacts and contractual escalation paths are documented and reachable."
+    - "Security and IT can disable integration access with change-control exception if needed."
+    - "Legal/PR can review external messaging on short notice."
+  constraints:
+    - "This is a discussion exercise only; no production integrations are modified."
+    - "Participants should identify unknowns and assign owners to close them."
+  success_criteria:
+    - "A clear decision is made on vendor access posture with business-impact rationale."
+    - "Vendor information requests and sharing boundaries are documented and owner-assigned."
+    - "Customer communication posture is approved with explicit sign-off roles."
+  pre_read:
+    - "Know active critical vendor integrations and business owners."
+    - "Know contractual obligations for incident notifications involving vendors."
+  out_of_scope:
+    - "Full legal interpretation of contract language beyond tabletop decision needs."
+  facilitator_notes: >
+    Keep pressure on sequencing: what to do first, what to communicate now, and what must wait for
+    confirmation. Ask for named owners whenever actions are proposed.
+
+injects:
+  - id: i01
+    t_plus_min: 0
+    delivery_method: "Chat/Email"
+    audience:
+      - "Security"
+      - "Procurement/Vendor Mgmt"
+      - "IT"
+    participant_prompt: >
+      A critical SaaS vendor notifies your team that they experienced unauthorized access and recommends
+      customers rotate integration tokens. Internal logs show recent API calls from the vendor integration
+      account outside normal hours.
+    expected_discussion:
+      - "Do we disable integration access immediately or wait for more vendor details?"
+      - "Who leads coordination with the vendor and internal stakeholders?"
+      - "What evidence is needed to estimate potential impact quickly?"
+    expected_decisions:
+      - "Decide immediate integration access posture and compensating controls."
+      - "Assign vendor liaison and internal incident commander."
+    evaluation_criteria:
+      - "Decision-making is timely and role ownership is explicit."
+      - "Initial evidence requests are prioritized and actionable."
+    evidence_refs:
+      - "SIM-VENDOR-NOTICE-001"
+
+  - id: i02
+    t_plus_min: 18
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+      - "Executive"
+    participant_prompt: >
+      IT reports that disabling the integration will interrupt a customer-facing workflow used by high-value
+      accounts. Business leadership requests a continuity option before full shutdown.
+    expected_discussion:
+      - "What is the minimum-risk continuity path if full disablement is delayed?"
+      - "Who approves risk acceptance for temporary continued operation?"
+      - "How do we monitor for abuse while continuity measures are in place?"
+    expected_decisions:
+      - "Decide whether to fully disable, partially restrict, or temporarily continue integration access."
+      - "Decide escalation/approval path for business risk acceptance."
+    evaluation_criteria:
+      - "Tradeoffs between security risk and continuity are explicit."
+      - "Monitoring and review checkpoints are defined for temporary controls."
+
+  - id: i03
+    t_plus_min: 35
+    delivery_method: "Chat/Email"
+    audience:
+      - "Legal/PR"
+      - "Executive"
+      - "Procurement/Vendor Mgmt"
+      - "Security"
+    participant_prompt: >
+      The vendor requests detailed internal logs and asks for a joint public statement. A major customer also
+      asks whether your environment was impacted and requests a written response by end of day.
+    expected_discussion:
+      - "What information can be shared with the vendor and under what controls?"
+      - "Do we issue a joint statement now or defer pending stronger facts?"
+      - "What commitments can be made to customers without overstatement?"
+    expected_decisions:
+      - "Decide data-sharing boundaries and approval workflow for vendor requests."
+      - "Decide customer communication posture and response ownership."
+    evaluation_criteria:
+      - "Information-sharing decisions consider legal and contractual constraints."
+      - "Customer messaging is consistent and fact-based."
+    evidence_refs:
+      - "SIM-VENDOR-LOG-REQUEST-002"
+      - "SIM-CUSTOMER-ASSURANCE-003"
+
+  - id: i04
+    t_plus_min: 58
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "IT"
+      - "Procurement/Vendor Mgmt"
+      - "Executive"
+    participant_prompt: >
+      New telemetry indicates suspicious authentication attempts through a secondary vendor integration
+      using a shared administrative account pattern. Scope may extend beyond the initial vendor.
+    expected_discussion:
+      - "Do we broaden containment to additional vendors proactively?"
+      - "How do we prioritize integrations for review and potential suspension?"
+      - "What is the immediate plan for credential hygiene across third-party access?"
+    expected_decisions:
+      - "Decide expansion of containment scope to other integrations."
+      - "Assign owners and deadlines for third-party credential rotation and access review."
+    evaluation_criteria:
+      - "Containment scope is justified by clear risk criteria."
+      - "Follow-on actions are prioritized and owner-assigned."
+    evidence_refs:
+      - "SIM-SECONDARY-VENDOR-AUTH-004"
+
+  - id: i05
+    t_plus_min: 80
+    delivery_method: "Chat/Email"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Security"
+      - "Procurement/Vendor Mgmt"
+    participant_prompt: >
+      Leadership asks for a 48-hour partner and customer management plan: decision log, notification status,
+      vendor attestation requirements, and conditions for restoring full connectivity.
+    expected_discussion:
+      - "What criteria must be met before restoring normal vendor connectivity?"
+      - "How will partner/customer updates be sequenced and approved?"
+      - "Which governance improvements are required after stabilization?"
+    expected_decisions:
+      - "Decide restoration criteria and attestation requirements for affected vendors."
+      - "Assign owners for communications cadence and post-incident control improvements."
+    evaluation_criteria:
+      - "Restoration criteria are measurable and auditable."
+      - "Plan includes communications owners, checkpoints, and documented approvals."
+    facilitator_notes: >
+      Close by asking for top three control improvements and assigned accountable owners.
+    evidence_refs:
+      - "SIM-48H-PARTNER-PLAN-005"

@@ -1,0 +1,1 @@
+Runbooks provide internal, step-by-step execution guides that reference existing workflows, templates, and tooling stubs. They are intended to be followed during delivery to ensure analysts can consistently execute the documented processes with the provided artifacts.

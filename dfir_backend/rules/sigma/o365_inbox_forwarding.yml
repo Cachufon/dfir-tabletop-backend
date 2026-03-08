@@ -1,0 +1,32 @@
+title: O365 Suspicious Inbox Forwarding Rule (Placeholder)
+id: GRV-SIG-SAAS-0001
+status: experimental
+description: >
+  Detects the creation of inbox forwarding rules in Exchange Online that may indicate
+  business email compromise or data exfiltration.
+author: Gruve DFIR
+date: 2025/01/01
+logsource:
+  product: o365
+  service: exchange
+detection:
+  selection_new_rule:
+    Operation: "New-InboxRule"
+  selection_forward_action:
+    Parameters.ForwardToExternalRecipientsOnly: "True"
+  condition: selection_new_rule and selection_forward_action
+fields:
+  - UserId
+  - Operation
+  - Parameters.Name
+  - Parameters.ForwardTo
+  - Parameters.ForwardToExternalRecipientsOnly
+  - ResultStatus
+falsepositives:
+  - Legitimate forwarding configured by users or IT for business reasons
+level: high
+tags:
+  - attack.T1114
+  - attack.T1114.003
+  - product.o365
+  - gruve.placeholder

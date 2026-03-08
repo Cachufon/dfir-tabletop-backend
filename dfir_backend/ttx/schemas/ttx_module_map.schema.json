@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gruve.ai/schemas/ttx_module_map.schema.json",
+  "title": "TTX Module Map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "category", "profiles"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["EXEC_90", "HALF_DAY", "FULL_DAY"],
+      "properties": {
+        "EXEC_90": { "$ref": "#/$defs/profile" },
+        "HALF_DAY": { "$ref": "#/$defs/profile" },
+        "FULL_DAY": { "$ref": "#/$defs/profile" }
+      }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration_minutes", "description", "modules", "completeness_rules"],
+      "properties": {
+        "duration_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/module" }
+        },
+        "completeness_rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["must_include_tags", "min_injects", "max_injects"],
+          "properties": {
+            "must_include_tags": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "min_injects": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_injects": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "timebox_min", "references", "inject_slots"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timebox_min": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "references": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "inject_slots": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/inject_slot" }
+        }
+      }
+    },
+    "inject_slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t_plus_min", "inject_id"],
+      "properties": {
+        "t_plus_min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inject_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "audience_override": {
+          "type": "string",
+          "minLength": 1
+        },
+        "delivery_override": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

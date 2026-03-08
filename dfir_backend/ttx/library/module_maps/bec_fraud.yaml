@@ -1,0 +1,204 @@
+version: 1
+category: bec_fraud
+profiles:
+  EXEC_90:
+    duration_minutes: 90
+    description: Executive BEC/fraud scenario focused on payment controls, loss containment, governance communications, and reporting posture decisions.
+    modules:
+      - id: EXEC90-M0
+        name: Opening and fraud-risk alignment
+        timebox_min: 15
+        references: [CORE-COMMON-001, CORE-COMMON-002, BEC-FRAUD-001, BEC-FRAUD-002]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 6
+            inject_id: BEC-FRAUD-001
+      - id: EXEC90-M1
+        name: Module 1 - Impersonation pressure and payment verification controls
+        timebox_min: 25
+        references: [BEC-FRAUD-003, BEC-FRAUD-004, BEC-FRAUD-005, BEC-FRAUD-021]
+        inject_slots:
+          - t_plus_min: 16
+            inject_id: BEC-FRAUD-003
+          - t_plus_min: 24
+            inject_id: BEC-FRAUD-005
+      - id: EXEC90-M2
+        name: Module 2 - Confirmed fraud and immediate bank actions
+        timebox_min: 25
+        references: [BEC-FRAUD-009, BEC-FRAUD-010, BEC-FRAUD-011]
+        inject_slots:
+          - t_plus_min: 42
+            inject_id: BEC-FRAUD-009
+          - t_plus_min: 50
+            inject_id: BEC-FRAUD-010
+      - id: EXEC90-M3
+        name: Module 3 - Internal governance, board, and external reporting discussion
+        timebox_min: 15
+        references: [BEC-FRAUD-012, BEC-FRAUD-013, BEC-FRAUD-014]
+        inject_slots:
+          - t_plus_min: 68
+            inject_id: BEC-FRAUD-012
+          - t_plus_min: 74
+            inject_id: BEC-FRAUD-013
+      - id: EXEC90-M4
+        name: Module 4 - Closeout commitments
+        timebox_min: 10
+        references: [BEC-FRAUD-022]
+        inject_slots:
+          - t_plus_min: 84
+            inject_id: BEC-FRAUD-022
+    completeness_rules:
+      must_include_tags: [bec_fraud, govern, respond]
+      min_injects: 8
+      max_injects: 12
+
+  HALF_DAY:
+    duration_minutes: 240
+    description: Half-day BEC/fraud scenario adding mailbox compromise response depth, communications coordination, and recovery governance.
+    modules:
+      - id: HALF-M0
+        name: Opening and financial control posture
+        timebox_min: 20
+        references: [CORE-COMMON-001, CORE-COMMON-002, BEC-FRAUD-001, BEC-FRAUD-002]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 8
+            inject_id: BEC-FRAUD-001
+      - id: HALF-M1
+        name: Module 1 - Impersonation and verification decision gates
+        timebox_min: 45
+        references: [BEC-FRAUD-003, BEC-FRAUD-004, BEC-FRAUD-005, BEC-FRAUD-021]
+        inject_slots:
+          - t_plus_min: 24
+            inject_id: BEC-FRAUD-003
+          - t_plus_min: 36
+            inject_id: BEC-FRAUD-004
+          - t_plus_min: 48
+            inject_id: BEC-FRAUD-005
+      - id: HALF-M2
+        name: Module 2 - Mailbox compromise and technical response beats
+        timebox_min: 45
+        references: [BEC-FRAUD-006, BEC-FRAUD-007, BEC-FRAUD-008, BEC-FRAUD-017, BEC-FRAUD-020]
+        inject_slots:
+          - t_plus_min: 72
+            inject_id: BEC-FRAUD-006
+          - t_plus_min: 84
+            inject_id: BEC-FRAUD-007
+          - t_plus_min: 96
+            inject_id: BEC-FRAUD-008
+      - id: HALF-M3
+        name: Module 3 - Confirmed fraud and loss containment operations
+        timebox_min: 50
+        references: [BEC-FRAUD-009, BEC-FRAUD-010, BEC-FRAUD-011, BEC-FRAUD-019]
+        inject_slots:
+          - t_plus_min: 120
+            inject_id: BEC-FRAUD-009
+          - t_plus_min: 134
+            inject_id: BEC-FRAUD-010
+          - t_plus_min: 148
+            inject_id: BEC-FRAUD-011
+      - id: HALF-M4
+        name: Module 4 - Internal and external communication governance
+        timebox_min: 45
+        references: [BEC-FRAUD-012, BEC-FRAUD-013, BEC-FRAUD-014, BEC-FRAUD-015, BEC-FRAUD-018]
+        inject_slots:
+          - t_plus_min: 172
+            inject_id: BEC-FRAUD-012
+          - t_plus_min: 184
+            inject_id: BEC-FRAUD-013
+          - t_plus_min: 196
+            inject_id: BEC-FRAUD-014
+      - id: HALF-M5
+        name: Recovery planning and closeout
+        timebox_min: 35
+        references: [BEC-FRAUD-016, BEC-FRAUD-022]
+        inject_slots:
+          - t_plus_min: 216
+            inject_id: BEC-FRAUD-016
+          - t_plus_min: 230
+            inject_id: BEC-FRAUD-022
+    completeness_rules:
+      must_include_tags: [bec_fraud, identify, respond, govern]
+      min_injects: 14
+      max_injects: 20
+
+  FULL_DAY:
+    duration_minutes: 480
+    description: Full-day BEC/fraud lifecycle scenario covering impersonation, account abuse, financial containment, stakeholder communications, and resilience improvements.
+    modules:
+      - id: FULL-M0
+        name: Opening and command priorities
+        timebox_min: 30
+        references: [CORE-COMMON-001, CORE-COMMON-002, BEC-FRAUD-001, BEC-FRAUD-002]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 10
+            inject_id: BEC-FRAUD-001
+      - id: FULL-M1
+        name: Module 1 - Impersonation campaigns and payment verification controls
+        timebox_min: 90
+        references: [BEC-FRAUD-003, BEC-FRAUD-004, BEC-FRAUD-005, BEC-FRAUD-020, BEC-FRAUD-021]
+        inject_slots:
+          - t_plus_min: 34
+            inject_id: BEC-FRAUD-003
+          - t_plus_min: 50
+            inject_id: BEC-FRAUD-004
+          - t_plus_min: 66
+            inject_id: BEC-FRAUD-005
+          - t_plus_min: 82
+            inject_id: BEC-FRAUD-021
+      - id: FULL-M2
+        name: Module 2 - Mailbox compromise and identity containment
+        timebox_min: 95
+        references: [BEC-FRAUD-006, BEC-FRAUD-007, BEC-FRAUD-008, BEC-FRAUD-017]
+        inject_slots:
+          - t_plus_min: 126
+            inject_id: BEC-FRAUD-006
+          - t_plus_min: 142
+            inject_id: BEC-FRAUD-007
+          - t_plus_min: 158
+            inject_id: BEC-FRAUD-008
+          - t_plus_min: 174
+            inject_id: BEC-FRAUD-017
+      - id: FULL-M3
+        name: Module 3 - Confirmed fraud, bank actions, and recovery pressure
+        timebox_min: 100
+        references: [BEC-FRAUD-009, BEC-FRAUD-010, BEC-FRAUD-011, BEC-FRAUD-019]
+        inject_slots:
+          - t_plus_min: 224
+            inject_id: BEC-FRAUD-009
+          - t_plus_min: 240
+            inject_id: BEC-FRAUD-010
+          - t_plus_min: 256
+            inject_id: BEC-FRAUD-011
+          - t_plus_min: 272
+            inject_id: BEC-FRAUD-019
+      - id: FULL-M4
+        name: Module 4 - Governance communications and reporting posture
+        timebox_min: 100
+        references: [BEC-FRAUD-012, BEC-FRAUD-013, BEC-FRAUD-014, BEC-FRAUD-015, BEC-FRAUD-018]
+        inject_slots:
+          - t_plus_min: 328
+            inject_id: BEC-FRAUD-012
+          - t_plus_min: 344
+            inject_id: BEC-FRAUD-013
+          - t_plus_min: 360
+            inject_id: BEC-FRAUD-014
+          - t_plus_min: 376
+            inject_id: BEC-FRAUD-015
+      - id: FULL-M5
+        name: Module 5 - Process hardening and closeout
+        timebox_min: 65
+        references: [BEC-FRAUD-016, BEC-FRAUD-022]
+        inject_slots:
+          - t_plus_min: 434
+            inject_id: BEC-FRAUD-016
+          - t_plus_min: 462
+            inject_id: BEC-FRAUD-022
+    completeness_rules:
+      must_include_tags: [bec_fraud, identify, respond, recover, govern]
+      min_injects: 20
+      max_injects: 30

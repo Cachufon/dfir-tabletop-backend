@@ -1,0 +1,27 @@
+rule OKTA_MFA_FATIGUE_PLACEHOLDER
+{
+    meta:
+        description = "Placeholder NOVA rule to detect prompts discussing or attempting MFA fatigue attacks against Okta."
+        author = "Gruve DFIR"
+        severity = "medium"
+        reference = "Internal Placeholder"
+
+    keywords:
+        $kw1 = "MFA fatigue"
+        $kw2 = "push bombing"
+        $kw3 = "spam push notifications"
+        $kw4 = "trigger repeated MFA prompts"
+        $kw5 = /okta.*(bypass|fatigue|push attack)/i
+
+    semantics:
+        $sem1 = "attack that repeatedly sends MFA challenges to a victim until they approve" (0.7)
+
+    llm:
+        $llm1 = "Is the user asking how to perform an MFA push bombing or MFA fatigue attack?" (0.7)
+
+    condition:
+        keywords.$kw1 or keywords.$kw2 or keywords.$kw3 or
+        keywords.$kw4 or keywords.$kw5 or
+        semantics.$sem1 or
+        llm.$llm1
+}

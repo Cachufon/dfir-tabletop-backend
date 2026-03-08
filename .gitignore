@@ -1,0 +1,33 @@
+# OS / editor
+.DS_Store
+__MACOSX/
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Python / virtualenv
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Archives
+*.zip
+*.tar.gz
+
+# NEVER COMMIT CLIENT CASE DATA
+# Ignore all case folders under dfir_backend/custom except the synthetic example_case and README.md
+dfir_backend/custom/*
+!dfir_backend/custom/README.md
+!dfir_backend/custom/example_case/
+!dfir_backend/custom/example_case/**
+
+# Temporary outputs
+**/.cache/
+**/tmp/
+**/temp/
+
+# Generated TTX packages (synthetic/examples only; never commit)
+dfir_backend/ttx/scenarios/_build*/

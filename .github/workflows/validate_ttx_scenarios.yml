@@ -1,0 +1,45 @@
+name: Validate TTX Scenarios
+
+on:
+  push:
+    paths:
+      - "dfir_backend/ttx/**"
+      - ".github/workflows/validate_ttx_scenarios.yml"
+  pull_request:
+    paths:
+      - "dfir_backend/ttx/**"
+      - ".github/workflows/validate_ttx_scenarios.yml"
+  workflow_dispatch: {}
+
+jobs:
+  validate-ttx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r dfir_backend/ttx/scripts/requirements.txt
+
+      - name: Validate TTX library
+        run: |
+          python dfir_backend/ttx/scripts/validate_ttx_library.py
+
+      - name: Validate TTX scenarios
+        run: |
+          python dfir_backend/ttx/scripts/validate_ttx_scenarios.py
+
+      - name: Test deterministic library compile
+        run: |
+          python dfir_backend/ttx/scripts/test_deterministic_library_compile.py
+
+      - name: Seed example cases and run end-to-end
+        run: |
+          python dfir_backend/ttx/scripts/seed_example_cases_and_run_end_to_end.py --out-root /tmp/ttx_e2e --force --include-library-compile

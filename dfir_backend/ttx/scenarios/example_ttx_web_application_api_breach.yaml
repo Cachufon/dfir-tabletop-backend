@@ -1,0 +1,168 @@
+version: 1
+
+scenario:
+  id: ttx-web-api-001
+  title: "API Authorization Flaw with Active Customer Impact"
+  category: "Web Application / API Breach"
+  duration_minutes: 90
+  audiences:
+    - "Product/Engineering"
+    - "Security"
+    - "Support"
+    - "Executive"
+    - "Legal/PR"
+  summary: >
+    A discussion-based scenario where an API authorization flaw is exploited to access customer records.
+    The exercise tests feature-disable decisions, patch strategy, scope confirmation, and customer
+    communication under uncertainty.
+  threat_context: >
+    An attacker uses crafted API requests to enumerate and access data across tenant boundaries, creating
+    potential confidentiality exposure and urgent containment pressure.
+  business_context: >
+    The affected API powers core customer workflows. Disabling features can reduce risk but may interrupt
+    contractual service levels and drive support escalation.
+  objectives:
+    - "Validate cross-functional decision-making for hotfix, rollback, and feature disablement."
+    - "Exercise scope-mapping and evidence preservation responsibilities during active exploitation."
+    - "Test communication flow between Product/Engineering, Support, Security, and Legal/PR."
+  assumptions:
+    - "Application and API logs are available for initial scoping queries."
+    - "Engineering can deploy emergency mitigations with expedited approvals."
+    - "Support has channels to issue approved customer updates rapidly."
+  constraints:
+    - "This is a discussion exercise only; no production deployment changes are performed."
+    - "Participants should document unknowns and assign owners for follow-up evidence pulls."
+  success_criteria:
+    - "Containment strategy is selected with clear owner and timeline."
+    - "Scope assessment plan identifies impacted endpoints, tenants, and time range."
+    - "Customer communication posture is approved with support enablement guidance."
+  pre_read:
+    - "Know incident escalation pathways across Engineering, Security, and Support."
+    - "Know emergency release and rollback governance for production systems."
+  out_of_scope:
+    - "Detailed code-level root cause analysis beyond tabletop decision points."
+  facilitator_notes: >
+    Keep participants focused on immediate risk reduction, customer impact, and communication approvals.
+    If debate stalls, ask what decision must be made in the next 30 minutes.
+
+injects:
+  - id: i01
+    t_plus_min: 0
+    delivery_method: "Verbal"
+    audience:
+      - "Security"
+      - "Product/Engineering"
+    participant_prompt: >
+      A bug bounty report claims cross-tenant data access through a public API endpoint. Security confirms
+      suspicious query patterns in logs within the last two hours.
+    expected_discussion:
+      - "Who leads incident command and who owns engineering mitigation?"
+      - "Do we disable the endpoint immediately or apply interim controls first?"
+      - "What evidence must be preserved before changing behavior?"
+    expected_decisions:
+      - "Decide immediate containment action for the affected endpoint."
+      - "Assign evidence preservation and timeline reconstruction owners."
+    evaluation_criteria:
+      - "Command structure and containment owner are explicit."
+      - "Preservation steps are documented before major changes."
+    evidence_refs:
+      - "SIM-API-BUG-REPORT-001"
+
+  - id: i02
+    t_plus_min: 14
+    delivery_method: "Chat/Email"
+    audience:
+      - "Product/Engineering"
+      - "Security"
+      - "Support"
+    participant_prompt: >
+      Support receives three customer tickets reporting access to records outside their account context.
+      Engineering proposes a hotfix but warns it may degrade performance significantly.
+    expected_discussion:
+      - "Hotfix now, rollback, or feature disablement: what is safest and fastest?"
+      - "How do we prepare support messaging while technical scope is incomplete?"
+      - "What thresholds trigger broader incident escalation?"
+    expected_decisions:
+      - "Decide mitigation path and release governance (approvals, verification, rollback criteria)."
+      - "Decide immediate support guidance and internal talking points."
+    evaluation_criteria:
+      - "Mitigation decision has explicit verification and rollback conditions."
+      - "Support receives controlled, approved guidance quickly."
+    evidence_refs:
+      - "SIM-CUSTOMER-TICKET-002"
+
+  - id: i03
+    t_plus_min: 32
+    delivery_method: "Verbal"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Security"
+      - "Product/Engineering"
+    participant_prompt: >
+      A journalist contacts PR with allegations that customer data was exposed for several days. Internal
+      scoping is still in progress and impacted population is not yet confirmed.
+    expected_discussion:
+      - "What can be communicated externally right now without overstatement?"
+      - "What legal/regulatory notification triggers may apply at this stage?"
+      - "Who approves and delivers external statements?"
+    expected_decisions:
+      - "Decide interim media response posture and spokesperson ownership."
+      - "Decide whether to prepare regulatory/customer notification drafts immediately."
+    evaluation_criteria:
+      - "External messaging is fact-based and governance-approved."
+      - "Notification planning starts early with clear owners."
+    facilitator_notes: >
+      If teams over-focus on certainty, prompt for communications under uncertainty.
+    evidence_refs:
+      - "SIM-MEDIA-INQUIRY-003"
+
+  - id: i04
+    t_plus_min: 52
+    delivery_method: "Chat/Email"
+    audience:
+      - "Security"
+      - "Product/Engineering"
+      - "Support"
+    participant_prompt: >
+      Post-mitigation telemetry shows reduced exploit traffic, but one legacy API version appears still
+      vulnerable. Additional affected tenants may exist in historical logs.
+    expected_discussion:
+      - "Do we disable legacy API access immediately for all customers?"
+      - "How do we prioritize retrospective scoping versus ongoing containment?"
+      - "What customer support impact is expected if legacy access is disabled?"
+    expected_decisions:
+      - "Decide containment scope for legacy API versions."
+      - "Assign time-boxed retrospective analysis plan with owner and checkpoints."
+    evaluation_criteria:
+      - "Containment scope and service-impact tradeoffs are explicit."
+      - "Retrospective scoping plan includes timeline and deliverables."
+    evidence_refs:
+      - "SIM-LEGACY-API-RISK-004"
+
+  - id: i05
+    t_plus_min: 78
+    delivery_method: "Verbal"
+    audience:
+      - "Executive"
+      - "Legal/PR"
+      - "Product/Engineering"
+      - "Security"
+      - "Support"
+    participant_prompt: >
+      Leadership requests a same-day action plan: confirmed impact, customer notification options,
+      support readiness, and next 7-day remediation commitments.
+    expected_discussion:
+      - "What facts are confirmed, and what uncertainty remains?"
+      - "What customer segments require prioritized outreach?"
+      - "Which remediation items are immediate versus strategic improvements?"
+    expected_decisions:
+      - "Assign owners for customer outreach strategy and support readiness plan."
+      - "Decide 7-day remediation commitments and executive update cadence."
+    evaluation_criteria:
+      - "Plan has clear ownership, timelines, and measurable outputs."
+      - "Customer/support actions are aligned with approved communications posture."
+    facilitator_notes: >
+      End with a concise decision log review and explicit ownership confirmation.
+    evidence_refs:
+      - "SIM-SAME-DAY-PLAN-005"

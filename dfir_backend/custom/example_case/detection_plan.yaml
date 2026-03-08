@@ -1,0 +1,17 @@
+# EXAMPLE detection plan for synthetic Compromise Assessment case
+model: Post-Incident Sweep
+scope:
+  - Identity
+  - SaaS
+goals:
+  Identity:
+    - Identify MFA fatigue patterns targeting `alice@example.com`.
+    - Flag logins from non-corporate IP ranges, especially 198.51.100.0/24.
+    - Trace token creation and session reuse following MFA approvals.
+  SaaS:
+    - Detect mailbox rule creation and forwarding destinations external to the org.
+    - Review recent consent grants or app registrations tied to the compromised session.
+    - Confirm whether mail access occurred from unusual IP addresses.
+expected_outputs:
+  - Sigma rule candidates for MFA fatigue and foreign login anomalies.
+  - IOC sweeps for documentation-range IPs and forwarding destination `exfil@example.net`.

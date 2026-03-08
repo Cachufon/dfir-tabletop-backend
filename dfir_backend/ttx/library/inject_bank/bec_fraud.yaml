@@ -1,0 +1,595 @@
+version: 1
+injects:
+  - id: BEC-FRAUD-001
+    label: BEC/fraud scenario opening and financial control priorities
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, finance, legal, communications]
+      csf_functions: [govern, identify]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [scenario_context, fraud_exposure, decision_scope]
+    inject:
+      delivery_method: facilitator_readout
+      audience: all_participants
+      participant_prompt: "At {CLIENT_ALIAS}, finance leadership receives notice of unusual payment activity tied to invoice updates and urgent transfer requests. Confirm command priorities, financial risk tolerance, and early decision boundaries."
+      expected_discussion:
+        - Aligning executives, finance, legal, and communications on immediate fraud risk posture.
+        - Defining thresholds for payment holds versus business continuity exceptions.
+        - Clarifying who can authorize urgent financial containment actions.
+      expected_decisions:
+        - Approve initial fraud response objectives and governance cadence.
+        - Assign owners for executive updates and decision logging.
+      evaluation_criteria:
+        - Teams establish a shared fraud incident framing before tactical actions.
+        - Authority boundaries for financial controls are explicit.
+      facilitator_notes: "Use this opening inject to establish leadership governance for all profiles."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-002
+    label: Suspicious invoice update and banking change request
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [finance, procurement, executive]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1566]
+      complexity: medium
+      redline_topics: [invoice_change, bank_details, payment_risk]
+    inject:
+      delivery_method: finance_ticket
+      audience: finance_and_procurement
+      participant_prompt: "Accounts payable receives an urgent vendor request to update remittance details before an upcoming payment run. Decide whether to pause payment, what verification sequence to use, and when to escalate to leadership."
+      expected_discussion:
+        - Identifying fraud indicators in payment change requests.
+        - Determining hold criteria for pending invoices.
+        - Coordinating finance and procurement validation responsibilities.
+      expected_decisions:
+        - Approve immediate hold-or-release posture for affected invoices.
+        - Assign verification owners and escalation timing.
+      evaluation_criteria:
+        - Payment controls are triggered quickly and consistently.
+        - Teams articulate clear verification and escalation logic.
+      facilitator_notes: "Push participants to describe practical controls, not generic caution."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_ATTACK_T1566_PHISHING, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-003
+    label: Executive impersonation wire urgency request
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, finance, legal]
+      csf_functions: [identify, govern, respond]
+      mitre_attack: [ATTACK:T1566, ATTACK:T1078]
+      complexity: medium
+      redline_topics: [exec_impersonation, urgency_pressure, authorization_chain]
+    inject:
+      delivery_method: email_thread
+      audience: command_team
+      participant_prompt: "A message appearing to be from the CEO requests a confidential same-day wire transfer for a sensitive acquisition matter. Decide whether to stop processing, how to validate authenticity, and who can override standard controls."
+      expected_discussion:
+        - Evaluating social engineering pressure against policy requirements.
+        - Confirming escalation pathways for executive impersonation attempts.
+        - Balancing confidentiality requests with fraud safeguards.
+      expected_decisions:
+        - Approve immediate verification and payment suspension actions.
+        - Define authority for any exception handling.
+      evaluation_criteria:
+        - Teams resist urgency pressure without bypassing controls.
+        - Exception governance is specific and auditable.
+      facilitator_notes: "Reinforce that urgency and confidentiality are common fraud levers."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_ATTACK_T1566_PHISHING, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: BEC-FRAUD-004
+    label: Vendor impersonation with look-alike domain
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [finance, procurement, incident_response]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1566]
+      complexity: medium
+      redline_topics: [vendor_impersonation, domain_spoofing, supplier_risk]
+    inject:
+      delivery_method: supplier_email
+      audience: finance_and_procurement
+      participant_prompt: "A top supplier submits revised invoice instructions from a near-match email domain and requests accelerated payment due to an audit deadline. Decide validation steps and whether to initiate broader supplier fraud checks."
+      expected_discussion:
+        - Identifying indicators of vendor impersonation.
+        - Determining whether to expand review to recent high-value vendor changes.
+        - Coordinating supplier relationship management while holding payment.
+      expected_decisions:
+        - Approve out-of-band supplier verification and invoice hold period.
+        - Launch targeted review of similar vendor communications.
+      evaluation_criteria:
+        - Teams identify impersonation risk quickly.
+        - Validation actions are proportional and repeatable.
+      facilitator_notes: "Keep focus on business process integrity and fraud prevention."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_ATTACK_T1566_PHISHING]
+
+  - id: BEC-FRAUD-005
+    label: Payment verification procedure call-back decision beat
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [finance, executive, legal]
+      csf_functions: [govern, protect, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [callback_verification, out_of_band, control_enforcement]
+    inject:
+      delivery_method: policy_decision_brief
+      audience: leadership_and_finance
+      participant_prompt: "Finance asks whether to enforce mandatory call-back and out-of-band confirmation for all payment-detail changes effective immediately. Decide scope, enforcement exceptions, and communication timing."
+      expected_discussion:
+        - Weighing fraud reduction benefits against payment processing delays.
+        - Defining approved out-of-band channels and validation records.
+        - Setting exception criteria for urgent business obligations.
+      expected_decisions:
+        - Approve verification control scope and go-live timing.
+        - Assign accountability for exception approvals.
+      evaluation_criteria:
+        - Verification controls are concrete and enforceable.
+        - Exception handling remains tightly governed.
+      facilitator_notes: "This inject is the primary decision beat for verification procedures."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-006
+    label: Potential mailbox compromise in finance leadership account
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [incident_response, finance, executive]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1078, ATTACK:T1110]
+      complexity: medium
+      redline_topics: [mailbox_access, account_abuse, compromise_confidence]
+    inject:
+      delivery_method: soc_alert
+      audience: incident_response_and_command_team
+      participant_prompt: "Security monitoring shows anomalous sign-ins to a finance executive mailbox, including failed-password bursts followed by successful access. Decide immediate investigation priorities and interim account protections."
+      expected_discussion:
+        - Determining confidence that the account was compromised.
+        - Prioritizing evidence review without delaying fraud containment.
+        - Defining interim controls for sensitive finance mailboxes.
+      expected_decisions:
+        - Approve immediate mailbox access review and containment actions.
+        - Set threshold for broader account protection measures.
+      evaluation_criteria:
+        - Teams tie containment decisions to observed risk indicators.
+        - Investigation priorities are explicit and time-bounded.
+      facilitator_notes: "Keep technical actions high-level and decision-oriented."
+      evidence_refs: [REF_ATTACK_T1078_VALID_ACCOUNTS, REF_ATTACK_T1110_BRUTE_FORCE, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-007
+    label: Suspicious forwarding rules and inbox manipulation findings
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, legal, finance]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: medium
+      redline_topics: [mailbox_rules, forwarding, evidence_scope]
+    inject:
+      delivery_method: analyst_brief
+      audience: response_and_legal_leads
+      participant_prompt: "Analysts report new forwarding rules in accounts payable mailboxes directing invoice conversations to external addresses. Decide investigation depth, legal hold scope, and immediate containment steps."
+      expected_discussion:
+        - Prioritizing affected users and conversations for review.
+        - Determining legal preservation boundaries for financial correspondence.
+        - Balancing speed of containment with evidence integrity.
+      expected_decisions:
+        - Approve rule-removal and monitoring approach.
+        - Trigger legal hold workflow for relevant mailboxes.
+      evaluation_criteria:
+        - Mailbox rule response is coordinated across technical and legal stakeholders.
+        - Preservation and containment actions are aligned.
+      facilitator_notes: "Avoid tool-level execution details; focus on governance decisions."
+      evidence_refs: [REF_FBI_BEC, REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-008
+    label: MFA reset and session control decision for exposed accounts
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, it_operations, executive]
+      csf_functions: [protect, respond, recover]
+      mitre_attack: [ATTACK:T1078, ATTACK:T1110]
+      complexity: medium
+      redline_topics: [mfa_reset, session_revocation, user_impact]
+    inject:
+      delivery_method: operations_update
+      audience: command_team
+      participant_prompt: "Identity engineers recommend immediate credential resets, MFA re-registration, and active-session revocation for finance and executive users. Decide scope, timing, and communication sequencing."
+      expected_discussion:
+        - Balancing rapid credential control with operational disruption.
+        - Determining phased versus broad reset strategy.
+        - Defining help-desk and executive support requirements.
+      expected_decisions:
+        - Approve account reset and session control plan.
+        - Establish communication and support ownership.
+      evaluation_criteria:
+        - Reset strategy is practical, risk-informed, and time-bound.
+        - Stakeholder support plan is explicit.
+      facilitator_notes: "This is a high-level technical response beat, not a tooling exercise."
+      evidence_refs: [REF_ATTACK_T1110_BRUTE_FORCE, REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-009
+    label: Fraud confirmed after payment execution
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [finance, executive, legal]
+      csf_functions: [respond, govern]
+      mitre_attack: [ATTACK:T1566, ATTACK:T1078]
+      complexity: high
+      redline_topics: [fraud_confirmation, payment_loss, command_activation]
+    inject:
+      delivery_method: treasury_alert
+      audience: leadership
+      participant_prompt: "Treasury confirms a high-value transfer was sent to unauthorized beneficiary details following a spoofed approval chain. Decide whether to activate crisis-level command, financial loss controls, and legal engagement."
+      expected_discussion:
+        - Defining conditions that move from suspected to confirmed fraud response.
+        - Prioritizing immediate financial and legal actions.
+        - Determining internal escalation and decision cadence.
+      expected_decisions:
+        - Declare confirmed fraud response posture.
+        - Assign executive owners for financial containment and legal coordination.
+      evaluation_criteria:
+        - Teams transition rapidly from analysis to action.
+        - Governance and ownership are unambiguous.
+      facilitator_notes: "Treat this inject as a major pivot point in scenario tempo."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-010
+    label: Immediate bank contact and recall-or-hold decision beat
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [finance, legal, executive]
+      csf_functions: [respond]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [bank_notification, recall_request, hold_window]
+    inject:
+      delivery_method: crisis_call
+      audience: finance_legal_executive
+      participant_prompt: "The transfer is less than two hours old. Decide immediate actions with the sending and receiving banks, including recall or hold requests, documentation, and authority to execute within the available time window."
+      expected_discussion:
+        - Prioritizing time-sensitive bank engagement steps.
+        - Clarifying legal and treasury coordination responsibilities.
+        - Determining what internal approvals are required versus pre-authorized.
+      expected_decisions:
+        - Approve immediate bank contact and recall/hold action plan.
+        - Assign named owners for bank follow-through and status reporting.
+      evaluation_criteria:
+        - Teams take decisive, time-aware financial containment actions.
+        - Responsibility and execution timelines are explicit.
+      facilitator_notes: "This inject is the primary immediate-action beat after fraud discovery."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-011
+    label: Secondary transfer attempt using updated beneficiary profile
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [finance, incident_response, executive]
+      csf_functions: [identify, respond]
+      mitre_attack: [ATTACK:T1078]
+      complexity: high
+      redline_topics: [repeat_attempt, beneficiary_controls, active_threat]
+    inject:
+      delivery_method: payment_platform_alert
+      audience: finance_and_command_team
+      participant_prompt: "A second queued payment targets the same newly added beneficiary account. Decide whether to freeze related payment batches, widen beneficiary screening, and notify additional business units."
+      expected_discussion:
+        - Assessing whether attacker access or process gaps remain active.
+        - Balancing broad payment holds with critical supplier obligations.
+        - Defining triggers for enterprise-wide payment scrutiny.
+      expected_decisions:
+        - Approve targeted or broad payment freeze actions.
+        - Expand fraud monitoring scope and ownership.
+      evaluation_criteria:
+        - Teams prevent repeat loss while managing business impact.
+        - Monitoring expansion is justified and documented.
+      facilitator_notes: "Probe how quickly participants adapt after confirmed fraud."
+      evidence_refs: [REF_FBI_BEC, REF_ATTACK_T1078_VALID_ACCOUNTS, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-012
+    label: Internal communications decision for workforce awareness
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [communications, executive, legal]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [internal_comms, rumor_control, fraud_guidance]
+    inject:
+      delivery_method: communications_draft
+      audience: leadership_and_comms
+      participant_prompt: "Communications requests approval for an internal notice about active payment fraud attempts and verification requirements. Decide message scope, timing, and disclosure boundaries to reduce additional losses."
+      expected_discussion:
+        - Balancing transparency with investigative sensitivity.
+        - Defining practical workforce guidance for payment request handling.
+        - Coordinating messaging across finance, legal, and HR channels.
+      expected_decisions:
+        - Approve internal communication release criteria and owners.
+        - Set cadence for follow-up fraud-awareness updates.
+      evaluation_criteria:
+        - Internal messaging is timely, clear, and action-oriented.
+        - Disclosure choices align with legal and operational constraints.
+      facilitator_notes: "This is a core decision beat on internal communications governance."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-013
+    label: Board notification threshold and briefing content decision
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, legal, communications]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [board_notification, governance_reporting, fiduciary_risk]
+    inject:
+      delivery_method: governance_brief
+      audience: executive_and_legal
+      participant_prompt: "Executives debate whether confirmed fraud loss and ongoing exposure warrant immediate board notification or inclusion in the next scheduled governance update. Decide threshold, briefing content, and spokesperson roles."
+      expected_discussion:
+        - Evaluating materiality and governance expectations.
+        - Determining level of investigative uncertainty acceptable in board messaging.
+        - Assigning who presents financial, legal, and response status.
+      expected_decisions:
+        - Approve board notification timing and format.
+        - Finalize leadership roles for board-facing communications.
+      evaluation_criteria:
+        - Board escalation decision is risk-based and defensible.
+        - Briefing ownership and content boundaries are clear.
+      facilitator_notes: "Use this inject to test executive governance discipline under uncertainty."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_FBI_BEC, REF_IC3_BEC]
+
+  - id: BEC-FRAUD-014
+    label: External reporting discussion beat including IC3 pathway
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [legal, executive, communications]
+      csf_functions: [govern, respond]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [external_reporting, law_enforcement, ic3_discussion]
+    inject:
+      delivery_method: legal_advisory
+      audience: executive_legal_comms
+      participant_prompt: "Legal outlines options for engaging law enforcement and submitting an IC3 complaint, while noting potential benefits and constraints. Discuss whether, when, and how to report based on organizational objectives and case maturity."
+      expected_discussion:
+        - Considering strategic value of external reporting channels.
+        - Reviewing timing tradeoffs between rapid reporting and evidence readiness.
+        - Coordinating any external statements with legal guidance.
+      expected_decisions:
+        - Determine preliminary external reporting posture and next review checkpoint.
+        - Assign ownership for collecting information needed if reporting proceeds.
+      evaluation_criteria:
+        - Teams discuss IC3 and law enforcement options as informed choices.
+        - Reporting posture aligns with legal, operational, and reputational context.
+      facilitator_notes: "Frame this as a discussion beat, not a mandatory action requirement."
+      evidence_refs: [REF_IC3_BEC, REF_FBI_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-015
+    label: Customer and supplier communications strategy under uncertainty
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [communications, legal, executive]
+      csf_functions: [respond, govern]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [external_comms, stakeholder_trust, disclosure_scope]
+    inject:
+      delivery_method: stakeholder_inquiry
+      audience: communications_and_legal
+      participant_prompt: "Key suppliers and customers ask about payment anomalies after delayed remittances. Decide whether to issue targeted notices, broad advisories, or case-by-case responses while investigation remains active."
+      expected_discussion:
+        - Balancing transparency with reputational and legal risk.
+        - Defining stakeholder segmentation for notifications.
+        - Aligning finance operations impacts with communications commitments.
+      expected_decisions:
+        - Approve stakeholder communication strategy and approval workflow.
+        - Set criteria for expanding disclosures if new facts emerge.
+      evaluation_criteria:
+        - External messaging decisions are coherent and defensible.
+        - Approval and escalation pathways are operationally usable.
+      facilitator_notes: "Challenge teams to avoid contradictory messages across stakeholder groups."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-016
+    label: Finance process hardening for future payment changes
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [finance, executive, risk]
+      csf_functions: [protect, recover, govern]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [process_hardening, segregation_of_duties, control_design]
+    inject:
+      delivery_method: process_review
+      audience: finance_and_risk_leads
+      participant_prompt: "Post-incident review identifies control gaps in payment-change approvals and segregation of duties. Decide immediate interim controls and longer-term process redesign priorities."
+      expected_discussion:
+        - Prioritizing highest-risk control weaknesses for remediation.
+        - Defining interim compensating controls pending full redesign.
+        - Assigning ownership and deadlines for control improvements.
+      expected_decisions:
+        - Approve short-term and long-term finance control roadmap.
+        - Set executive governance checkpoints for remediation progress.
+      evaluation_criteria:
+        - Control improvements are risk-ranked and measurable.
+        - Governance accountability is defined beyond the exercise.
+      facilitator_notes: "Keep this decision-oriented and tied to observed scenario failures."
+      evidence_refs: [REF_FBI_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-017
+    label: Password spraying indicators against executive assistants
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, executive, it_operations]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1110]
+      complexity: medium
+      redline_topics: [password_spraying, access_pressure, account_protection]
+    inject:
+      delivery_method: threat_hunt_update
+      audience: command_team
+      participant_prompt: "Identity telemetry indicates broad failed login attempts targeting executive assistants and finance approvers. Decide temporary access protections, monitoring expansion, and leadership notification thresholds."
+      expected_discussion:
+        - Evaluating whether attack activity is opportunistic or campaign-linked.
+        - Determining account protection actions with minimal business disruption.
+        - Setting clear thresholds for wider identity emergency controls.
+      expected_decisions:
+        - Approve enhanced protections for targeted user groups.
+        - Expand monitoring and escalation criteria.
+      evaluation_criteria:
+        - Protective actions align with observed attack pressure.
+        - Escalation triggers are explicit and actionable.
+      facilitator_notes: "Maintain a strategic level; do not require deep SOC tooling detail."
+      evidence_refs: [REF_ATTACK_T1110_BRUTE_FORCE, REF_NIST_SP_800_61_R3, REF_FBI_BEC]
+
+  - id: BEC-FRAUD-018
+    label: Legal and insurance notification sequencing decision
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [legal, executive, finance]
+      csf_functions: [govern, respond, recover]
+      mitre_attack: []
+      complexity: medium
+      redline_topics: [legal_privilege, insurance_notice, sequencing]
+    inject:
+      delivery_method: counsel_update
+      audience: executive_legal_finance
+      participant_prompt: "Outside counsel advises early coordination on privilege and insurance terms for potential fraud loss recovery. Decide sequencing for insurer notice, legal workstreams, and internal evidence handling guidance."
+      expected_discussion:
+        - Weighing timing sensitivity of notice obligations.
+        - Defining privileged versus operational documentation streams.
+        - Aligning finance recovery steps with legal constraints.
+      expected_decisions:
+        - Approve notification sequencing and legal governance model.
+        - Assign owners for insurer and counsel coordination.
+      evaluation_criteria:
+        - Decisions preserve legal posture while enabling response speed.
+        - Ownership and documentation boundaries are clear.
+      facilitator_notes: "Focus on governance coordination, not policy interpretation details."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_FBI_BEC, REF_IC3_BEC]
+
+  - id: BEC-FRAUD-019
+    label: Cross-border transfer complications and hold extension choices
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [finance, legal, executive]
+      csf_functions: [respond, recover]
+      mitre_attack: []
+      complexity: high
+      redline_topics: [cross_border_transfer, jurisdiction, recovery_tradeoffs]
+    inject:
+      delivery_method: treasury_status_update
+      audience: leadership
+      participant_prompt: "Bank feedback indicates transferred funds moved across jurisdictions, reducing likelihood of full recall. Decide resource allocation for recovery efforts, legal escalation, and executive reporting cadence."
+      expected_discussion:
+        - Assessing diminishing-return points for recovery efforts.
+        - Balancing legal, financial, and reputational implications.
+        - Determining realistic executive and board expectations.
+      expected_decisions:
+        - Approve recovery strategy adjustments and escalation pathways.
+        - Update governance cadence for ongoing financial impact tracking.
+      evaluation_criteria:
+        - Recovery decisions are pragmatic and evidence-based.
+        - Leadership communication reflects realistic outcomes.
+      facilitator_notes: "Use this inject to test resilience when perfect recovery is unlikely."
+      evidence_refs: [REF_FBI_BEC, REF_IC3_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-020
+    label: Coordinated phishing wave against accounts payable staff
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [half_day, full_day]
+      audiences: [incident_response, finance, communications]
+      csf_functions: [identify, protect, respond]
+      mitre_attack: [ATTACK:T1566]
+      complexity: medium
+      redline_topics: [phishing_wave, user_reporting, containment_messaging]
+    inject:
+      delivery_method: soc_broadcast
+      audience: response_and_finance_leads
+      participant_prompt: "A new phishing campaign targets accounts payable with fake invoice portals and urgent approval prompts. Decide how to prioritize user reporting intake, response triage, and anti-fraud messaging updates."
+      expected_discussion:
+        - Managing high-volume suspicious message reports.
+        - Prioritizing likely compromised users for immediate action.
+        - Updating awareness messaging without causing alert fatigue.
+      expected_decisions:
+        - Approve triage model for phishing-related reports.
+        - Issue updated anti-fraud guidance to targeted teams.
+      evaluation_criteria:
+        - Response scales effectively under report surge conditions.
+        - Messaging supports action rather than confusion.
+      facilitator_notes: "Keep emphasis on decision throughput and coordination."
+      evidence_refs: [REF_ATTACK_T1566_PHISHING, REF_FBI_BEC, REF_NIST_SP_800_61_R3]
+
+  - id: BEC-FRAUD-021
+    label: Executive travel spoof and mobile approval risk
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, finance, legal]
+      csf_functions: [identify, govern, respond]
+      mitre_attack: [ATTACK:T1566, ATTACK:T1078]
+      complexity: medium
+      redline_topics: [mobile_approval, travel_context, executive_controls]
+    inject:
+      delivery_method: chat_message
+      audience: executive_and_finance
+      participant_prompt: "During executive travel, finance receives a mobile chat request from an impersonated executive account to approve an urgent international transfer. Decide approval restrictions, validation channels, and executive communication expectations."
+      expected_discussion:
+        - Evaluating elevated fraud risk during travel and mobile workflows.
+        - Defining acceptable approval methods for high-risk transfers.
+        - Coordinating executive convenience with fraud safeguards.
+      expected_decisions:
+        - Approve temporary high-risk transfer approval restrictions.
+        - Require validated secondary confirmation before release.
+      evaluation_criteria:
+        - Controls address travel-specific impersonation risk.
+        - Validation expectations are unambiguous.
+      facilitator_notes: "Challenge participants on balancing speed with trustworthy approval."
+      evidence_refs: [REF_FBI_BEC, REF_ATTACK_T1566_PHISHING, REF_ATTACK_T1078_VALID_ACCOUNTS]
+
+  - id: BEC-FRAUD-022
+    label: Exercise closeout and executive commitment priorities
+    tags:
+      categories: [bec_fraud]
+      package_profiles: [executive, half_day, full_day]
+      audiences: [executive, finance, legal, communications]
+      csf_functions: [recover, govern]
+      mitre_attack: []
+      complexity: low
+      redline_topics: [lessons_learned, accountability, follow_through]
+    inject:
+      delivery_method: hotwash_prompt
+      audience: all_participants
+      participant_prompt: "Conclude the scenario by identifying the top corrective actions for fraud prevention, response speed, and governance communication. Confirm ownership, target dates, and executive oversight expectations."
+      expected_discussion:
+        - Prioritizing highest-impact control and process improvements.
+        - Confirming cross-functional accountability for remediation.
+        - Defining executive checkpoints for sustained readiness.
+      expected_decisions:
+        - Approve top remediation commitments and accountable owners.
+        - Set follow-up governance cadence for completion tracking.
+      evaluation_criteria:
+        - Commitments are specific, measurable, and cross-functional.
+        - Leadership follow-through mechanisms are established.
+      facilitator_notes: "Use this inject to convert scenario insights into accountable actions."
+      evidence_refs: [REF_NIST_SP_800_61_R3, REF_FBI_BEC, REF_IC3_BEC]

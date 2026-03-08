@@ -1,0 +1,32 @@
+name: Validate CA Assets
+
+on:
+  push:
+    paths:
+      - dfir_backend/ca/**
+      - dfir_backend/custom/example_case/**
+      - dfir_backend/workflows/ca_*
+      - dfir_backend/runbooks/ca_*
+      - dfir_backend/detections/**
+  pull_request:
+    paths:
+      - dfir_backend/ca/**
+      - dfir_backend/custom/example_case/**
+      - dfir_backend/workflows/ca_*
+      - dfir_backend/runbooks/ca_*
+      - dfir_backend/detections/**
+
+jobs:
+  validate-ca-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r dfir_backend/ca/scripts/requirements.txt
+      - name: Validate CA example case
+        run: python dfir_backend/ca/scripts/validate_ca_example_case.py
+      - name: Test deterministic case init
+        run: python dfir_backend/ca/scripts/test_deterministic_case_init.py

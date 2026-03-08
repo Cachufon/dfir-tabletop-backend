@@ -1,0 +1,222 @@
+version: 1
+category: saas_identity
+profiles:
+  EXEC_90:
+    duration_minutes: 90
+    description: Executive-focused identity incident emphasizing governance, decision rights, and business-risk tradeoffs.
+    modules:
+      - id: EXEC90-M0
+        name: Opening and governance alignment
+        timebox_min: 15
+        references: [CORE-COMMON-001, CORE-COMMON-002, SAAS-IDENTITY-001]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 6
+            inject_id: CORE-COMMON-002
+      - id: EXEC90-M1
+        name: Module 1 - Identity threat signal and prioritization
+        timebox_min: 20
+        references: [CORE-COMMON-004, SAAS-IDENTITY-002, SAAS-IDENTITY-003, SAAS-IDENTITY-004]
+        inject_slots:
+          - t_plus_min: 18
+            inject_id: SAAS-IDENTITY-002
+          - t_plus_min: 24
+            inject_id: SAAS-IDENTITY-003
+          - t_plus_min: 30
+            inject_id: CORE-COMMON-004
+      - id: EXEC90-M2
+        name: Module 2 - Containment and business tradeoffs
+        timebox_min: 30
+        references: [SAAS-IDENTITY-005, SAAS-IDENTITY-006, SAAS-IDENTITY-008, SAAS-IDENTITY-012]
+        inject_slots:
+          - t_plus_min: 40
+            inject_id: SAAS-IDENTITY-005
+          - t_plus_min: 48
+            inject_id: SAAS-IDENTITY-006
+          - t_plus_min: 56
+            inject_id: SAAS-IDENTITY-008
+          - t_plus_min: 64
+            inject_id: SAAS-IDENTITY-012
+      - id: EXEC90-M3
+        name: Hotwash and leadership decisions
+        timebox_min: 25
+        references: [CORE-COMMON-007, CORE-COMMON-008, SAAS-IDENTITY-013, SAAS-IDENTITY-014]
+        inject_slots:
+          - t_plus_min: 74
+            inject_id: SAAS-IDENTITY-013
+          - t_plus_min: 80
+            inject_id: CORE-COMMON-007
+          - t_plus_min: 86
+            inject_id: CORE-COMMON-008
+    completeness_rules:
+      must_include_tags: [saas_identity, govern, respond]
+      min_injects: 8
+      max_injects: 12
+
+  HALF_DAY:
+    duration_minutes: 240
+    description: Half-day identity incident adding coordination depth, discovery actions, and containment decision tradeoffs.
+    modules:
+      - id: HALF-M0
+        name: Opening and command structure
+        timebox_min: 25
+        references: [CORE-COMMON-001, CORE-COMMON-002, CORE-COMMON-004, SAAS-IDENTITY-001]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 8
+            inject_id: CORE-COMMON-002
+          - t_plus_min: 18
+            inject_id: SAAS-IDENTITY-001
+      - id: HALF-M1
+        name: Module 1 - Authentication abuse and anomaly surge
+        timebox_min: 45
+        references: [SAAS-IDENTITY-002, SAAS-IDENTITY-003, SAAS-IDENTITY-004, SAAS-IDENTITY-017, SAAS-IDENTITY-018]
+        inject_slots:
+          - t_plus_min: 30
+            inject_id: SAAS-IDENTITY-002
+          - t_plus_min: 40
+            inject_id: SAAS-IDENTITY-003
+          - t_plus_min: 50
+            inject_id: SAAS-IDENTITY-017
+          - t_plus_min: 60
+            inject_id: SAAS-IDENTITY-004
+      - id: HALF-M2
+        name: Module 2 - Containment operations and impact management
+        timebox_min: 60
+        references: [CORE-COMMON-003, SAAS-IDENTITY-005, SAAS-IDENTITY-006, SAAS-IDENTITY-008, SAAS-IDENTITY-009, SAAS-IDENTITY-016]
+        inject_slots:
+          - t_plus_min: 78
+            inject_id: CORE-COMMON-003
+          - t_plus_min: 90
+            inject_id: SAAS-IDENTITY-005
+          - t_plus_min: 102
+            inject_id: SAAS-IDENTITY-006
+          - t_plus_min: 114
+            inject_id: SAAS-IDENTITY-009
+      - id: HALF-M3
+        name: Module 3 - Discovery, legal readiness, and communications
+        timebox_min: 70
+        references: [SAAS-IDENTITY-010, SAAS-IDENTITY-011, SAAS-IDENTITY-012, SAAS-IDENTITY-013, SAAS-IDENTITY-014, SAAS-IDENTITY-015, SAAS-IDENTITY-021, CORE-COMMON-007, CORE-COMMON-008]
+        inject_slots:
+          - t_plus_min: 130
+            inject_id: SAAS-IDENTITY-010
+          - t_plus_min: 142
+            inject_id: SAAS-IDENTITY-011
+          - t_plus_min: 154
+            inject_id: SAAS-IDENTITY-012
+          - t_plus_min: 166
+            inject_id: SAAS-IDENTITY-013
+          - t_plus_min: 178
+            inject_id: CORE-COMMON-008
+          - t_plus_min: 190
+            inject_id: CORE-COMMON-007
+      - id: HALF-M4
+        name: Hotwash
+        timebox_min: 40
+        references: [SAAS-IDENTITY-015, SAAS-IDENTITY-016, SAAS-IDENTITY-022]
+        inject_slots:
+          - t_plus_min: 208
+            inject_id: SAAS-IDENTITY-015
+          - t_plus_min: 220
+            inject_id: SAAS-IDENTITY-022
+    completeness_rules:
+      must_include_tags: [saas_identity, identify, respond, recover]
+      min_injects: 14
+      max_injects: 20
+
+  FULL_DAY:
+    duration_minutes: 480
+    description: Full-day identity lifecycle exercise spanning detect, respond, recover, and strategic lessons learned.
+    modules:
+      - id: FULL-M0
+        name: Opening and strategic context
+        timebox_min: 35
+        references: [CORE-COMMON-001, CORE-COMMON-002, CORE-COMMON-004, SAAS-IDENTITY-001]
+        inject_slots:
+          - t_plus_min: 0
+            inject_id: CORE-COMMON-001
+          - t_plus_min: 10
+            inject_id: CORE-COMMON-002
+          - t_plus_min: 22
+            inject_id: SAAS-IDENTITY-001
+      - id: FULL-M1
+        name: Module 1 - Initial detection and identity compromise expansion
+        timebox_min: 75
+        references: [SAAS-IDENTITY-002, SAAS-IDENTITY-003, SAAS-IDENTITY-004, SAAS-IDENTITY-017, SAAS-IDENTITY-018, SAAS-IDENTITY-019, CORE-COMMON-004]
+        inject_slots:
+          - t_plus_min: 36
+            inject_id: SAAS-IDENTITY-002
+          - t_plus_min: 50
+            inject_id: SAAS-IDENTITY-003
+          - t_plus_min: 64
+            inject_id: SAAS-IDENTITY-017
+          - t_plus_min: 78
+            inject_id: SAAS-IDENTITY-018
+          - t_plus_min: 92
+            inject_id: SAAS-IDENTITY-004
+      - id: FULL-M2
+        name: Module 2 - Containment architecture and trust-boundary decisions
+        timebox_min: 95
+        references: [CORE-COMMON-003, SAAS-IDENTITY-005, SAAS-IDENTITY-006, SAAS-IDENTITY-007, SAAS-IDENTITY-008, SAAS-IDENTITY-009, SAAS-IDENTITY-020]
+        inject_slots:
+          - t_plus_min: 112
+            inject_id: CORE-COMMON-003
+          - t_plus_min: 126
+            inject_id: SAAS-IDENTITY-005
+          - t_plus_min: 140
+            inject_id: SAAS-IDENTITY-006
+          - t_plus_min: 154
+            inject_id: SAAS-IDENTITY-007
+          - t_plus_min: 168
+            inject_id: SAAS-IDENTITY-020
+          - t_plus_min: 182
+            inject_id: SAAS-IDENTITY-008
+      - id: FULL-M3
+        name: Module 3 - Discovery, exposure analysis, and legal/comms escalation
+        timebox_min: 105
+        references: [SAAS-IDENTITY-010, SAAS-IDENTITY-011, SAAS-IDENTITY-012, SAAS-IDENTITY-013, SAAS-IDENTITY-014, SAAS-IDENTITY-015, SAAS-IDENTITY-021, CORE-COMMON-006, CORE-COMMON-007, CORE-COMMON-008, CORE-COMMON-009]
+        inject_slots:
+          - t_plus_min: 210
+            inject_id: SAAS-IDENTITY-010
+          - t_plus_min: 224
+            inject_id: SAAS-IDENTITY-011
+          - t_plus_min: 238
+            inject_id: SAAS-IDENTITY-012
+          - t_plus_min: 252
+            inject_id: SAAS-IDENTITY-013
+          - t_plus_min: 266
+            inject_id: SAAS-IDENTITY-014
+          - t_plus_min: 280
+            inject_id: SAAS-IDENTITY-021
+          - t_plus_min: 294
+            inject_id: CORE-COMMON-008
+      - id: FULL-M4
+        name: Module 4 - Recovery, resilience, and lifecycle closure
+        timebox_min: 110
+        references: [SAAS-IDENTITY-016, SAAS-IDENTITY-019, SAAS-IDENTITY-022, SAAS-IDENTITY-023, SAAS-IDENTITY-024, CORE-COMMON-010]
+        inject_slots:
+          - t_plus_min: 322
+            inject_id: SAAS-IDENTITY-016
+          - t_plus_min: 336
+            inject_id: SAAS-IDENTITY-019
+          - t_plus_min: 350
+            inject_id: SAAS-IDENTITY-022
+          - t_plus_min: 364
+            inject_id: SAAS-IDENTITY-023
+          - t_plus_min: 378
+            inject_id: SAAS-IDENTITY-024
+      - id: FULL-M5
+        name: Hotwash and executive commitments
+        timebox_min: 60
+        references: [SAAS-IDENTITY-023, SAAS-IDENTITY-024]
+        inject_slots:
+          - t_plus_min: 420
+            inject_id: SAAS-IDENTITY-023
+          - t_plus_min: 440
+            inject_id: SAAS-IDENTITY-024
+    completeness_rules:
+      must_include_tags: [saas_identity, identify, respond, recover, govern]
+      min_injects: 22
+      max_injects: 32

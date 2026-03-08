@@ -1,0 +1,6 @@
+streamlit
+pyyaml
+jsonschema
+markdown
+streamlit-autorefresh
+segno
