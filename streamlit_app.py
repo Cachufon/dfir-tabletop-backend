@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+import time
 
 st.set_page_config(page_title="DFIR TTX Platform", layout="wide")
 
@@ -22,7 +23,13 @@ SCENARIOS = {
                     "Isolate affected systems and activate incident response": "Strong decision. This prioritizes containment and structured response.",
                     "Wait for more evidence before escalating": "Weak decision. Delay increases operational and business risk.",
                     "Pay the ransom immediately to restore operations": "Poor decision. This bypasses basic triage, legal review, and executive governance.",
-                    "Ask IT to quietly investigate without formal activation": "Weak decision. Informal handling often leads to slow escalation and poor coordination."
+                    "Ask IT to quietly investigate without formal activation": "Weak decision. Informal handling often leads to slow escalation and poor coordination.",
+                    "Activate incident response and notify leadership": "Strong decision. This supports rapid escalation and coordination.",
+                    "Delay escalation until more data is available": "Weak decision. Delay increases operational and business risk.",
+                    "Assess regulatory exposure and preserve evidence": "Strong decision. Legal review and evidence preservation are critical.",
+                    "Avoid involvement until breach is confirmed": "Weak decision. Legal should engage early when exposure is possible.",
+                    "Prioritize business continuity and stakeholder communication": "Strong decision. This reflects executive leadership under pressure.",
+                    "Wait for technical confirmation before acting": "Weak decision. Executives should begin coordination early."
                 }
             },
             {
@@ -40,7 +47,13 @@ SCENARIOS = {
                     "Validate backup integrity, scope the incident, and preserve evidence": "Strong decision. This supports recovery confidence and investigation quality.",
                     "Focus only on restoring the loudest business unit first": "Weak decision. Recovery should be risk based, not noise based.",
                     "Disconnect everything immediately with no coordination": "Mixed decision. Containment matters, but uncoordinated disruption can create more damage.",
-                    "Send a companywide message saying systems are safe": "Poor decision. Messaging must align to facts."
+                    "Send a companywide message saying systems are safe": "Poor decision. Messaging must align to facts.",
+                    "Activate incident response and notify leadership": "Good escalation, but this stage requires stronger focus on scope and backup validation.",
+                    "Delay escalation until more data is available": "Weak decision. Scope expansion demands fast coordination.",
+                    "Assess regulatory exposure and preserve evidence": "Useful, but not the top operational priority at this moment.",
+                    "Avoid involvement until breach is confirmed": "Weak decision. This delays response preparation.",
+                    "Prioritize business continuity and stakeholder communication": "Helpful, but operational validation should lead first here.",
+                    "Wait for technical confirmation before acting": "Weak decision. Leadership should not wait passively."
                 }
             },
             {
@@ -58,7 +71,13 @@ SCENARIOS = {
                     "Engage legal, privacy, communications, and incident leadership for coordinated response": "Strong decision. This is the right cross functional response to exfiltration risk.",
                     "Ignore the claim until the attackers post proof": "Weak decision. This delays legal and regulatory preparedness.",
                     "Post a public statement immediately with no internal review": "Poor decision. Public communication must be deliberate and reviewed.",
-                    "Negotiate directly with the threat actor without counsel": "Poor decision. This creates legal, regulatory, and strategic risk."
+                    "Negotiate directly with the threat actor without counsel": "Poor decision. This creates legal, regulatory, and strategic risk.",
+                    "Activate incident response and notify leadership": "Good escalation, but this stage requires broader coordination across functions.",
+                    "Delay escalation until more data is available": "Weak decision. Exfiltration risk requires early alignment.",
+                    "Assess regulatory exposure and preserve evidence": "Strong decision. This is highly relevant at this stage.",
+                    "Avoid involvement until breach is confirmed": "Weak decision. Delay increases legal risk.",
+                    "Prioritize business continuity and stakeholder communication": "Strong decision, especially for executive coordination.",
+                    "Wait for technical confirmation before acting": "Weak decision. External pressure requires active leadership."
                 }
             },
             {
@@ -76,7 +95,13 @@ SCENARIOS = {
                     "Use validated clean restore points and staged recovery with executive signoff": "Strong decision. This balances speed, safety, and governance.",
                     "Restore everything as fast as possible regardless of validation": "Poor decision. Fast recovery without validation can reinfect the environment.",
                     "Delay all recovery until every forensic detail is complete": "Weak decision. Recovery and investigation must move in parallel where possible.",
-                    "Let each business unit decide how to restore independently": "Poor decision. Recovery needs central coordination."
+                    "Let each business unit decide how to restore independently": "Poor decision. Recovery needs central coordination.",
+                    "Activate incident response and notify leadership": "Useful, but this stage requires a more recovery focused decision.",
+                    "Delay escalation until more data is available": "Weak decision. Recovery posture needs active direction.",
+                    "Assess regulatory exposure and preserve evidence": "Important, but not the primary recovery decision.",
+                    "Avoid involvement until breach is confirmed": "Weak decision. Recovery governance cannot wait.",
+                    "Prioritize business continuity and stakeholder communication": "Helpful, but recovery validation is still the core issue.",
+                    "Wait for technical confirmation before acting": "Weak decision. Leaders must balance speed and safety, not stall."
                 }
             }
         ]
@@ -94,7 +119,9 @@ def init_state():
         "completed": False,
         "participant_name": "",
         "team_name": "",
-        "start_time": None
+        "role": "Incident Response Lead",
+        "start_time": None,
+        "timer_start": None
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -108,17 +135,18 @@ def reset_scenario():
     st.session_state.score = 0
     st.session_state.completed = False
     st.session_state.start_time = None
+    st.session_state.timer_start = None
 
 
 def get_score_label(score, max_score):
     percentage = (score / max_score) * 100 if max_score else 0
     if percentage >= 90:
-        return "Excellent"
+        return "Executive Ready"
     if percentage >= 75:
-        return "Strong"
+        return "Operationally Sound"
     if percentage >= 60:
-        return "Moderate"
-    return "Needs Improvement"
+        return "Moderate Risk Exposure"
+    return "High Risk Decision Gaps"
 
 
 def render_home():
@@ -126,18 +154,15 @@ def render_home():
     st.subheader("Test and validate cyber incident decision making in real time.")
 
     st.write(
-        "This prototype simulates executive and incident response decision making during a cyber event. "
-        "It is designed to demonstrate structured scenario flow, leadership choices, and after action results."
+        "Run structured cyber crisis scenarios, capture leadership decisions, "
+        "and generate immediate after action insight."
     )
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
         st.metric("Scenario Type", "Cyber Crisis")
-
     with col2:
         st.metric("Exercise Format", "Decision Based")
-
     with col3:
         st.metric("Output", "Results Summary")
 
@@ -167,14 +192,22 @@ def render_scenario():
             "Team or function",
             value=st.session_state.team_name
         )
+        st.session_state.role = st.selectbox(
+            "Select your role",
+            ["CISO", "Incident Response Lead", "Legal", "Executive"],
+            index=["CISO", "Incident Response Lead", "Legal", "Executive"].index(
+                st.session_state.role
+            ) if st.session_state.role in ["CISO", "Incident Response Lead", "Legal", "Executive"] else 1
+        )
 
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns(2)
 
     with col1:
         if not st.session_state.scenario_started:
             if st.button("Start Scenario", use_container_width=True):
                 st.session_state.scenario_started = True
                 st.session_state.start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                st.session_state.timer_start = time.time()
                 st.rerun()
 
     with col2:
@@ -187,22 +220,34 @@ def render_scenario():
         return
 
     inject_index = st.session_state.current_inject
-    import time
-
-if "timer_start" not in st.session_state:
-    st.session_state.timer_start = time.time()
-
-elapsed = int(time.time() - st.session_state.timer_start)
-remaining = max(0, 120 - elapsed)
-
-st.warning(f"Time remaining: {remaining} seconds")
-
-if remaining == 0:
-    st.error("Time expired. Moving to next inject.")
-    st.session_state.current_inject += 1
-    st.session_state.timer_start = time.time()
-    st.rerun()
     total_injects = len(scenario["injects"])
+
+    if st.session_state.timer_start is None:
+        st.session_state.timer_start = time.time()
+
+    elapsed = int(time.time() - st.session_state.timer_start)
+    remaining = max(0, 120 - elapsed)
+
+    st.warning(f"Time remaining: {remaining} seconds")
+
+    if remaining == 0:
+        st.error("Time expired. Moving to next inject.")
+        st.session_state.responses.append(
+            {
+                "inject_title": scenario["injects"][inject_index]["title"],
+                "prompt": scenario["injects"][inject_index]["prompt"],
+                "selected_option": "No response submitted",
+                "best_option": scenario["injects"][inject_index]["best"],
+                "earned_points": 0,
+                "max_points": scenario["injects"][inject_index]["points"],
+                "feedback": "No decision submitted before time expired."
+            }
+        )
+        st.session_state.current_inject += 1
+        st.session_state.timer_start = time.time()
+        if st.session_state.current_inject >= total_injects:
+            st.session_state.completed = True
+        st.rerun()
 
     if inject_index >= total_injects:
         st.session_state.completed = True
@@ -217,16 +262,46 @@ if remaining == 0:
     st.markdown(f"## {inject['title']}")
     st.write(inject["prompt"])
 
+    role = st.session_state.get("role", "Incident Response Lead")
+
+    if role == "CISO":
+        options = [
+            "Activate incident response and notify leadership",
+            "Delay escalation until more data is available"
+        ]
+    elif role == "Legal":
+        options = [
+            "Assess regulatory exposure and preserve evidence",
+            "Avoid involvement until breach is confirmed"
+        ]
+    elif role == "Executive":
+        options = [
+            "Prioritize business continuity and stakeholder communication",
+            "Wait for technical confirmation before acting"
+        ]
+    else:
+        options = inject["options"]
+
     response_key = f"inject_response_{inject_index}"
     selected_option = st.radio(
         "Choose your decision",
-        inject["options"],
+        options,
         key=response_key
     )
 
     if st.button("Submit Decision", use_container_width=True):
-        is_best = selected_option == inject["best"]
+        best_options = {
+            inject["best"],
+            "Activate incident response and notify leadership" if inject_index == 0 else None,
+            "Assess regulatory exposure and preserve evidence" if inject_index == 2 else None,
+            "Prioritize business continuity and stakeholder communication" if inject_index == 2 else None,
+        }
+        best_options = {opt for opt in best_options if opt is not None}
+
+        is_best = selected_option in best_options
         earned_points = inject["points"] if is_best else 0
+
+        feedback = inject["feedback"].get(selected_option, "Decision recorded.")
 
         st.session_state.responses.append(
             {
@@ -236,12 +311,17 @@ if remaining == 0:
                 "best_option": inject["best"],
                 "earned_points": earned_points,
                 "max_points": inject["points"],
-                "feedback": inject["feedback"][selected_option]
+                "feedback": feedback
             }
         )
 
         st.session_state.score += earned_points
         st.session_state.current_inject += 1
+        st.session_state.timer_start = time.time()
+
+        if st.session_state.current_inject >= total_injects:
+            st.session_state.completed = True
+
         st.rerun()
 
     if st.session_state.responses:
@@ -269,27 +349,33 @@ def render_results():
 
     with col1:
         st.metric("Total Score", f"{score} / {max_score}")
-
     with col2:
         st.metric("Performance", rating)
-
     with col3:
         st.metric("Injects Completed", f"{len(st.session_state.responses)} / {len(scenario['injects'])}")
 
     st.markdown("### Participant Summary")
     st.write(f"**Participant:** {st.session_state.participant_name or 'Not provided'}")
     st.write(f"**Team or function:** {st.session_state.team_name or 'Not provided'}")
+    st.write(f"**Role:** {st.session_state.role or 'Not provided'}")
     st.write(f"**Scenario:** {st.session_state.selected_scenario}")
     st.write(f"**Started:** {st.session_state.start_time or 'Not recorded'}")
 
-    st.markdown("### Decision Review")
+    st.markdown("### Executive Summary")
+    if score >= 0.9 * max_score:
+        st.success("Decision making aligned with best practices. Strong resilience readiness.")
+    elif score >= 0.75 * max_score:
+        st.info("Generally effective decisions with minor gaps.")
+    else:
+        st.error("Significant decision gaps observed. Improvement required.")
 
+    st.markdown("### Decision Review")
     for i, response in enumerate(st.session_state.responses, start=1):
         with st.container():
             st.markdown(f"#### {i}. {response['inject_title']}")
             st.write(f"**Prompt:** {response['prompt']}")
             st.write(f"**Your decision:** {response['selected_option']}")
-            st.write(f"**Best practice choice:** {response['best_option']}")
+            st.write(f"**Recommended response:** {response['best_option']}")
             st.write(f"**Feedback:** {response['feedback']}")
             st.write(f"**Score:** {response['earned_points']} / {response['max_points']}")
             st.divider()
