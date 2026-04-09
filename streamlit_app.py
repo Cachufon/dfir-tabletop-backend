@@ -187,6 +187,21 @@ def render_scenario():
         return
 
     inject_index = st.session_state.current_inject
+    import time
+
+if "timer_start" not in st.session_state:
+    st.session_state.timer_start = time.time()
+
+elapsed = int(time.time() - st.session_state.timer_start)
+remaining = max(0, 120 - elapsed)
+
+st.warning(f"Time remaining: {remaining} seconds")
+
+if remaining == 0:
+    st.error("Time expired. Moving to next inject.")
+    st.session_state.current_inject += 1
+    st.session_state.timer_start = time.time()
+    st.rerun()
     total_injects = len(scenario["injects"])
 
     if inject_index >= total_injects:
